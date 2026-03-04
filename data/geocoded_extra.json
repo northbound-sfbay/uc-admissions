@@ -1,0 +1,65 @@
+[
+  {
+    "school_id": "51088",
+    "school_name": "GRANADA HILLS CHARTER HIGH SCH",
+    "city": "Granada Hills",
+    "lat": 34.2608949,
+    "lng": -118.5253898
+  },
+  {
+    "school_id": "52347",
+    "school_name": "HENRY M GUNN SENIOR HIGH SCHL",
+    "city": "Palo Alto",
+    "lat": 37.4024002,
+    "lng": -122.1339572
+  },
+  {
+    "school_id": "52945",
+    "school_name": "GALILEO ACAD OF SCIENCE & TECH",
+    "city": "San Francisco",
+    "lat": 37.8037984,
+    "lng": -122.4241789
+  },
+  {
+    "school_id": "51672",
+    "school_name": "KING DREW MAGNET HS MED/SCI",
+    "city": "Los Angeles",
+    "lat": 33.924729,
+    "lng": -118.245345
+  },
+  {
+    "school_id": "53336",
+    "school_name": "SAUGUS HIGH SCHOOL",
+    "city": "Santa Clarita",
+    "lat": 34.4403705,
+    "lng": -118.518128
+  },
+  {
+    "school_id": "52617",
+    "school_name": "SHERMAN OAKS CTR ENRCHED STDS",
+    "city": "Tarzana",
+    "lat": 34.1853515,
+    "lng": -118.5386083
+  },
+  {
+    "school_id": "51465",
+    "school_name": "DAV STARR JORDAN HIGH SCHOOL",
+    "city": "Long Beach",
+    "lat": 33.871986,
+    "lng": -118.1839753
+  },
+  {
+    "school_id": "52869",
+    "school_name": "SAN DIEGO SCHL CREATE/PERFORM",
+    "city": "San Diego",
+    "lat": 32.6804372,
+    "lng": -117.0487579
+  },
+  {
+    "school_id": "51504",
+    "school_name": "JUAN RODRIGUEZ CABRILLO HS",
+    "city": "Long Beach",
+    "lat": 33.7949342,
+    "lng": -118.2204166
+  }
+]

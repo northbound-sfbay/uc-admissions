@@ -1,0 +1,44 @@
+[
+  {
+    "school_id": "52683",
+    "school_name": "PALOS VERDES PENINSULA HS",
+    "city": "Rolling Hills Estates",
+    "lat": 33.7798492,
+    "lng": -118.3722058
+  },
+  {
+    "school_id": "53806",
+    "school_name": "WILLIAM HOWARD TAFT HS",
+    "city": "Woodland Hills",
+    "lat": 34.1687562,
+    "lng": -118.5729564
+  },
+  {
+    "school_id": "53149",
+    "school_name": "TESORO HIGH SCHOOL",
+    "city": "Rancho Santa Margarita",
+    "lat": 33.581115,
+    "lng": -117.6126491
+  },
+  {
+    "school_id": "52491",
+    "school_name": "WILLIAM J PETE KNIGHT HIGH SCH",
+    "city": "Palmdale",
+    "lat": 34.563986,
+    "lng": -118.0086498
+  },
+  {
+    "school_id": "53525",
+    "school_name": "TRACY JOINT UNION HIGH SCHOOL",
+    "city": "Tracy",
+    "lat": 37.7417357,
+    "lng": -121.4188491
+  },
+  {
+    "school_id": "54725",
+    "school_name": "ERNEST S MCBRIDE SR HIGH SCHL",
+    "city": "Long Beach",
+    "lat": 33.8296824,
+    "lng": -118.0954472
+  }
+]

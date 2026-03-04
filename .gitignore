@@ -1,0 +1,25 @@
+# Raw source data (hundreds of MB of CSVs — kept locally only)
+data/raw/
+
+# NCES geocode cache ZIPs
+data/nces_*.zip
+
+# Combined admissions file (per-type files are used instead)
+data/admissions.json
+
+# Python processing scripts (not part of the website)
+*.py
+*.js
+!app.js
+
+# Node / scraper tooling
+node_modules/
+package*.json
+playwright-report/
+
+# macOS
+.DS_Store
+
+# Local dev artifacts
+*.log
+nohup.out
