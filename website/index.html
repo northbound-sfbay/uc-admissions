@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC Admissions by High School</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V9PW2YBH8Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-V9PW2YBH8Q');
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>UC Admissions by California High School</h1>
+      <p class="subtitle">Fall 1994 – 2024 · Applicants, Admits &amp; Enrollees by school, campus, and ethnicity</p>
+    </div>
+  </div>
+</header>
+
+<!-- Loading overlay -->
+<div id="loading-overlay" class="loading-overlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p id="loading-msg">Loading admissions data…</p>
+  </div>
+</div>
+
+<main>
+
+  <!-- ══════════════════════════ Notes bar ════════════════════════════════════ -->
+  <div class="notes-bar">
+    <div class="notes-title">Notes</div>
+    <ul>
+      <li>Universitywide applicant counts reflect <strong>applications</strong>, not unique students — a student applying to multiple campuses is counted once per campus.</li>
+      <li>UC moved to an online application system around <strong>2002</strong>.</li>
+      <li>Since <strong>1986</strong>, students can apply to multiple UC campuses in a single application (<a href="https://www.latimes.com/archives/la-xpm-1985-05-20-mn-16535-story.html" target="_blank" rel="noopener">LA Times, 1985</a>).</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════ ROW 1: Two charts side by side ══════════════ -->
+  <div class="charts-row">
+
+    <!-- ── Left: Single-school time series ── -->
+    <div class="chart-panel" id="ts-panel">
+
+      <div class="panel-controls">
+        <div class="school-picker-wrap">
+          <label class="ctrl-label">High School</label>
+          <div class="school-search-wrap">
+            <input type="text" id="ts-school-input" placeholder="Search school…" autocomplete="off">
+            <ul id="ts-school-dropdown" class="school-dropdown hidden"></ul>
+          </div>
+        </div>
+        <div class="inline-filters">
+          <div class="filter-group">
+            <label class="ctrl-label" for="ts-campus">Campus</label>
+            <select id="ts-campus">
+              <option value="universitywide">Universitywide</option>
+              <option value="Berkeley">Berkeley</option>
+              <option value="Davis">Davis</option>
+              <option value="Irvine">Irvine</option>
+              <option value="Los Angeles">Los Angeles</option>
+              <option value="Merced">Merced</option>
+              <option value="Riverside">Riverside</option>
+              <option value="San Diego">San Diego</option>
+              <option value="Santa Barbara">Santa Barbara</option>
+              <option value="Santa Cruz">Santa Cruz</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="ctrl-label" for="ts-ethnicity">Ethnic Group</label>
+            <select id="ts-ethnicity">
+              <option value="all">All students</option>
+              <option value="African American">African American</option>
+              <option value="American Indian">American Indian</option>
+              <option value="Hispanic/ Latinx">Hispanic / Latinx</option>
+              <option value="Pacific Islander">Pacific Islander</option>
+              <option value="Asian">Asian</option>
+              <option value="White">White</option>
+              <option value="Domestic Unknown">Domestic Unknown</option>
+              <option value="Int'l">International</option>
+            </select>
+          </div>
+        </div>
+      </div><!-- /.panel-controls -->
+
+      <div class="panel-body">
+        <div class="chart-header">
+          <div>
+            <h2 id="ts-school-title" class="chart-title">—</h2>
+            <p id="ts-school-sub" class="chart-sub"></p>
+          </div>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="legend-bar"></span>Applicants</span>
+            <span class="legend-item"><span class="legend-line red"></span>Admit Rate</span>
+            <span class="legend-item"><span class="legend-line green"></span>Yield Rate</span>
+          </div>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="ts-chart"></canvas>
+        </div>
+        <p class="chart-note">Bars = applicants (left axis) · Lines = rates (right axis) · Yield = enrollees ÷ admits</p>
+      </div><!-- /.panel-body -->
+
+    </div><!-- /#ts-panel -->
+
+    <!-- ── Right: Multi-school compare ── -->
+    <div class="chart-panel" id="cmp-panel">
+
+      <div class="panel-controls">
+        <div class="school-picker-wrap">
+          <label class="ctrl-label">Add School to Compare</label>
+          <div class="school-search-wrap">
+            <input type="text" id="cmp-school-input" placeholder="Search and add school…" autocomplete="off">
+            <ul id="cmp-school-dropdown" class="school-dropdown hidden"></ul>
+          </div>
+        </div>
+        <div class="inline-filters">
+          <div class="filter-group">
+            <label class="ctrl-label" for="cmp-campus">Campus</label>
+            <select id="cmp-campus">
+              <option value="universitywide">Universitywide</option>
+              <option value="Berkeley">Berkeley</option>
+              <option value="Davis">Davis</option>
+              <option value="Irvine">Irvine</option>
+              <option value="Los Angeles">Los Angeles</option>
+              <option value="Merced">Merced</option>
+              <option value="Riverside">Riverside</option>
+              <option value="San Diego">San Diego</option>
+              <option value="Santa Barbara">Santa Barbara</option>
+              <option value="Santa Cruz">Santa Cruz</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="ctrl-label" for="cmp-ethnicity">Ethnic Group</label>
+            <select id="cmp-ethnicity">
+              <option value="all">All students</option>
+              <option value="African American">African American</option>
+              <option value="American Indian">American Indian</option>
+              <option value="Hispanic/ Latinx">Hispanic / Latinx</option>
+              <option value="Pacific Islander">Pacific Islander</option>
+              <option value="Asian">Asian</option>
+              <option value="White">White</option>
+              <option value="Domestic Unknown">Domestic Unknown</option>
+              <option value="Int'l">International</option>
+            </select>
+          </div>
+        </div>
+        <!-- Chips live here so they're part of the controls block -->
+        <div id="cmp-tags" class="cmp-tags">
+          <span class="cmp-hint">Search above to add schools (up to 8)</span>
+        </div>
+      </div><!-- /.panel-controls -->
+
+      <div class="panel-body">
+        <div class="chart-header">
+          <div>
+            <h2 class="chart-title">Admit Rate Comparison</h2>
+            <p id="cmp-sub" class="chart-sub">Universitywide · All students</p>
+          </div>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="cmp-chart"></canvas>
+        </div>
+        <p class="chart-note">Admit rate = Admits ÷ Applicants per year · Click a map dot to see its trend</p>
+      </div><!-- /.panel-body -->
+
+    </div><!-- /#cmp-panel -->
+
+  </div><!-- /.charts-row -->
+
+  <!-- ══════════════════════════ ROW 2: Full-width map ═══════════════════════ -->
+  <div class="map-card">
+
+    <div class="map-controls">
+      <div class="map-school-picker">
+        <label class="ctrl-label">Find School</label>
+        <div class="school-search-wrap">
+          <input type="text" id="map-school-input" placeholder="Search school…" autocomplete="off">
+          <ul id="map-school-dropdown" class="school-dropdown hidden"></ul>
+        </div>
+      </div>
+      <div class="filter-group">
+        <span class="ctrl-label">School Type</span>
+        <div class="type-dropdown" id="map-school-type">
+          <button class="type-dropdown-btn" id="map-school-type-btn" type="button">
+            <span id="map-school-type-label">CA Public</span>
+          </button>
+          <div class="type-dropdown-panel hidden" id="map-school-type-panel">
+            <label class="type-check"><input type="checkbox" value="CA Public" checked> CA Public</label>
+            <label class="type-check"><input type="checkbox" value="CA Private"> CA Private</label>
+            <label class="type-check"><input type="checkbox" value="Non-CA Domestic"> Non-CA Domestic</label>
+            <label class="type-check"><input type="checkbox" value="Foreign"> Foreign</label>
+            <label class="type-check"><input type="checkbox" value="Other"> Other</label>
+          </div>
+        </div>
+      </div>
+      <div class="filter-group" id="map-county-group">
+        <label class="ctrl-label" for="map-county">County</label>
+        <select id="map-county">
+          <option value="">All counties</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="ctrl-label" for="map-campus">Campus</label>
+        <select id="map-campus">
+          <option value="universitywide">Universitywide</option>
+          <option value="Berkeley">Berkeley</option>
+          <option value="Davis">Davis</option>
+          <option value="Irvine">Irvine</option>
+          <option value="Los Angeles">Los Angeles</option>
+          <option value="Merced">Merced</option>
+          <option value="Riverside">Riverside</option>
+          <option value="San Diego">San Diego</option>
+          <option value="Santa Barbara">Santa Barbara</option>
+          <option value="Santa Cruz">Santa Cruz</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="ctrl-label" for="map-year">Year</label>
+        <select id="map-year"></select>
+      </div>
+      <div class="map-legend-inline">
+        <span class="ctrl-label">Admit Rate</span>
+        <div class="map-legend">
+          <span class="dot high"></span><span>≥75%</span>
+          <span class="dot mid"></span><span>50–74%</span>
+          <span class="dot low"></span><span>&lt;50%</span>
+        </div>
+      </div>
+      <span id="map-school-count" class="map-school-count"></span>
+    </div>
+
+    <div id="map" class="map-container"></div>
+
+  </div><!-- /.map-card -->
+
+</main>
+
+<footer>
+  <p>Data: <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" target="_blank" rel="noopener">UC Information Center</a> · School locations: California Dept. of Education &amp; OpenStreetMap contributors · Map: © CARTO</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
