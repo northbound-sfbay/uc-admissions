@@ -182,6 +182,32 @@ function init() {
   setupCompare();
   setupMap();
   initMap();
+  applyUrlParam();
+}
+
+/** Read ?school=ID from the URL and pre-select that school. */
+function applyUrlParam() {
+  const id = new URLSearchParams(window.location.search).get('school');
+  if (!id) return;
+  const school = allSchools.find(s => s.school_id === id);
+  if (school) selectTsSchool(school);
+}
+
+/** Update page title, meta description, and URL to reflect the selected school. */
+function updatePageMeta(school) {
+  const recentYear = ALL_YEARS.slice().reverse().find(yr => (school.years?.[yr]?.app ?? 0) > 0);
+  const rate = school.years?.[recentYear]?.admit_rate;
+  const rateStr = rate != null ? ` — ${(rate * 100).toFixed(0)}% UC admit rate (${recentYear})` : '';
+  const loc = [school.city, school.county].filter(Boolean).join(', ');
+
+  const title = `${school.school_name}${loc ? ' (' + loc + ')' : ''} | UC Admissions | collegeacceptance.info`;
+  const desc = `UC admissions data for ${school.school_name} in ${loc}${rateStr}. View applicant counts, admit rates, and enrollment trends from 1994–2024 across all UC campuses.`;
+
+  document.title = title;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
+  history.replaceState(null, '', '?school=' + encodeURIComponent(school.school_id));
 }
 
 // ════════════════════════════════════ TIME SERIES ═════════════════════════════
@@ -203,6 +229,7 @@ function selectTsSchool(school) {
   if (!school) return;
   tsSelectedSchool = school;
   document.getElementById('ts-school-input').value = school.school_name;
+  updatePageMeta(school);
   renderTsChart();
 }
 
