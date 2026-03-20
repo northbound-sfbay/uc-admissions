@@ -17,7 +17,7 @@ const COORDS_URL           = 'data/school_coords.json';
 const NONPUBLIC_COORDS_URL = 'data/school_coords_nonpublic.json';
 const COUNTIES_URL         = 'data/ca_counties.geojson';
 
-const ALL_YEARS    = Array.from({length: 31}, (_, i) => String(1994 + i));
+const ALL_YEARS    = Array.from({length: 32}, (_, i) => String(1994 + i));
 const RECENT_YEARS = ALL_YEARS.slice(-3);  // last 3 years for "active school" filter
 
 const CMP_COLORS = [
