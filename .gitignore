@@ -17,6 +17,15 @@ node_modules/
 package*.json
 playwright-report/
 
+# Exceptions: nextjs-app is a full Next.js project and needs its own files tracked
+!nextjs-app/**/*.js
+!nextjs-app/**/*.ts
+!nextjs-app/**/*.tsx
+!nextjs-app/**/*.mjs
+!nextjs-app/**/*.py
+!nextjs-app/package.json
+!nextjs-app/package-lock.json
+
 # macOS
 .DS_Store
 
