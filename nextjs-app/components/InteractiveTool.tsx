@@ -228,7 +228,7 @@ export default function InteractiveTool() {
       </main>
 
       <footer>
-        <p>Data: <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" target="_blank" rel="noopener">UC Information Center</a> · School locations: California Dept. of Education &amp; OpenStreetMap contributors · Map: © CARTO · <a href="/about">About this site</a></p>
+        <p>Data: <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" target="_blank" rel="noopener">UC Information Center</a> · School locations: California Dept. of Education &amp; OpenStreetMap contributors · Map: © CARTO · <a href="/about">About this site</a> · <a href="/privacy">Privacy Policy</a></p>
       </footer>
     </>
   )
