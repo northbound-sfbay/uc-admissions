@@ -74,8 +74,38 @@ export default async function FeederPage({
   const feederData = getFeederData(slug)
   if (!feederData) notFound()
 
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://collegeacceptance.info/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Feeder Pages',
+        item: 'https://collegeacceptance.info/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: feederData.campusLabel,
+        item: `https://collegeacceptance.info/feeder-schools/${slug}`,
+      },
+    ],
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+
       <header>
         <div className="header-inner">
           <Link href="/" className="text-sm text-blue-200 hover:text-white">

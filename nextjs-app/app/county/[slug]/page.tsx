@@ -74,8 +74,38 @@ export default async function CountyPage({
   const countyData = getCountyData(slug)
   if (!countyData) notFound()
 
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://collegeacceptance.info/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'County Pages',
+        item: 'https://collegeacceptance.info/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: `${countyData.county} County`,
+        item: `https://collegeacceptance.info/county/${slug}`,
+      },
+    ],
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+
       <header>
         <div className="header-inner">
           <Link href="/" className="text-sm text-blue-200 hover:text-white">

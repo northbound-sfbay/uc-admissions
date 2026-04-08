@@ -303,11 +303,40 @@ export default async function SchoolPage({
     },
   }
 
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://collegeacceptance.info/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'School Pages',
+        item: 'https://collegeacceptance.info/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name,
+        item: `https://collegeacceptance.info/school/${slug}`,
+      },
+    ],
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
       <div className="min-h-screen bg-gray-50">
