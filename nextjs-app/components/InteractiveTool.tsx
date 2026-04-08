@@ -71,7 +71,7 @@ export default function InteractiveTool() {
 
       // Set default school
       const def = caPublic.find(s => s.school_name.toUpperCase().includes('PALO ALTO') && s.school_name.toUpperCase().includes('HIGH')) ?? caPublic[0]
-      if (def) selectTsSchool(def, caPublic)
+      if (def) selectTsSchool(def, { updateUrl: false, updateMeta: false })
 
       // Default compare
       const defaults = [
@@ -84,7 +84,7 @@ export default function InteractiveTool() {
       const id = new URLSearchParams(window.location.search).get('school')
       if (id) {
         const found = all.find(s => s.school_id === id)
-        if (found) selectTsSchool(found, all)
+        if (found) selectTsSchool(found)
       }
 
       // Background-load Foreign
@@ -104,15 +104,24 @@ export default function InteractiveTool() {
     })
   }, [])
 
-  function selectTsSchool(school: School, schools?: School[]) {
+  function selectTsSchool(
+    school: School,
+    options: { updateUrl?: boolean; updateMeta?: boolean } = {}
+  ) {
+    const { updateUrl = true, updateMeta = true } = options
     setTsSelectedSchool(school)
     setTsInput(school.school_name)
-    // Update URL and meta
-    const slug = makeSlug(school.school_id, school.school_name)
-    window.history.replaceState(null, '', `/school/${slug}`)
-    document.title = `${school.school_name} | UC Admissions | collegeacceptance.info`
-    document.querySelector('meta[name="description"]')?.setAttribute('content',
-      `UC admissions data for ${school.school_name}, ${school.city}. View trends from 1994–2025.`)
+
+    if (updateUrl) {
+      const slug = makeSlug(school.school_id, school.school_name)
+      window.history.replaceState(null, '', `/school/${slug}`)
+    }
+
+    if (updateMeta) {
+      document.title = `${school.school_name} | UC Admissions | collegeacceptance.info`
+      document.querySelector('meta[name="description"]')?.setAttribute('content',
+        `UC admissions data for ${school.school_name}, ${school.city}. View trends from 1994–2025.`)
+    }
   }
 
   const handleSelectTsSchool = useCallback((school: School) => {
