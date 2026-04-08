@@ -11,6 +11,14 @@ import type { School } from '@/lib/types'
 const LeafletMap = dynamic(() => import('./LeafletMap'), { ssr: false, loading: () => <div className="map-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>Loading map…</div> })
 
 export default function InteractiveTool() {
+  const COUNTY_PAGE_OPTIONS = [
+    { label: 'Santa Clara', slug: 'santa-clara' },
+    { label: 'Alameda', slug: 'alameda' },
+    { label: 'Los Angeles', slug: 'los-angeles' },
+    { label: 'Orange', slug: 'orange' },
+    { label: 'San Diego', slug: 'san-diego' },
+  ]
+
   const [allSchools,    setAllSchools]    = useState<School[]>([])
   const [schoolsByType, setSchoolsByType] = useState<Record<string, School[]>>({})
   const [loadedTypes,   setLoadedTypes]   = useState<Set<string>>(new Set())
@@ -27,6 +35,7 @@ export default function InteractiveTool() {
   const [cmpSelected,   setCmpSelected]   = useState<CmpEntry[]>([])
   const [cmpCampus,     setCmpCampus]     = useState('universitywide')
   const [cmpEthnicity,  setCmpEthnicity]  = useState('all')
+  const [countyPageSlug, setCountyPageSlug] = useState('santa-clara')
 
   const allSchoolsRef    = useRef<School[]>([])
   const schoolsByTypeRef = useRef<Record<string, School[]>>({})
@@ -234,6 +243,32 @@ export default function InteractiveTool() {
             onEnsureTypeLoaded={ensureTypeLoaded}
           />
         )}
+
+        <section className="county-entry-panel" aria-label="Browse by county">
+          <div className="county-entry-copy">
+            <div className="ctrl-label">Browse by County</div>
+            <p>
+              Explore feeder schools, admit rates, and countywide UC trends.
+            </p>
+          </div>
+          <div className="county-entry-actions">
+            <div className="filter-group county-entry-select">
+              <label className="ctrl-label" htmlFor="county-page-select">County</label>
+              <select
+                id="county-page-select"
+                value={countyPageSlug}
+                onChange={e => setCountyPageSlug(e.target.value)}
+              >
+                {COUNTY_PAGE_OPTIONS.map(option => (
+                  <option key={option.slug} value={option.slug}>{option.label}</option>
+                ))}
+              </select>
+            </div>
+            <a className="county-entry-link" href={`/county/${countyPageSlug}`}>
+              View county page →
+            </a>
+          </div>
+        </section>
       </main>
 
       <footer>
