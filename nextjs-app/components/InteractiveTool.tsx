@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import TimeSeriesPanel from './TimeSeriesPanel'
 import ComparePanel, { type CmpEntry } from './ComparePanel'
 import { TYPE_DATA_URLS, COORDS_URL, NONPUBLIC_COORDS_URL, MAX_CMP, RECENT_YEARS } from '@/lib/constants'
+import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
 import { schoolKey, makeSlug } from '@/lib/utils'
 import type { School } from '@/lib/types'
 
@@ -32,6 +33,7 @@ export default function InteractiveTool() {
   const [cmpCampus,     setCmpCampus]     = useState('universitywide')
   const [cmpEthnicity,  setCmpEthnicity]  = useState('all')
   const [countyPageSlug, setCountyPageSlug] = useState('')
+  const [feederPageSlug, setFeederPageSlug] = useState(FEEDER_CAMPUSES[0].slug)
 
   const allSchoolsRef    = useRef<School[]>([])
   const schoolsByTypeRef = useRef<Record<string, School[]>>({})
@@ -246,36 +248,64 @@ export default function InteractiveTool() {
           />
         )}
 
-        <section className="county-entry-panel" aria-label="Browse by county">
-          <div className="county-entry-copy">
-            <div className="ctrl-label">Browse by County</div>
-            <p>
-              Explore feeder schools, admit rates, and countywide UC trends.
-            </p>
-          </div>
-          <div className="county-entry-actions">
-            <div className="filter-group county-entry-select">
-              <label className="ctrl-label" htmlFor="county-page-select">County</label>
-              <select
-                id="county-page-select"
-                value={countyPageSlug}
-                onChange={e => setCountyPageSlug(e.target.value)}
-              >
-                {countyPageOptions.map(option => (
-                  <option key={option.slug} value={option.slug}>{option.label}</option>
-                ))}
-              </select>
+        <div className="charts-row" style={{ gridTemplateColumns: '1fr 1fr', alignItems: 'stretch' }}>
+          <section className="county-entry-panel" aria-label="Browse by county" style={{ width: '100%' }}>
+            <div className="county-entry-copy">
+              <div className="ctrl-label">Browse by County</div>
+              <p>
+                Explore feeder schools, admit rates, and countywide UC trends.
+              </p>
             </div>
-            <a
-              className="county-entry-link"
-              href={countyPageSlug ? `/county/${countyPageSlug}` : '#'}
-              aria-disabled={!countyPageSlug}
-              style={!countyPageSlug ? { pointerEvents: 'none', opacity: 0.6 } : undefined}
-            >
-              View county page →
-            </a>
-          </div>
-        </section>
+            <div className="county-entry-actions">
+              <div className="filter-group county-entry-select">
+                <label className="ctrl-label" htmlFor="county-page-select">County</label>
+                <select
+                  id="county-page-select"
+                  value={countyPageSlug}
+                  onChange={e => setCountyPageSlug(e.target.value)}
+                >
+                  {countyPageOptions.map(option => (
+                    <option key={option.slug} value={option.slug}>{option.label}</option>
+                  ))}
+                </select>
+              </div>
+              <a
+                className="county-entry-link"
+                href={countyPageSlug ? `/county/${countyPageSlug}` : '#'}
+                aria-disabled={!countyPageSlug}
+                style={!countyPageSlug ? { pointerEvents: 'none', opacity: 0.6 } : undefined}
+              >
+                View county page →
+              </a>
+            </div>
+          </section>
+
+          <section className="county-entry-panel" aria-label="Browse feeder pages" style={{ width: '100%' }}>
+            <div className="county-entry-copy">
+              <div className="ctrl-label">Browse by Campus</div>
+              <p>
+                See top feeder schools and strongest admit-rate schools for major UC campuses.
+              </p>
+            </div>
+            <div className="county-entry-actions">
+              <div className="filter-group county-entry-select">
+                <label className="ctrl-label" htmlFor="feeder-page-select">Campus</label>
+                <select
+                  id="feeder-page-select"
+                  value={feederPageSlug}
+                  onChange={e => setFeederPageSlug(e.target.value)}
+                >
+                  {FEEDER_CAMPUSES.map(option => (
+                    <option key={option.slug} value={option.slug}>{option.label}</option>
+                  ))}
+                </select>
+              </div>
+              <a className="county-entry-link" href={`/feeder-schools/${feederPageSlug}`}>
+                View feeder page →
+              </a>
+            </div>
+          </section>
+        </div>
       </main>
 
       <footer>
