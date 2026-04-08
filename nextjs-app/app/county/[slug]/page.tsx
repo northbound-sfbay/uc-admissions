@@ -1,52 +1,9 @@
-import fs from 'fs'
-import path from 'path'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { makeSlug, titleCase } from '@/lib/utils'
-import type { School } from '@/lib/types'
+import { notFound } from 'next/navigation'
+import { countySchoolHref, getCountyData, getCountySlugs } from '@/lib/county'
 
-export const metadata: Metadata = {
-  title: 'Santa Clara County High Schools for UC Admissions | Mockup | collegeacceptance.info',
-  description:
-    'Mockup county landing page for Santa Clara County high schools and UC admissions trends.',
-  alternates: { canonical: 'https://collegeacceptance.info/county/santa-clara' },
-}
-
-const DATA_DIRS = ['ca_public', 'ca_private']
-const CAMPUS_HIGHLIGHTS = [
-  { key: 'Los Angeles', label: 'UCLA' },
-  { key: 'Berkeley', label: 'UC Berkeley' },
-  { key: 'San Diego', label: 'UC San Diego' },
-  { key: 'Davis', label: 'UC Davis' },
-]
-
-type SchoolRow = {
-  school_id: string
-  school_name: string
-  city: string
-  school_type: string
-  app: number
-  adm: number
-  enr: number
-  admitRate: number | null
-}
-
-type CampusRow = {
-  campus: string
-  school_id: string
-  school_name: string
-  city: string
-  adm: number
-}
-
-type AdmitRateRow = {
-  school_id: string
-  school_name: string
-  city: string
-  app: number
-  adm: number
-  admitRate: number | null
-}
+export const revalidate = 86400
 
 function fmtNumber(value: number | null | undefined): string {
   if (value == null) return '—'
@@ -56,129 +13,6 @@ function fmtNumber(value: number | null | undefined): string {
 function fmtPercent(value: number | null | undefined): string {
   if (value == null) return '—'
   return `${(value * 100).toFixed(1)}%`
-}
-
-function loadCountySchools(county: string): School[] {
-  const root = path.join(process.cwd(), 'school-data')
-  const schools: School[] = []
-
-  for (const dir of DATA_DIRS) {
-    const fullDir = path.join(root, dir)
-    for (const fileName of fs.readdirSync(fullDir)) {
-      const school = JSON.parse(fs.readFileSync(path.join(fullDir, fileName), 'utf8')) as School
-      if (school.county === county) schools.push(school)
-    }
-  }
-
-  return schools
-}
-
-function latestAvailableYear(schools: School[]): string {
-  const years = new Set<string>()
-  for (const school of schools) {
-    for (const [year, data] of Object.entries(school.years)) {
-      if ((data.app ?? 0) > 0 || (data.adm ?? 0) > 0 || (data.enr ?? 0) > 0) {
-        years.add(year)
-      }
-    }
-  }
-
-  return Array.from(years).sort().at(-1) ?? '2025'
-}
-
-function latestCampusDataYear(schools: School[]): string {
-  const years = new Set<string>()
-  for (const school of schools) {
-    for (const [year, data] of Object.entries(school.years)) {
-      const hasCampusData = Object.values(data.by_campus ?? {}).some(
-        campus => (campus?.app ?? 0) > 0 || (campus?.adm ?? 0) > 0 || (campus?.enr ?? 0) > 0
-      )
-      if (hasCampusData) years.add(year)
-    }
-  }
-
-  return Array.from(years).sort().at(-1) ?? latestAvailableYear(schools)
-}
-
-function buildCountyData(county: string) {
-  const schools = loadCountySchools(county)
-  const displayYear = latestAvailableYear(schools)
-  const campusDisplayYear = latestCampusDataYear(schools)
-  const schoolsWithYear = schools.filter(s => {
-    const year = s.years[displayYear]
-    return year && ((year.app ?? 0) > 0 || (year.adm ?? 0) > 0 || (year.enr ?? 0) > 0)
-  })
-  const schoolsWithCampusYear = schools.filter(s => {
-    const year = s.years[campusDisplayYear]
-    return year && ((year.app ?? 0) > 0 || (year.adm ?? 0) > 0 || (year.enr ?? 0) > 0)
-  })
-
-  const rankedSchools: SchoolRow[] = schoolsWithYear
-    .map(s => {
-      const year = s.years[displayYear]
-      return {
-        school_id: s.school_id,
-        school_name: titleCase(s.school_name),
-        city: s.city,
-        school_type: s.school_type,
-        app: year.app ?? 0,
-        adm: year.adm ?? 0,
-        enr: year.enr ?? 0,
-        admitRate: year.admit_rate ?? null,
-      }
-    })
-    .sort((a, b) => b.app - a.app)
-
-  const totals = rankedSchools.reduce(
-    (acc, school) => {
-      acc.app += school.app
-      acc.adm += school.adm
-      acc.enr += school.enr
-      return acc
-    },
-    { app: 0, adm: 0, enr: 0 }
-  )
-
-  const campusHighlights: CampusRow[] = CAMPUS_HIGHLIGHTS.map(campus => {
-    const topSchool = schoolsWithCampusYear
-      .map(s => {
-        const campusData = s.years[campusDisplayYear].by_campus?.[campus.key]
-        return {
-          campus: campus.label,
-          school_id: s.school_id,
-          school_name: titleCase(s.school_name),
-          city: s.city,
-          adm: campusData?.adm ?? 0,
-        }
-      })
-      .sort((a, b) => b.adm - a.adm)[0]
-
-    return topSchool
-  }).filter(row => row.adm > 0)
-
-  return {
-    county,
-    displayYear,
-    campusDisplayYear,
-    schoolsWithYearCount: schoolsWithYear.length,
-    totals,
-    rankedSchools,
-    topSchools: rankedSchools.slice(0, 5),
-    topAdmitRateSchools: rankedSchools
-      .filter(s => s.app >= 100 && s.admitRate != null)
-      .sort((a, b) => (b.admitRate ?? 0) - (a.admitRate ?? 0))
-      .slice(0, 5)
-      .map<AdmitRateRow>(s => ({
-        school_id: s.school_id,
-        school_name: s.school_name,
-        city: s.city,
-        app: s.app,
-        adm: s.adm,
-        admitRate: s.admitRate,
-      })),
-    campusHighlights,
-    weightedAdmitRate: totals.app > 0 ? totals.adm / totals.app : null,
-  }
 }
 
 function StatPanel({
@@ -201,8 +35,44 @@ function StatPanel({
   )
 }
 
-export default function SantaClaraCountyMockPage() {
-  const countyData = buildCountyData('Santa Clara')
+export function generateStaticParams() {
+  return getCountySlugs().map(slug => ({ slug }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const countyData = getCountyData(slug)
+  if (!countyData) return {}
+
+  const title = `${countyData.county} County High Schools for UC Admissions | collegeacceptance.info`
+  const description = `See applicants, admits, feeder-school patterns, and top UC-admissions high schools in ${countyData.county} County for Fall ${countyData.displayYear}.`
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `https://collegeacceptance.info/county/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `https://collegeacceptance.info/county/${slug}`,
+      type: 'website',
+    },
+    twitter: { card: 'summary', title, description },
+  }
+}
+
+export default async function CountyPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const countyData = getCountyData(slug)
+  if (!countyData) notFound()
 
   return (
     <>
@@ -217,19 +87,17 @@ export default function SantaClaraCountyMockPage() {
       <main>
         <section className="seo-intro" aria-label="About this county page">
           <p>
-            This mockup shows how a <strong>county landing page</strong> could fit into the current site without
-            changing the overall visual style. Using the existing dataset, this page summarizes
-            <strong> Santa Clara County UC admissions in Fall {countyData.displayYear}</strong>, ranks the county&apos;s top high
-            schools, highlights feeder patterns to major UC campuses, and links users into individual school pages.
+            This page summarizes <strong>{countyData.county} County UC admissions in Fall {countyData.displayYear}</strong>,
+            ranks the county&apos;s top high schools, highlights feeder patterns to major UC campuses, and links users
+            into individual school pages.
           </p>
         </section>
 
         <div className="notes-bar">
-          <div className="notes-title">County Page Concept</div>
+          <div className="notes-title">{countyData.county} County</div>
           <ul>
-            <li>The numbers on this page are now pulled from the actual local dataset for Santa Clara County.</li>
             <li>Universitywide applicant and admit counts reflect applications and admissions across UC campuses, not unique students.</li>
-            <li>The page focuses on user-facing rankings and feeder patterns rather than SEO planning notes.</li>
+            <li>The rankings below use the most recent available year in the current dataset.</li>
             <li>Each school listed here links directly to its detailed admissions page.</li>
           </ul>
         </div>
@@ -285,7 +153,7 @@ export default function SantaClaraCountyMockPage() {
                     <div>
                       <div className="ctrl-label" style={{ marginBottom: '2px' }}>{`Rank ${index + 1}`}</div>
                       <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--uc-blue)' }}>
-                        <Link href={`/school/${makeSlug(school.school_id, school.school_name)}`} style={{ color: 'var(--uc-blue)' }}>
+                        <Link href={countySchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--uc-blue)' }}>
                           {school.school_name}
                         </Link>
                       </div>
@@ -378,7 +246,7 @@ export default function SantaClaraCountyMockPage() {
                     <div>
                       <div className="ctrl-label" style={{ marginBottom: '2px' }}>{row.campus}</div>
                       <div style={{ fontSize: '.95rem', fontWeight: 700, color: 'var(--text)' }}>
-                        <Link href={`/school/${makeSlug(row.school_id, row.school_name)}`} style={{ color: 'var(--text)' }}>
+                        <Link href={countySchoolHref(row.school_id, row.school_name)} style={{ color: 'var(--text)' }}>
                           {row.school_name}
                         </Link>
                       </div>
@@ -421,7 +289,7 @@ export default function SantaClaraCountyMockPage() {
                     <div>
                       <div className="ctrl-label" style={{ marginBottom: '2px' }}>{`Rank ${index + 1}`}</div>
                       <div style={{ fontSize: '.95rem', fontWeight: 700, color: 'var(--text)' }}>
-                        <Link href={`/school/${makeSlug(school.school_id, school.school_name)}`} style={{ color: 'var(--text)' }}>
+                        <Link href={countySchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--text)' }}>
                           {school.school_name}
                         </Link>
                       </div>
@@ -470,7 +338,7 @@ export default function SantaClaraCountyMockPage() {
                 {countyData.rankedSchools.map((school, index) => (
                   <tr key={school.school_id} className={index % 2 === 0 ? 'bg-gray-50/60' : ''}>
                     <td className="border-b border-gray-100 py-3 font-medium text-gray-800">
-                      <Link href={`/school/${makeSlug(school.school_id, school.school_name)}`} style={{ color: 'var(--uc-blue)' }}>
+                      <Link href={countySchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--uc-blue)' }}>
                         {school.school_name}
                       </Link>
                     </td>
@@ -487,10 +355,6 @@ export default function SantaClaraCountyMockPage() {
           </div>
         </section>
       </main>
-
-      <footer>
-        <p>County page mockup using actual Santa Clara County admissions data from the local dataset.</p>
-      </footer>
     </>
   )
 }
