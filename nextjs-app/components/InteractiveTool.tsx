@@ -33,7 +33,7 @@ export default function InteractiveTool() {
   const [cmpCampus,     setCmpCampus]     = useState('universitywide')
   const [cmpEthnicity,  setCmpEthnicity]  = useState('all')
   const [countyPageSlug, setCountyPageSlug] = useState('')
-  const [feederPageSlug, setFeederPageSlug] = useState(FEEDER_CAMPUSES[0].slug)
+  const [feederPageSlug, setFeederPageSlug] = useState<string>(FEEDER_CAMPUSES[0].slug)
 
   const allSchoolsRef    = useRef<School[]>([])
   const schoolsByTypeRef = useRef<Record<string, School[]>>({})
