@@ -179,8 +179,8 @@ export function getCountyData(slug: string): CountyPageData | null {
       })
       .sort((a, b) => b.adm - a.adm)[0]
 
-    return topSchool
-  }).filter(row => row.adm > 0)
+    return topSchool && topSchool.adm > 0 ? topSchool : null
+  }).filter((row): row is CountyCampusRow => row !== null)
 
   return {
     county,
