@@ -13,10 +13,6 @@ const LeafletMap = dynamic(() => import('./LeafletMap'), { ssr: false, loading: 
 export default function InteractiveTool() {
   const COUNTY_PAGE_OPTIONS = [
     { label: 'Santa Clara', slug: 'santa-clara' },
-    { label: 'Alameda', slug: 'alameda' },
-    { label: 'Los Angeles', slug: 'los-angeles' },
-    { label: 'Orange', slug: 'orange' },
-    { label: 'San Diego', slug: 'san-diego' },
   ]
 
   const [allSchools,    setAllSchools]    = useState<School[]>([])
