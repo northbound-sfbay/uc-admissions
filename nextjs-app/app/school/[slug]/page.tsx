@@ -65,30 +65,79 @@ function AdmitRateBadge({ rate }: { rate: number | null }) {
   return <span className={`font-bold ${color}`}>{pct(rate)}</span>
 }
 
+function SectionCard({
+  title,
+  description,
+  children,
+}: {
+  title: string
+  description?: string
+  children: React.ReactNode
+}) {
+  return (
+    <section className="chart-panel" style={{ height: 'auto' }}>
+      <div className="panel-controls">
+        <div className="ctrl-label">School Detail</div>
+        <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1.2 }}>
+          {title}
+        </h2>
+        {description && (
+          <p style={{ fontSize: '.84rem', color: 'var(--text-muted)', maxWidth: '60ch', lineHeight: 1.6 }}>
+            {description}
+          </p>
+        )}
+      </div>
+      <div className="panel-body" style={{ paddingTop: '14px' }}>
+        {children}
+      </div>
+    </section>
+  )
+}
+
 function YearSummary({ yr, d }: { yr: string; d: YearData }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-gray-700 mb-4">
-        Fall {yr} — Universitywide
-      </h2>
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="text-center">
-          <div className="text-3xl font-bold text-blue-900">{fmt(d.app)}</div>
-          <div className="text-sm text-gray-500 mt-1">Applicants</div>
+    <SectionCard
+      title={`Fall ${yr} Snapshot`}
+      description="Latest universitywide totals for this school across all UC campuses."
+    >
+      <div style={{ display: 'grid', gap: '14px', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}>
+        <div style={{ border: '1px solid var(--border)', borderRadius: '10px', padding: '14px 16px', background: '#fff' }}>
+          <div className="ctrl-label" style={{ marginBottom: '4px' }}>
+            Applicants
+          </div>
+          <div style={{ fontSize: '2.6rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1 }}>
+            {fmt(d.app)}
+          </div>
         </div>
-        <div className="text-center">
-          <div className="text-3xl font-bold text-blue-900">{fmt(d.adm)}</div>
-          <div className="text-sm text-gray-500 mt-1">Admitted</div>
+        <div style={{ border: '1px solid var(--border)', borderRadius: '10px', padding: '14px 16px', background: '#fff' }}>
+          <div className="ctrl-label" style={{ marginBottom: '4px' }}>
+            Admitted
+          </div>
+          <div style={{ fontSize: '2.6rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1 }}>
+            {fmt(d.adm)}
+          </div>
         </div>
-        <div className="text-center">
-          <div className="text-3xl font-bold text-blue-900">{fmt(d.enr)}</div>
-          <div className="text-sm text-gray-500 mt-1">Enrolled</div>
+        <div style={{ border: '1px solid var(--border)', borderRadius: '10px', padding: '14px 16px', background: '#fff' }}>
+          <div className="ctrl-label" style={{ marginBottom: '4px' }}>
+            Enrolled
+          </div>
+          <div style={{ fontSize: '2.6rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1 }}>
+            {fmt(d.enr)}
+          </div>
+        </div>
+        <div style={{ border: '1px solid #bfdbfe', borderRadius: '10px', padding: '14px 16px', background: '#eff6ff' }}>
+          <div className="ctrl-label" style={{ marginBottom: '4px', color: 'var(--uc-blue)' }}>
+            Admit Rate
+          </div>
+          <div style={{ fontSize: '2.6rem', fontWeight: 700, lineHeight: 1 }}>
+            <AdmitRateBadge rate={d.admit_rate} />
+          </div>
+          <div style={{ marginTop: '6px', fontSize: '.8rem', color: 'var(--text-muted)' }}>
+            Admitted ÷ applicants
+          </div>
         </div>
       </div>
-      <div className="text-center text-2xl">
-        Admit Rate: <AdmitRateBadge rate={d.admit_rate} />
-      </div>
-    </div>
+    </SectionCard>
   )
 }
 
@@ -100,31 +149,35 @@ function CampusTable({ d }: { d: YearData }) {
   if (!campusRows.length) return null
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-gray-700 mb-4">By Campus</h2>
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-gray-100 text-left text-gray-500">
-            <th className="pb-2 font-medium">Campus</th>
-            <th className="pb-2 font-medium text-right">Applicants</th>
-            <th className="pb-2 font-medium text-right">Admitted</th>
-            <th className="pb-2 font-medium text-right">Admit Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          {campusRows.map(({ campus, data }) => (
-            <tr key={campus} className="border-b border-gray-50">
-              <td className="py-2 font-medium text-gray-800">UC {campus}</td>
-              <td className="py-2 text-right text-gray-600">{fmt(data?.app)}</td>
-              <td className="py-2 text-right text-gray-600">{fmt(data?.adm)}</td>
-              <td className="py-2 text-right">
-                <AdmitRateBadge rate={data?.admit_rate ?? null} />
-              </td>
+    <SectionCard
+      title="By Campus"
+      description="How this school performed at each UC campus in the most recent fall term."
+    >
+      <div style={{ overflowX: 'auto' }}>
+        <table className="w-full text-sm" style={{ minWidth: '560px' }}>
+          <thead>
+            <tr className="border-b border-gray-100 text-left text-gray-500">
+              <th className="pb-3 pt-1 font-medium">Campus</th>
+              <th className="pb-3 pt-1 font-medium text-right">Applicants</th>
+              <th className="pb-3 pt-1 font-medium text-right">Admitted</th>
+              <th className="pb-3 pt-1 font-medium text-right">Admit Rate</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {campusRows.map(({ campus, data }) => (
+              <tr key={campus} className="odd:bg-gray-50/60">
+                <td className="border-b border-gray-100 py-3 font-medium text-gray-800">UC {campus}</td>
+                <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmt(data?.app)}</td>
+                <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmt(data?.adm)}</td>
+                <td className="border-b border-gray-100 py-3 text-right font-semibold">
+                  <AdmitRateBadge rate={data?.admit_rate ?? null} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </SectionCard>
   )
 }
 
@@ -136,31 +189,35 @@ function EthnicityTable({ d }: { d: YearData }) {
   if (!rows.length) return null
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-gray-700 mb-4">By Ethnicity</h2>
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-gray-100 text-left text-gray-500">
-            <th className="pb-2 font-medium">Group</th>
-            <th className="pb-2 font-medium text-right">Applicants</th>
-            <th className="pb-2 font-medium text-right">Admitted</th>
-            <th className="pb-2 font-medium text-right">Admit Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(([ethnicity, e]) => (
-            <tr key={ethnicity} className="border-b border-gray-50">
-              <td className="py-2 text-gray-800">{ethnicity}</td>
-              <td className="py-2 text-right text-gray-600">{fmt(e?.app)}</td>
-              <td className="py-2 text-right text-gray-600">{fmt(e?.adm)}</td>
-              <td className="py-2 text-right">
-                <AdmitRateBadge rate={e?.admit_rate ?? null} />
-              </td>
+    <SectionCard
+      title="By Ethnicity"
+      description="Most recent universitywide breakdown by ethnicity for this school."
+    >
+      <div style={{ overflowX: 'auto' }}>
+        <table className="w-full text-sm" style={{ minWidth: '560px' }}>
+          <thead>
+            <tr className="border-b border-gray-100 text-left text-gray-500">
+              <th className="pb-3 pt-1 font-medium">Group</th>
+              <th className="pb-3 pt-1 font-medium text-right">Applicants</th>
+              <th className="pb-3 pt-1 font-medium text-right">Admitted</th>
+              <th className="pb-3 pt-1 font-medium text-right">Admit Rate</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {rows.map(([ethnicity, e]) => (
+              <tr key={ethnicity} className="odd:bg-gray-50/60">
+                <td className="border-b border-gray-100 py-3 text-gray-800">{ethnicity}</td>
+                <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmt(e?.app)}</td>
+                <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmt(e?.adm)}</td>
+                <td className="border-b border-gray-100 py-3 text-right font-semibold">
+                  <AdmitRateBadge rate={e?.admit_rate ?? null} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </SectionCard>
   )
 }
 
@@ -168,38 +225,40 @@ function TrendTable({ school }: { school: School }) {
   const years = Object.keys(school.years).sort().reverse().slice(0, 10)
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-gray-700 mb-4">
-        10-Year Trend (Universitywide)
-      </h2>
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-gray-100 text-left text-gray-500">
-            <th className="pb-2 font-medium">Year</th>
-            <th className="pb-2 font-medium text-right">Applicants</th>
-            <th className="pb-2 font-medium text-right">Admitted</th>
-            <th className="pb-2 font-medium text-right">Enrolled</th>
-            <th className="pb-2 font-medium text-right">Admit Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          {years.map(yr => {
-            const d = school.years[yr]
-            return (
-              <tr key={yr} className="border-b border-gray-50">
-                <td className="py-2 font-medium text-gray-800">{yr}</td>
-                <td className="py-2 text-right text-gray-600">{fmt(d.app)}</td>
-                <td className="py-2 text-right text-gray-600">{fmt(d.adm)}</td>
-                <td className="py-2 text-right text-gray-600">{fmt(d.enr)}</td>
-                <td className="py-2 text-right">
-                  <AdmitRateBadge rate={d.admit_rate} />
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
+    <SectionCard
+      title="10-Year Trend"
+      description="Recent universitywide trend for applicants, admits, enrollment, and admit rate."
+    >
+      <div style={{ overflowX: 'auto' }}>
+        <table className="w-full text-sm" style={{ minWidth: '640px' }}>
+          <thead>
+            <tr className="border-b border-gray-100 text-left text-gray-500">
+              <th className="pb-3 pt-1 font-medium">Year</th>
+              <th className="pb-3 pt-1 font-medium text-right">Applicants</th>
+              <th className="pb-3 pt-1 font-medium text-right">Admitted</th>
+              <th className="pb-3 pt-1 font-medium text-right">Enrolled</th>
+              <th className="pb-3 pt-1 font-medium text-right">Admit Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            {years.map(yr => {
+              const d = school.years[yr]
+              return (
+                <tr key={yr} className="odd:bg-gray-50/60">
+                  <td className="border-b border-gray-100 py-3 font-medium text-gray-800">{yr}</td>
+                  <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmt(d.app)}</td>
+                  <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmt(d.adm)}</td>
+                  <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmt(d.enr)}</td>
+                  <td className="border-b border-gray-100 py-3 text-right font-semibold">
+                    <AdmitRateBadge rate={d.admit_rate} />
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </SectionCard>
   )
 }
 
@@ -253,52 +312,85 @@ export default async function SchoolPage({
 
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <header className="bg-[#003262] text-white px-6 py-3">
-          <div className="max-w-4xl mx-auto flex items-center justify-between">
+        <header>
+          <div className="header-inner">
             <Link href="/" className="text-sm text-blue-200 hover:text-white">
               ← UC Admissions by High School
             </Link>
           </div>
         </header>
 
-        <main className="max-w-4xl mx-auto px-6 py-8 space-y-6">
+        <main>
           {/* School heading */}
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">{name}</h1>
-            <p className="text-gray-500 mt-1">
-              {loc}
-              {school.school_type !== 'CA Public' && (
-                <span className="ml-2 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-                  {school.school_type}
-                </span>
+          <section className="map-card">
+            <div className="map-controls" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <div className="ctrl-label">
+                  School Profile
+                </div>
+                <div style={{ fontSize: '3rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1.05 }}>
+                  {name}
+                </div>
+                <div style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>
+                  {loc}
+                  {school.school_type !== 'CA Public' && (
+                    <span style={{ marginLeft: '8px', fontSize: '.72rem', color: 'var(--text-muted)' }}>
+                      {school.school_type}
+                    </span>
+                  )}
+                </div>
+              </div>
+              {yr && (
+                <div
+                  style={{
+                    border: '1px solid #bfdbfe',
+                    background: '#eff6ff',
+                    borderRadius: '999px',
+                    padding: '8px 14px',
+                    fontSize: '.8rem',
+                    fontWeight: 600,
+                    color: 'var(--uc-blue)',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  Latest available data: Fall {yr}
+                </div>
               )}
-            </p>
-          </div>
+            </div>
+          </section>
 
           {/* Most recent year summary */}
           {yr && d && <YearSummary yr={yr} d={d} />}
 
-          {/* Campus breakdown */}
-          {yr && d && <CampusTable d={d} />}
+          {/* Manual ad placement for Journey/Mediavine */}
+          <div className="content_hint" aria-hidden="true" />
 
-          {/* Ethnicity breakdown */}
-          {yr && d && <EthnicityTable d={d} />}
+          <section className="charts-row" style={{ alignItems: 'start' }}>
+            {/* Campus breakdown */}
+            {yr && d && <CampusTable d={d} />}
+
+            {/* Ethnicity breakdown */}
+            {yr && d && <EthnicityTable d={d} />}
+          </section>
 
           {/* 10-year trend */}
           <TrendTable school={school} />
 
           {/* Link to full interactive tool */}
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 text-center">
-            <p className="text-gray-700 mb-3">
+          <div className="content_hint" aria-hidden="true" />
+
+          <section className="notes-bar" style={{ textAlign: 'center' }}>
+            <p style={{ color: 'var(--text)', marginBottom: '12px' }}>
               View charts, compare schools, and explore the map in the full interactive tool.
             </p>
             <Link
               href={`/?school=${school.school_id}`}
-              className="inline-block bg-[#003262] text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-900 transition-colors"
+              className="county-entry-link"
+              style={{ background: 'var(--uc-blue)', color: '#fff', borderColor: 'var(--uc-blue)' }}
             >
               Open in Interactive Tool →
             </Link>
-          </div>
+          </section>
 
           {/* Data source */}
           <p className="text-xs text-gray-400 text-center pb-4">

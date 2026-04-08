@@ -208,8 +208,9 @@ export default function SantaClaraCountyMockPage() {
     <>
       <header>
         <div className="header-inner">
-          <h1>UC Admissions by California High School</h1>
-          <p className="subtitle">Fall 1994 – 2025 · Applicants, Admits &amp; Enrollees by school, campus, and ethnicity</p>
+          <Link href="/" className="text-sm text-blue-200 hover:text-white">
+            ← UC Admissions by High School
+          </Link>
         </div>
       </header>
 
