@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import SchoolPageAnalytics from '@/components/SchoolPageAnalytics'
 import { readSchoolById, getTop300, idFromSlug, recentYear } from '@/lib/data'
-import { titleCase, fmt, pct, rateColor, makeSlug } from '@/lib/utils'
+import { titleCase, fmt, pct, rateColor } from '@/lib/utils'
 import type { Metadata } from 'next'
 import type { School, YearData } from '@/lib/types'
 
@@ -274,9 +275,6 @@ export default async function SchoolPage({
   if (!school) notFound()
 
   // Redirect if slug doesn't match canonical form
-  const canonical = makeSlug(school.school_id, school.school_name)
-  // (slug mismatch handling can be added later if needed)
-
   const yr = recentYear(school)
   const d = yr ? school.years[yr] : null
   const name = titleCase(school.school_name)
@@ -330,6 +328,11 @@ export default async function SchoolPage({
 
   return (
     <>
+      <SchoolPageAnalytics
+        schoolSlug={slug}
+        schoolName={school.school_name}
+        county={school.county}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

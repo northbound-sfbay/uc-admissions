@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import TimeSeriesPanel from './TimeSeriesPanel'
 import ComparePanel, { type CmpEntry } from './ComparePanel'
-import { TYPE_DATA_URLS, COORDS_URL, NONPUBLIC_COORDS_URL, MAX_CMP, RECENT_YEARS } from '@/lib/constants'
+import { trackEvent } from '@/lib/analytics'
+import { TYPE_DATA_URLS, COORDS_URL, NONPUBLIC_COORDS_URL, MAX_CMP } from '@/lib/constants'
 import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
 import { schoolKey, makeSlug } from '@/lib/utils'
 import type { School } from '@/lib/types'
@@ -39,6 +40,26 @@ export default function InteractiveTool() {
   const schoolsByTypeRef = useRef<Record<string, School[]>>({})
   const loadedTypesRef   = useRef<Set<string>>(new Set())
   const schoolCoordsRef  = useRef<Record<string, { lat: number; lng: number }>>({})
+
+  function selectTsSchool(
+    school: School,
+    options: { updateUrl?: boolean; updateMeta?: boolean } = {}
+  ) {
+    const { updateUrl = true, updateMeta = true } = options
+    setTsSelectedSchool(school)
+    setTsInput(school.school_name)
+
+    if (updateUrl) {
+      const slug = makeSlug(school.school_id, school.school_name)
+      window.history.replaceState(null, '', `/school/${slug}`)
+    }
+
+    if (updateMeta) {
+      document.title = `${school.school_name} | UC Admissions | collegeacceptance.info`
+      document.querySelector('meta[name="description"]')?.setAttribute('content',
+        `UC admissions data for ${school.school_name}, ${school.city}. View trends from 1994–2025.`)
+    }
+  }
 
   // Initial data load
   useEffect(() => {
@@ -112,31 +133,21 @@ export default function InteractiveTool() {
     })
   }, [])
 
-  function selectTsSchool(
-    school: School,
-    options: { updateUrl?: boolean; updateMeta?: boolean } = {}
-  ) {
-    const { updateUrl = true, updateMeta = true } = options
-    setTsSelectedSchool(school)
-    setTsInput(school.school_name)
-
-    if (updateUrl) {
-      const slug = makeSlug(school.school_id, school.school_name)
-      window.history.replaceState(null, '', `/school/${slug}`)
-    }
-
-    if (updateMeta) {
-      document.title = `${school.school_name} | UC Admissions | collegeacceptance.info`
-      document.querySelector('meta[name="description"]')?.setAttribute('content',
-        `UC admissions data for ${school.school_name}, ${school.city}. View trends from 1994–2025.`)
-    }
-  }
-
   const handleSelectTsSchool = useCallback((school: School) => {
+    trackEvent('comparison_intent', {
+      interaction_type: 'select_school',
+      school_name: school.school_name,
+      school_slug: makeSlug(school.school_id, school.school_name),
+    })
     selectTsSchool(school)
   }, [])
 
   const handleMapSchoolClick = useCallback((school: School) => {
+    trackEvent('comparison_intent', {
+      interaction_type: 'map_school_click',
+      school_name: school.school_name,
+      school_slug: makeSlug(school.school_id, school.school_name),
+    })
     selectTsSchool(school)
     setCmpSelected(prev => {
       const key = schoolKey(school)
@@ -147,6 +158,11 @@ export default function InteractiveTool() {
   }, [])
 
   const handleAddCmp = useCallback((school: School) => {
+    trackEvent('comparison_intent', {
+      interaction_type: 'add_compare_school',
+      school_name: school.school_name,
+      school_slug: makeSlug(school.school_id, school.school_name),
+    })
     setCmpSelected(prev => {
       const key = schoolKey(school)
       if (prev.some(e => schoolKey(e.school) === key)) return prev
@@ -179,6 +195,38 @@ export default function InteractiveTool() {
     label: county,
     slug: countySlug(county),
   }))
+
+  function handleTsCampusChange(value: string) {
+    trackEvent('comparison_intent', {
+      interaction_type: 'timeseries_campus_change',
+      campus: value,
+    })
+    setTsCampus(value)
+  }
+
+  function handleTsEthnicityChange(value: string) {
+    trackEvent('comparison_intent', {
+      interaction_type: 'timeseries_ethnicity_change',
+      ethnicity: value,
+    })
+    setTsEthnicity(value)
+  }
+
+  function handleCmpCampusChange(value: string) {
+    trackEvent('comparison_intent', {
+      interaction_type: 'compare_campus_change',
+      campus: value,
+    })
+    setCmpCampus(value)
+  }
+
+  function handleCmpEthnicityChange(value: string) {
+    trackEvent('comparison_intent', {
+      interaction_type: 'compare_ethnicity_change',
+      ethnicity: value,
+    })
+    setCmpEthnicity(value)
+  }
 
   return (
     <>
@@ -219,8 +267,8 @@ export default function InteractiveTool() {
             campus={tsCampus}
             ethnicity={tsEthnicity}
             onSelectSchool={handleSelectTsSchool}
-            onCampusChange={setTsCampus}
-            onEthnicityChange={setTsEthnicity}
+            onCampusChange={handleTsCampusChange}
+            onEthnicityChange={handleTsEthnicityChange}
             tsInput={tsInput}
             onTsInputChange={v => { setTsInput(v) }}
           />
@@ -231,8 +279,8 @@ export default function InteractiveTool() {
             ethnicity={cmpEthnicity}
             onAdd={handleAddCmp}
             onRemove={handleRemoveCmp}
-            onCampusChange={setCmpCampus}
-            onEthnicityChange={setCmpEthnicity}
+            onCampusChange={handleCmpCampusChange}
+            onEthnicityChange={handleCmpEthnicityChange}
           />
         </div>
 
@@ -272,6 +320,17 @@ export default function InteractiveTool() {
               <a
                 className="county-entry-link"
                 href={countyPageSlug ? `/county/${countyPageSlug}` : '#'}
+                onClick={() => {
+                  if (!countyPageSlug) return
+                  trackEvent('county_or_feeder_navigation', {
+                    destination_type: 'county',
+                    destination_slug: countyPageSlug,
+                  })
+                  trackEvent('lead_or_capture_click', {
+                    cta_type: 'view_county_page',
+                    destination_slug: countyPageSlug,
+                  })
+                }}
                 aria-disabled={!countyPageSlug}
                 style={!countyPageSlug ? { pointerEvents: 'none', opacity: 0.6 } : undefined}
               >
@@ -300,7 +359,20 @@ export default function InteractiveTool() {
                   ))}
                 </select>
               </div>
-              <a className="county-entry-link" href={`/feeder-schools/${feederPageSlug}`}>
+              <a
+                className="county-entry-link"
+                href={`/feeder-schools/${feederPageSlug}`}
+                onClick={() => {
+                  trackEvent('county_or_feeder_navigation', {
+                    destination_type: 'feeder',
+                    destination_slug: feederPageSlug,
+                  })
+                  trackEvent('lead_or_capture_click', {
+                    cta_type: 'view_feeder_page',
+                    destination_slug: feederPageSlug,
+                  })
+                }}
+              >
                 View feeder page →
               </a>
             </div>

@@ -3,8 +3,9 @@
 import { useEffect, useRef } from 'react'
 import { Chart, registerables } from 'chart.js'
 import SchoolAutocomplete from './SchoolAutocomplete'
+import { trackEvent } from '@/lib/analytics'
 import { ALL_YEARS, CAMPUSES, ETHNICITIES } from '@/lib/constants'
-import { getYearData, yieldRate, fmt, makeSlug } from '@/lib/utils'
+import { getYearData, yieldRate, makeSlug } from '@/lib/utils'
 import type { School } from '@/lib/types'
 
 Chart.register(...registerables)
@@ -147,6 +148,13 @@ export default function TimeSeriesPanel({
               {school && (
                 <a
                   href={`/school/${makeSlug(school.school_id, school.school_name)}`}
+                  onClick={() => {
+                    trackEvent('lead_or_capture_click', {
+                      cta_type: 'view_school_page',
+                      school_slug: makeSlug(school.school_id, school.school_name),
+                      school_name: school.school_name,
+                    })
+                  }}
                   style={{ marginLeft: '0.75rem', fontSize: '0.8rem', color: '#2563eb', textDecoration: 'none', whiteSpace: 'nowrap' }}
                 >
                   View school page →
