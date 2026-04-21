@@ -241,14 +241,14 @@ export default function InteractiveTool() {
 
       <header>
         <div className="header-inner">
-          <h1>UC Admissions by California High School</h1>
+          <h1>UC Admissions by High School</h1>
           <p className="subtitle">Fall 1994 – 2025 · Applicants, Admits &amp; Enrollees by school, campus, and ethnicity</p>
         </div>
       </header>
 
       <main>
         <section className="seo-intro" aria-label="About this tool">
-          <p>This tool lets you look up <strong>University of California admissions data</strong> for any California high school from <strong>Fall 1994 through Fall 2025</strong>. Browse applicant counts, admission rates, and enrollment numbers across all nine undergraduate UC campuses — Berkeley, Los Angeles, San Diego, Davis, Santa Barbara, Irvine, Santa Cruz, Riverside, and Merced — broken down by ethnicity. Data is sourced from the <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" rel="noopener">UC Information Center</a>.</p>
+          <p>This tool lets you look up <strong>University of California admissions data</strong> for high schools from <strong>Fall 1994 through Fall 2025</strong>. Browse applicant counts, admission rates, and enrollment numbers across all nine undergraduate UC campuses — Berkeley, Los Angeles, San Diego, Davis, Santa Barbara, Irvine, Santa Cruz, Riverside, and Merced — broken down by ethnicity. Data is sourced from the <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" rel="noopener">UC Information Center</a>.</p>
         </section>
 
         <div className="notes-bar">
