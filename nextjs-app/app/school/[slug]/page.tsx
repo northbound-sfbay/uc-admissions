@@ -35,10 +35,10 @@ export async function generateMetadata({
     ? ` ${pct(d.admit_rate, 0)} UC admit rate in ${yr}.`
     : ''
 
-  const title = `${name} | UC Admissions Data | collegeacceptance.info`
+  const title = `${name} UC Admissions Trends | Admit Rates & History`
   const description =
-    `UC admissions data for ${name} in ${loc}.${rateStr} ` +
-    `View applicants, admits, and enrollment trends from 1994–2025 across all UC campuses.`
+    `Explore UC admissions trends, admit rates, and history for ${name} in ${loc}.${rateStr} ` +
+    `View applicants, admits, and enrollment data from 1994–2025 across all UC campuses.`
 
   return {
     title,

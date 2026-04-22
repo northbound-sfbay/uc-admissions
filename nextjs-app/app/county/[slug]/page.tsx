@@ -48,8 +48,8 @@ export async function generateMetadata({
   const countyData = getCountyData(slug)
   if (!countyData) return {}
 
-  const title = `${countyData.county} County High Schools for UC Admissions | collegeacceptance.info`
-  const description = `See applicants, admits, feeder-school patterns, and top UC-admissions high schools in ${countyData.county} County for Fall ${countyData.displayYear}.`
+  const title = `${countyData.county} County UC Admissions | Top Schools & Admit Rates`
+  const description = `Explore top schools, admit rates, and UC admissions trends in ${countyData.county} County for Fall ${countyData.displayYear}.`
 
   return {
     title,

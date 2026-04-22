@@ -48,8 +48,8 @@ export async function generateMetadata({
   const feederData = getFeederData(slug)
   if (!feederData) return {}
 
-  const title = `Top feeder schools to ${feederData.campusLabel} | collegeacceptance.info`
-  const description = `See which California high schools sent the most applicants, admits, and enrollees to ${feederData.campusLabel} in Fall ${feederData.displayYear}.`
+  const title = `Top Feeder Schools to ${feederData.campusLabel} | Highest-Volume Trends`
+  const description = `Explore the highest-volume feeder schools to ${feederData.campusLabel}, with applicants, admits, enrollees, and admit-rate trends for Fall ${feederData.displayYear}.`
 
   return {
     title,
