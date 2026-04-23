@@ -415,13 +415,13 @@ export default async function SchoolPage({
             <p style={{ color: 'var(--text)', marginBottom: '12px' }}>
               View charts, compare schools, and explore the map in the full interactive tool.
             </p>
-            <Link
+            <a
               href={`/?school=${school.school_id}`}
               className="county-entry-link"
               style={{ background: 'var(--uc-blue)', color: '#fff', borderColor: 'var(--uc-blue)' }}
             >
               Open in Interactive Tool →
-            </Link>
+            </a>
           </section>
 
           {/* Data source */}

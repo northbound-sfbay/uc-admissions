@@ -113,7 +113,7 @@ export default function InteractiveTool() {
       const id = new URLSearchParams(window.location.search).get('school')
       if (id) {
         const found = all.find(s => s.school_id === id)
-        if (found) selectTsSchool(found)
+        if (found) selectTsSchool(found, { updateUrl: false })
       }
 
       // Background-load Foreign
