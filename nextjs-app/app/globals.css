@@ -232,6 +232,32 @@ main {
 /* ══════════ ROW 2: Full-width map ══════════ */
 .map-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
 .map-controls { padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; position: relative; z-index: 2; }
+.related-links-body { padding: 14px 16px 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.related-links-group { display: flex; flex-direction: column; gap: 10px; }
+.related-links-group-title { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); }
+.related-links-list { display: flex; flex-direction: column; gap: 8px; }
+.related-links-item {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fff;
+  color: var(--uc-blue);
+  text-decoration: none;
+  font-size: .86rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.related-links-item:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+.related-links-item-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: .74rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
 .map-school-picker { flex: 1 1 180px; display: flex; flex-direction: column; gap: 3px; }
 .map-legend-inline { display: flex; flex-direction: column; gap: 4px; }
 .map-legend { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .78rem; color: var(--text-muted); }
@@ -274,6 +300,7 @@ footer a:hover { text-decoration: underline; }
   .county-entry-panel { flex-direction: column; align-items: stretch; width: 100%; }
   .county-entry-actions { margin-left: 0; }
   .county-entry-select { min-width: 0; }
+  .related-links-body { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   header { padding: 10px 16px; }

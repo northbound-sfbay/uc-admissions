@@ -211,3 +211,7 @@ export function getCountyData(slug: string): CountyPageData | null {
 export function countySchoolHref(schoolId: string, schoolName: string): string {
   return `/school/${makeSlug(schoolId, schoolName)}`
 }
+
+export function countyPageHref(county: string): string {
+  return `/county/${countySlug(county)}`
+}

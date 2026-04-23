@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { feederSchoolHref, getFeederData, getFeederSlugs } from '@/lib/feeder'
+import { countyPageHref } from '@/lib/county'
 
 export const revalidate = 86400
 
@@ -98,6 +99,19 @@ export default async function FeederPage({
       },
     ],
   }
+
+  const topCountyLinks = Array.from(
+    feederData.rankedSchools.reduce((acc, school) => {
+      const current = acc.get(school.county) ?? { county: school.county, adm: 0, app: 0 }
+      current.adm += school.adm
+      current.app += school.app
+      acc.set(school.county, current)
+      return acc
+    }, new Map<string, { county: string; adm: number; app: number }>())
+      .values()
+  )
+    .sort((a, b) => b.adm - a.adm || b.app - a.app)
+    .slice(0, 4)
 
   return (
     <>
@@ -341,6 +355,54 @@ export default async function FeederPage({
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        <section className="map-card">
+          <div className="map-controls" style={{ alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+              <div className="ctrl-label">Explore Next</div>
+              <div style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1.2 }}>
+                Related county and school pages
+              </div>
+            </div>
+          </div>
+          <div className="related-links-body">
+            <div className="related-links-group">
+              <div className="related-links-group-title">Top Counties for {feederData.campusLabel}</div>
+              <div className="related-links-list">
+                {topCountyLinks.map(county => (
+                  <Link
+                    key={county.county}
+                    href={countyPageHref(county.county)}
+                    className="related-links-item"
+                  >
+                    {county.county} County UC admissions
+                    <span className="related-links-item-sub">
+                      {fmtNumber(county.adm)} admits and {fmtNumber(county.app)} applicants to {feederData.campusLabel}.
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="related-links-group">
+              <div className="related-links-group-title">Featured School Pages</div>
+              <div className="related-links-list">
+                {feederData.topSchools.slice(0, 4).map(school => (
+                  <Link
+                    key={school.school_id}
+                    href={feederSchoolHref(school.school_id, school.school_name)}
+                    className="related-links-item"
+                  >
+                    {school.school_name}
+                    <span className="related-links-item-sub">
+                      {school.city}, {school.county} · {fmtNumber(school.adm)} admits to {feederData.campusLabel}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
       </main>

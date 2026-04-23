@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { countySchoolHref, getCountyData, getCountySlugs } from '@/lib/county'
+import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
 
 export const revalidate = 86400
 
@@ -382,6 +383,54 @@ export default async function CountyPage({
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        <section className="map-card">
+          <div className="map-controls" style={{ alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+              <div className="ctrl-label">Explore Next</div>
+              <div style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1.2 }}>
+                Related feeder and school pages
+              </div>
+            </div>
+          </div>
+          <div className="related-links-body">
+            <div className="related-links-group">
+              <div className="related-links-group-title">Major UC Feeder Pages</div>
+              <div className="related-links-list">
+                {FEEDER_CAMPUSES.map(campus => (
+                  <Link
+                    key={campus.slug}
+                    href={`/feeder-schools/${campus.slug}`}
+                    className="related-links-item"
+                  >
+                    Top feeder schools to {campus.label}
+                    <span className="related-links-item-sub">
+                      Compare admits, applicants, and admit rates for {campus.label}.
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="related-links-group">
+              <div className="related-links-group-title">Featured School Pages</div>
+              <div className="related-links-list">
+                {countyData.topSchools.slice(0, 4).map(school => (
+                  <Link
+                    key={school.school_id}
+                    href={countySchoolHref(school.school_id, school.school_name)}
+                    className="related-links-item"
+                  >
+                    {school.school_name}
+                    <span className="related-links-item-sub">
+                      {school.city} · {fmtNumber(school.app)} applicants in Fall {countyData.displayYear}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
       </main>

@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import SchoolPageAnalytics from '@/components/SchoolPageAnalytics'
 import { readSchoolById, getTop300, idFromSlug, recentYear } from '@/lib/data'
+import { countyPageHref } from '@/lib/county'
+import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
 import { titleCase, fmt, pct, rateColor } from '@/lib/utils'
 import type { Metadata } from 'next'
 import type { School, YearData } from '@/lib/types'
@@ -279,6 +281,11 @@ export default async function SchoolPage({
   const d = yr ? school.years[yr] : null
   const name = titleCase(school.school_name)
   const loc = [school.city, school.county].filter(Boolean).join(', ')
+  const relatedFeederLinks = FEEDER_CAMPUSES.map(campus => ({
+    href: `/feeder-schools/${campus.slug}`,
+    label: `Top feeder schools to ${campus.label}`,
+    sublabel: `See highest-volume schools, admit rates, and trends for ${campus.label}.`,
+  }))
 
   // JSON-LD structured data
   const jsonLd = {
@@ -422,6 +429,42 @@ export default async function SchoolPage({
             >
               Open in Interactive Tool →
             </a>
+          </section>
+
+          <section className="map-card">
+            <div className="map-controls" style={{ alignItems: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                <div className="ctrl-label">Explore Next</div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1.2 }}>
+                  Related county and feeder pages
+                </div>
+              </div>
+            </div>
+            <div className="related-links-body">
+              <div className="related-links-group">
+                <div className="related-links-group-title">County Page</div>
+                <div className="related-links-list">
+                  <Link href={countyPageHref(school.county)} className="related-links-item">
+                    {school.county} County UC admissions
+                    <span className="related-links-item-sub">
+                      See top schools, admit rates, and countywide trends.
+                    </span>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="related-links-group">
+                <div className="related-links-group-title">Major UC Feeder Pages</div>
+                <div className="related-links-list">
+                  {relatedFeederLinks.map(link => (
+                    <Link key={link.href} href={link.href} className="related-links-item">
+                      {link.label}
+                      <span className="related-links-item-sub">{link.sublabel}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </section>
 
           {/* Data source */}
