@@ -352,8 +352,8 @@ export default async function CountyPage({
             <div className="map-school-count">{countyData.rankedSchools.length} schools with Fall {countyData.displayYear} records</div>
           </div>
 
-          <div style={{ overflowX: 'auto', padding: '8px 16px 16px' }}>
-            <table className="w-full text-sm">
+          <div className="rankings-table-wrap">
+            <table className="w-full text-sm rankings-table">
               <thead>
                 <tr className="border-b border-gray-100 text-left text-gray-500">
                   <th className="pb-3 pt-2 font-medium">School</th>

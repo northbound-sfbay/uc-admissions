@@ -258,6 +258,17 @@ main {
   font-weight: 500;
   color: var(--text-muted);
 }
+.rankings-table-wrap {
+  max-height: 720px;
+  overflow: auto;
+  padding: 8px 16px 16px;
+}
+.rankings-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+}
 .map-school-picker { flex: 1 1 180px; display: flex; flex-direction: column; gap: 3px; }
 .map-legend-inline { display: flex; flex-direction: column; gap: 4px; }
 .map-legend { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .78rem; color: var(--text-muted); }
@@ -301,6 +312,7 @@ footer a:hover { text-decoration: underline; }
   .county-entry-actions { margin-left: 0; }
   .county-entry-select { min-width: 0; }
   .related-links-body { grid-template-columns: 1fr; }
+  .rankings-table-wrap { max-height: 560px; }
 }
 @media (max-width: 600px) {
   header { padding: 10px 16px; }
@@ -315,5 +327,6 @@ footer a:hover { text-decoration: underline; }
   .map-school-picker { flex-basis: 100%; }
   .county-entry-actions { flex-direction: column; align-items: stretch; }
   .county-entry-link { width: 100%; }
+  .rankings-table-wrap { max-height: 420px; padding: 8px 12px 12px; }
   footer { padding: 8px 12px 16px; }
 }
