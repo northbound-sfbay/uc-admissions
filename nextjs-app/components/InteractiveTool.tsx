@@ -17,6 +17,16 @@ function countySlug(county: string): string {
   return county.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
 
+function comparisonReportUrl(schools: School[], campus: string, ethnicity: string) {
+  if (!schools.length) return ''
+  const params = new URLSearchParams({
+    schools: schools.map(school => school.school_id).join(','),
+    campus,
+    ethnicity,
+  })
+  return `/report/compare?${params.toString()}`
+}
+
 export default function InteractiveTool() {
   const [allSchools,    setAllSchools]    = useState<School[]>([])
   const [schoolsByType, setSchoolsByType] = useState<Record<string, School[]>>({})
@@ -200,9 +210,7 @@ export default function InteractiveTool() {
     ? `/report/school/${makeSlug(tsSelectedSchool.school_id, tsSelectedSchool.school_name)}`
     : ''
   const comparisonSchools = cmpSelected.slice(0, 3).map(entry => entry.school)
-  const comparisonReportHref = comparisonSchools.length
-    ? `/report/compare?schools=${comparisonSchools.map(school => school.school_id).join(',')}&campus=${encodeURIComponent(cmpCampus)}&ethnicity=${encodeURIComponent(cmpEthnicity)}`
-    : ''
+  const comparisonReportHref = comparisonReportUrl(comparisonSchools, cmpCampus, cmpEthnicity)
 
   function handleTsCampusChange(value: string) {
     trackEvent('comparison_intent', {
@@ -321,6 +329,11 @@ export default function InteractiveTool() {
               <ReportIntentLink
                 href={comparisonReportHref}
                 className="report-entry-link primary"
+                onClick={event => {
+                  if (!comparisonReportHref) return
+                  event.preventDefault()
+                  window.location.assign(comparisonReportHref)
+                }}
                 eventParams={{
                   report_type: 'comparison',
                   price: 39,
