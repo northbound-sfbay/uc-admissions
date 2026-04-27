@@ -32,6 +32,32 @@ const TABLEAU_URL = 'https://visualizedata.ucop.edu/t/Public/views/AdmissionsDat
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+function parseCsvList(value) {
+  return value ? value.split(',').map(v => v.trim()).filter(Boolean) : null;
+}
+
+function parseYears(value) {
+  if (!value) return null;
+  return new Set(
+    value
+      .split(',')
+      .map(v => v.trim())
+      .filter(Boolean)
+      .map(v => Number(v))
+      .filter(v => Number.isInteger(v))
+  );
+}
+
+function parseArgs(argv) {
+  const args = { types: null, years: null };
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i];
+    if (arg === '--types') args.types = parseCsvList(argv[++i]);
+    else if (arg === '--years') args.years = parseYears(argv[++i]);
+  }
+  return args;
+}
+
 async function waitForQuiet(page, quietMs = 2000, maxMs = 15000) {
   const t0 = Date.now(); let last = Date.now();
   const fn = () => { last = Date.now(); };
@@ -127,12 +153,22 @@ async function recover(page) {
 }
 
 async function main() {
+  const { types: typeFilter, years: yearFilter } = parseArgs(process.argv.slice(2));
+  const selectedTypes = SCHOOL_TYPES.filter(st => !typeFilter || typeFilter.includes(st.slug));
+  const selectedYears = yearFilter ?? new Set(YEARS);
+
+  if (selectedTypes.length === 0) {
+    console.log('No matching school types selected.');
+    return;
+  }
+
   fs.mkdirSync(DATA_DIR, { recursive: true });
 
   // Build work list — skip already-downloaded files
   const work = [];
-  for (const stype of SCHOOL_TYPES) {
+  for (const stype of selectedTypes) {
     for (const year of YEARS) {
+      if (!selectedYears.has(year)) continue;
       const fname = `type_${stype.slug}_year_${year}.csv`;
       const fpath = path.join(DATA_DIR, fname);
       if (!fs.existsSync(fpath)) {
@@ -146,7 +182,7 @@ async function main() {
     return;
   }
 
-  const total = SCHOOL_TYPES.length * YEARS.length;
+  const total = selectedTypes.length * selectedYears.size;
   console.log(`Work items: ${work.length} of ${total} remaining\n`);
 
   const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });

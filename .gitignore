@@ -11,6 +11,10 @@ data/admissions.json
 *.py
 *.js
 !app.js
+!campus_scraper.js
+!type_scraper.js
+!type_campus_scraper.js
+!process_data.py
 
 # Node / scraper tooling
 node_modules/
@@ -30,5 +34,6 @@ playwright-report/
 .DS_Store
 
 # Local dev artifacts
+.pycache/
 *.log
 nohup.out
