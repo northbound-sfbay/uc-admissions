@@ -134,10 +134,17 @@ def school_id_for(row, school_name, city, county, school_type):
     calc = value_for(row, 'Calculation1', 'School Code', 'School ID', 'CDS Code')
     match = re.search(r'(\d+)\s*$', calc or '')
     if match:
-        return match.group(1)
+        return normalize_school_id(match.group(1))
     if calc:
         return calc.strip()
     return f'generated:{slugify(school_type)}:{slugify(school_name)}:{slugify(city)}:{slugify(county)}'
+
+
+def normalize_school_id(value):
+    text = (value or '').strip()
+    if text.isdigit():
+        return str(int(text))
+    return text
 
 
 def parse_csv(path):

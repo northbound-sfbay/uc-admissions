@@ -174,33 +174,6 @@ export default async function SchoolReportPreviewPage({
           </div>
         </section>
 
-        <section className="report-panel">
-          <div className="ctrl-label">Campus Preview</div>
-          <h2>Major UC campus breakdown</h2>
-          <div className="report-table-wrap">
-            <table className="report-table">
-              <thead>
-                <tr>
-                  <th>Campus</th>
-                  <th>Applicants</th>
-                  <th>Admits</th>
-                  <th>Admit Rate</th>
-                </tr>
-              </thead>
-              <tbody>
-                {campusRows(data).map(row => (
-                  <tr key={row.campus}>
-                    <td>{row.campus}</td>
-                    <td>{fmt(row.app)}</td>
-                    <td>{fmt(row.adm)}</td>
-                    <td>{pct(row.admitRate)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
         <section className="report-panel report-gpa-panel">
           <div className="ctrl-label">Free GPA Sneak Peek</div>
           <h2>{gpaData ? `Fall ${gpaYear} GPA snapshot` : 'GPA profile included in the paid report'}</h2>
@@ -275,6 +248,33 @@ export default async function SchoolReportPreviewPage({
             GPA values are shown only where UC publishes them for groups meeting its reporting
             threshold; blanks mean the source data was redacted or unavailable.
           </p>
+        </section>
+
+        <section className="report-panel">
+          <div className="ctrl-label">Campus Preview</div>
+          <h2>Major UC campus breakdown</h2>
+          <div className="report-table-wrap">
+            <table className="report-table">
+              <thead>
+                <tr>
+                  <th>Campus</th>
+                  <th>Applicants</th>
+                  <th>Admits</th>
+                  <th>Admit Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {campusRows(data).map(row => (
+                  <tr key={row.campus}>
+                    <td>{row.campus}</td>
+                    <td>{fmt(row.app)}</td>
+                    <td>{fmt(row.adm)}</td>
+                    <td>{pct(row.admitRate)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <section className="report-panel report-lock-panel">
