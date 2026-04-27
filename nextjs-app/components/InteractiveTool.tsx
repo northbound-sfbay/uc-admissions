@@ -297,8 +297,8 @@ export default function InteractiveTool() {
             <div className="ctrl-label">Paid Reports</div>
             <h2>Turn this lookup into a PDF-ready report</h2>
             <p>
-              Preview a single-school trend report or a side-by-side comparison report using the
-              schools and filters currently selected above.
+              Preview a single-school trend report or a side-by-side comparison report with
+              admit-rate, campus, and GPA context.
             </p>
           </div>
           <div className="report-entry-actions">

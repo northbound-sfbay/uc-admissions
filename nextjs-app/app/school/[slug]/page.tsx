@@ -407,8 +407,8 @@ export default async function SchoolPage({
               <div className="ctrl-label">Paid Reports</div>
               <h2>{name} UC admissions report</h2>
               <p>
-                Preview a paid PDF-ready report with trend interpretation, campus context,
-                and comparable-school benchmarks.
+                Preview a paid PDF-ready report with trend interpretation, GPA context,
+                campus context, and comparable-school benchmarks.
               </p>
             </div>
             <div className="report-entry-actions">

@@ -65,7 +65,8 @@ export default async function ComparisonReportPreviewPage({
             <h1>{reportTitle}</h1>
             <p>
               A paid comparison report for families weighing UC admissions patterns across up to
-              three high schools. Current focus: {campus} · {ethnicity}.
+              three high schools, including admit-rate, campus, and GPA context. Current focus:
+              {campus} · {ethnicity}.
             </p>
           </div>
           <div className="report-price-card">
@@ -152,6 +153,25 @@ export default async function ComparisonReportPreviewPage({
           </>
         )}
 
+        <section className="report-panel report-gpa-panel">
+          <div className="ctrl-label">GPA Insights</div>
+          <h2>Compare applicant, admit, and enrolled GPA</h2>
+          <div className="report-insight-list">
+            <p>
+              The paid comparison report will include UC&apos;s average GPA fields for applicants,
+              admits, and enrollees so the comparison is not limited to counts and admit rates.
+            </p>
+            <p>
+              This makes the report more useful for judging whether one school&apos;s UC outcomes are
+              driven by applicant volume, admit selectivity, or the academic profile of students
+              applying and enrolling.
+            </p>
+            <p>
+              GPA context will be shown by year and, where available, by UC campus.
+            </p>
+          </div>
+        </section>
+
         <section className="report-panel report-lock-panel">
           <div>
             <div className="ctrl-label">Full Report</div>
@@ -160,9 +180,9 @@ export default async function ComparisonReportPreviewPage({
           <div className="report-lock-grid">
             <span>Side-by-side 10-year trend tables</span>
             <span>Campus-by-campus comparison</span>
+            <span>Applicant, admit, and enrolled GPA comparison</span>
             <span>Applicant, admit, and enrollment momentum</span>
             <span>Strongest UC campus fit by school</span>
-            <span>PDF-ready summary for family discussion</span>
             <span>Interpretation notes and data caveats</span>
           </div>
         </section>

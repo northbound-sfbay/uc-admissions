@@ -348,6 +348,11 @@ main {
   color: var(--text);
 }
 
+.report-gpa-panel {
+  border-color: #f3d27c;
+  background: #fffaf0;
+}
+
 .report-table-wrap {
   overflow-x: auto;
 }

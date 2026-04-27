@@ -88,7 +88,7 @@ export default async function SchoolReportPreviewPage({
             <h1>{name} UC Admissions Trend Report</h1>
             <p>
               A paid high school report for families comparing UC admissions trends, campus mix,
-              and recent momentum for {name}.
+              GPA profile, and recent momentum for {name}.
             </p>
           </div>
           <div className="report-price-card">
@@ -171,6 +171,26 @@ export default async function SchoolReportPreviewPage({
           </div>
         </section>
 
+        <section className="report-panel report-gpa-panel">
+          <div className="ctrl-label">GPA Insights</div>
+          <h2>GPA profile included in the paid report</h2>
+          <div className="report-insight-list">
+            <p>
+              The UC source also publishes average GPA for freshman applicants, admits, and enrollees
+              by source school, year, and campus.
+            </p>
+            <p>
+              The full report will add GPA context alongside admit rates so families can see whether
+              admitted and enrolled students from this high school have become more academically
+              competitive over time.
+            </p>
+            <p>
+              GPA values use UC&apos;s weighted, capped high school GPA definition for 10th and 11th
+              grade college preparatory courses, subject to UC&apos;s reporting thresholds.
+            </p>
+          </div>
+        </section>
+
         <section className="report-panel report-lock-panel">
           <div>
             <div className="ctrl-label">Full Report</div>
@@ -179,9 +199,9 @@ export default async function SchoolReportPreviewPage({
           <div className="report-lock-grid">
             <span>10-year trend interpretation</span>
             <span>County ranking and peer context</span>
+            <span>Applicant, admit, and enrolled GPA trends</span>
             <span>UCLA, Berkeley, UCSD, Davis focus notes</span>
             <span>Comparable high school benchmarks</span>
-            <span>PDF-ready summary for family discussion</span>
             <span>Data caveats and interpretation guidance</span>
           </div>
         </section>
