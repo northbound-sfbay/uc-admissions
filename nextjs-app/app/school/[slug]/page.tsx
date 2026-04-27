@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import SchoolPageAnalytics from '@/components/SchoolPageAnalytics'
+import ReportIntentLink from '@/components/ReportIntentLink'
 import { readSchoolById, getTop300, idFromSlug, recentYear } from '@/lib/data'
 import { countyPageHref } from '@/lib/county'
 import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
@@ -400,6 +401,45 @@ export default async function SchoolPage({
 
           {/* Most recent year summary */}
           {yr && d && <YearSummary yr={yr} d={d} />}
+
+          <section className="report-entry-panel">
+            <div className="report-entry-copy">
+              <div className="ctrl-label">Paid Reports</div>
+              <h2>{name} UC admissions report</h2>
+              <p>
+                Preview a paid PDF-ready report with trend interpretation, campus context,
+                and comparable-school benchmarks.
+              </p>
+            </div>
+            <div className="report-entry-actions">
+              <ReportIntentLink
+                href={`/report/school/${slug}`}
+                className="report-entry-link primary"
+                eventParams={{
+                  report_type: 'single_school',
+                  price: 19,
+                  source: 'school_page',
+                  school_slug: slug,
+                  school_name: name,
+                }}
+              >
+                Preview $19 report →
+              </ReportIntentLink>
+              <ReportIntentLink
+                href={`/?school=${school.school_id}#cmp-panel`}
+                className="report-entry-link"
+                eventParams={{
+                  report_type: 'comparison',
+                  price: 39,
+                  source: 'school_page',
+                  school_slug: slug,
+                  school_name: name,
+                }}
+              >
+                Build $39 comparison →
+              </ReportIntentLink>
+            </div>
+          </section>
 
           {/* Manual ad placement for Journey/Mediavine */}
           <div className="content_hint" aria-hidden="true" />

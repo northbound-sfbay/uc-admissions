@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import TimeSeriesPanel from './TimeSeriesPanel'
 import ComparePanel, { type CmpEntry } from './ComparePanel'
+import ReportIntentLink from './ReportIntentLink'
 import { trackEvent } from '@/lib/analytics'
 import { TYPE_DATA_URLS, COORDS_URL, NONPUBLIC_COORDS_URL, MAX_CMP } from '@/lib/constants'
 import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
@@ -195,6 +196,13 @@ export default function InteractiveTool() {
     label: county,
     slug: countySlug(county),
   }))
+  const singleReportHref = tsSelectedSchool
+    ? `/report/school/${makeSlug(tsSelectedSchool.school_id, tsSelectedSchool.school_name)}`
+    : ''
+  const comparisonSchools = cmpSelected.slice(0, 3).map(entry => entry.school)
+  const comparisonReportHref = comparisonSchools.length
+    ? `/report/compare?schools=${comparisonSchools.map(school => school.school_id).join(',')}&campus=${encodeURIComponent(cmpCampus)}&ethnicity=${encodeURIComponent(cmpEthnicity)}`
+    : ''
 
   function handleTsCampusChange(value: string) {
     trackEvent('comparison_intent', {
@@ -283,6 +291,50 @@ export default function InteractiveTool() {
             onEthnicityChange={handleCmpEthnicityChange}
           />
         </div>
+
+        <section className="report-entry-panel" aria-label="Paid report previews">
+          <div className="report-entry-copy">
+            <div className="ctrl-label">Paid Reports</div>
+            <h2>Turn this lookup into a PDF-ready report</h2>
+            <p>
+              Preview a single-school trend report or a side-by-side comparison report using the
+              schools and filters currently selected above.
+            </p>
+          </div>
+          <div className="report-entry-actions">
+            {tsSelectedSchool && (
+              <ReportIntentLink
+                href={singleReportHref}
+                className="report-entry-link"
+                eventParams={{
+                  report_type: 'single_school',
+                  price: 19,
+                  source: 'interactive_tool',
+                  school_slug: makeSlug(tsSelectedSchool.school_id, tsSelectedSchool.school_name),
+                  school_name: tsSelectedSchool.school_name,
+                }}
+              >
+                Preview $19 school report →
+              </ReportIntentLink>
+            )}
+            {!!comparisonSchools.length && (
+              <ReportIntentLink
+                href={comparisonReportHref}
+                className="report-entry-link primary"
+                eventParams={{
+                  report_type: 'comparison',
+                  price: 39,
+                  source: 'interactive_tool',
+                  school_count: comparisonSchools.length,
+                  campus: cmpCampus,
+                  ethnicity: cmpEthnicity,
+                }}
+              >
+                Preview $39 comparison →
+              </ReportIntentLink>
+            )}
+          </div>
+        </section>
 
         {!loading && (
           <LeafletMap
