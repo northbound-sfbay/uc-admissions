@@ -5,6 +5,8 @@ Pre-build script: split per-type admissions JSON into per-school files.
 Output:
   school-data/ca_public/{id}.json
   school-data/ca_private/{id}.json
+  school-gpa-data/ca_public/{id}.json
+  school-gpa-data/ca_private/{id}.json
   public/top300.json   ← top 300 CA schools by total applicants, with slugs
 
 Run from nextjs-app/: python3 scripts/split-school-data.py
@@ -18,6 +20,7 @@ from pathlib import Path
 # Paths relative to nextjs-app/
 DATA_DIR    = Path('../data')
 OUT_DIR     = Path('school-data')
+GPA_OUT_DIR = Path('school-gpa-data')
 PUBLIC_DIR  = Path('public')
 TOP_N       = 300
 
@@ -25,6 +28,11 @@ TOP_N       = 300
 TYPE_FILES = {
     'ca_public':  DATA_DIR / 'admissions_ca_public.json',
     'ca_private': DATA_DIR / 'admissions_ca_private.json',
+}
+
+GPA_TYPE_FILES = {
+    'ca_public':  DATA_DIR / 'gpa_ca_public.json',
+    'ca_private': DATA_DIR / 'gpa_ca_private.json',
 }
 
 
@@ -65,6 +73,26 @@ def main():
 
         all_ca_schools.extend(schools)
         print(f'  Wrote {len(schools)} files to {out_type_dir}/')
+
+    for type_slug, json_path in GPA_TYPE_FILES.items():
+        if not json_path.exists():
+            print(f'  Skipping missing GPA data: {json_path}')
+            continue
+
+        print(f'Reading {json_path} ...')
+        with open(json_path) as f:
+            schools = json.load(f)
+
+        out_type_dir = GPA_OUT_DIR / type_slug
+        out_type_dir.mkdir(parents=True, exist_ok=True)
+
+        for school in schools:
+            sid = school['school_id']
+            out_path = out_type_dir / f'{sid}.json'
+            with open(out_path, 'w') as f:
+                json.dump(school, f, separators=(',', ':'))
+
+        print(f'  Wrote {len(schools)} GPA files to {out_type_dir}/')
 
     # Build top300.json — sorted by total applicants
     all_ca_schools.sort(key=total_apps, reverse=True)

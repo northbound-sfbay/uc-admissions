@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import ReportPreviewAnalytics from '@/components/ReportPreviewAnalytics'
-import { readSchoolById, recentYear } from '@/lib/data'
+import { readGpaSchoolById, readSchoolById, recentGpaYear, recentYear } from '@/lib/data'
 import { titleCase, fmt, pct, makeSlug } from '@/lib/utils'
 import type { School } from '@/lib/types'
 
@@ -22,7 +22,14 @@ function parseSchools(value: string | undefined): School[] {
 function latestRow(school: School) {
   const year = recentYear(school)
   const data = year ? school.years[year] : null
-  return { year, data }
+  const gpaSchool = readGpaSchoolById(school.school_id, school.school_type)
+  const gpaYear = recentGpaYear(gpaSchool)
+  const gpaData = gpaYear && gpaSchool ? gpaSchool.years[gpaYear] ?? null : null
+  return { year, data, gpaYear, gpaData }
+}
+
+function gpa(value: number | null | undefined) {
+  return value === null || value === undefined ? '—' : value.toFixed(2)
 }
 
 export default async function ComparisonReportPreviewPage({
@@ -101,6 +108,7 @@ export default async function ComparisonReportPreviewPage({
                       <th>Applicants</th>
                       <th>Admits</th>
                       <th>Admit Rate</th>
+                      <th>Admit GPA</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -117,6 +125,7 @@ export default async function ComparisonReportPreviewPage({
                           <td>{fmt(row.data?.app)}</td>
                           <td>{fmt(row.data?.adm)}</td>
                           <td>{pct(row.data?.admit_rate)}</td>
+                          <td>{gpa(row.gpaData?.adm_gpa)}</td>
                         </tr>
                       )
                     })}
@@ -142,6 +151,11 @@ export default async function ComparisonReportPreviewPage({
                         <strong>{fmt(row.data?.app)}</strong>
                       </p>
                       <p>
+                        Latest admit GPA:{' '}
+                        <strong>{gpa(row.gpaData?.adm_gpa)}</strong>
+                        {row.gpaYear && ` (${row.gpaYear})`}
+                      </p>
+                      <p>
                         Full report adds campus-specific comparisons, trend deltas, and peer
                         context across the selected schools.
                       </p>
@@ -154,12 +168,13 @@ export default async function ComparisonReportPreviewPage({
         )}
 
         <section className="report-panel report-gpa-panel">
-          <div className="ctrl-label">GPA Insights</div>
+          <div className="ctrl-label">Free GPA Sneak Peek</div>
           <h2>Compare applicant, admit, and enrolled GPA</h2>
           <div className="report-insight-list">
             <p>
-              The paid comparison report will include UC&apos;s average GPA fields for applicants,
-              admits, and enrollees so the comparison is not limited to counts and admit rates.
+              The preview now includes latest-year admit GPA when UC publishes it. The paid
+              comparison expands this into applicant, admit, and enrolled GPA trends by year and
+              by campus.
             </p>
             <p>
               This makes the report more useful for judging whether one school&apos;s UC outcomes are

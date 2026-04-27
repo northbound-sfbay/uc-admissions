@@ -353,6 +353,26 @@ main {
   background: #fffaf0;
 }
 
+.report-gpa-stat-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 14px;
+}
+
+.report-gpa-copy {
+  margin-bottom: 14px;
+}
+
+.report-gpa-campus-preview {
+  margin-top: 12px;
+}
+
+.report-gpa-note {
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: .78rem;
+  line-height: 1.5;
+}
+
 .report-table-wrap {
   overflow-x: auto;
 }

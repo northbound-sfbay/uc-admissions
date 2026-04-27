@@ -1,11 +1,13 @@
 # Raw source data (hundreds of MB of CSVs — kept locally only)
 data/raw/
+data/raw_gpa/
 
 # NCES geocode cache ZIPs
 data/nces_*.zip
 
 # Combined admissions file (per-type files are used instead)
 data/admissions.json
+data/gpa.json
 
 # Python processing scripts (not part of the website)
 *.py
@@ -14,7 +16,9 @@ data/admissions.json
 !campus_scraper.js
 !type_scraper.js
 !type_campus_scraper.js
+!gpa_scraper.js
 !process_data.py
+!process_gpa_data.py
 
 # Node / scraper tooling
 node_modules/

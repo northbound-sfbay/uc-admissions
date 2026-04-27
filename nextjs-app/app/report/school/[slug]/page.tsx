@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ReportPreviewAnalytics from '@/components/ReportPreviewAnalytics'
-import { readSchoolById, idFromSlug, recentYear } from '@/lib/data'
+import { readGpaSchoolById, readSchoolById, idFromSlug, recentGpaYear, recentYear } from '@/lib/data'
 import { titleCase, fmt, pct } from '@/lib/utils'
-import type { School, YearData } from '@/lib/types'
+import type { GpaData, GpaSchool, GpaYearData, School, YearData } from '@/lib/types'
 
 const FOCUS_CAMPUSES = ['Los Angeles', 'Berkeley', 'San Diego', 'Davis']
 
@@ -46,6 +46,32 @@ function campusRows(data: YearData | null) {
   })
 }
 
+function gpaYearData(school: GpaSchool | null, year: string | null): GpaYearData | null {
+  return year && school ? school.years[year] ?? null : null
+}
+
+function gpa(value: number | null | undefined) {
+  return value === null || value === undefined ? '—' : value.toFixed(2)
+}
+
+function gpaGap(data: GpaYearData | null) {
+  if (data?.app_gpa === null || data?.app_gpa === undefined) return null
+  if (data.adm_gpa === null || data.adm_gpa === undefined) return null
+  return data.adm_gpa - data.app_gpa
+}
+
+function campusGpaRows(data: GpaYearData | null) {
+  return FOCUS_CAMPUSES.map(campus => {
+    const row: GpaData | undefined = data?.by_campus?.[campus]
+    return {
+      campus: campus === 'Los Angeles' ? 'UCLA' : `UC ${campus}`,
+      appGpa: row?.app_gpa ?? null,
+      admGpa: row?.adm_gpa ?? null,
+      enrGpa: row?.enr_gpa ?? null,
+    }
+  })
+}
+
 export default async function SchoolReportPreviewPage({
   params,
 }: {
@@ -58,6 +84,10 @@ export default async function SchoolReportPreviewPage({
   const name = titleCase(school.school_name)
   const yr = recentYear(school)
   const data = yearData(school, yr)
+  const gpaSchool = readGpaSchoolById(school.school_id, school.school_type)
+  const gpaYear = recentGpaYear(gpaSchool)
+  const gpaData = gpaYearData(gpaSchool, gpaYear)
+  const latestGpaGap = gpaGap(gpaData)
   const applicantTrend = trendDelta(school, 'app')
   const admitTrend = trendDelta(school, 'adm')
 
@@ -172,23 +202,79 @@ export default async function SchoolReportPreviewPage({
         </section>
 
         <section className="report-panel report-gpa-panel">
-          <div className="ctrl-label">GPA Insights</div>
-          <h2>GPA profile included in the paid report</h2>
-          <div className="report-insight-list">
-            <p>
-              The UC source also publishes average GPA for freshman applicants, admits, and enrollees
-              by source school, year, and campus.
-            </p>
-            <p>
-              The full report will add GPA context alongside admit rates so families can see whether
-              admitted and enrolled students from this high school have become more academically
-              competitive over time.
-            </p>
-            <p>
-              GPA values use UC&apos;s weighted, capped high school GPA definition for 10th and 11th
-              grade college preparatory courses, subject to UC&apos;s reporting thresholds.
-            </p>
-          </div>
+          <div className="ctrl-label">Free GPA Sneak Peek</div>
+          <h2>{gpaData ? `Fall ${gpaYear} GPA snapshot` : 'GPA profile included in the paid report'}</h2>
+          {gpaData ? (
+            <>
+              <div className="report-stat-grid report-gpa-stat-grid">
+                <div>
+                  <span>Applicant GPA</span>
+                  <strong>{gpa(gpaData.app_gpa)}</strong>
+                </div>
+                <div>
+                  <span>Admit GPA</span>
+                  <strong>{gpa(gpaData.adm_gpa)}</strong>
+                </div>
+                <div>
+                  <span>Enrolled GPA</span>
+                  <strong>{gpa(gpaData.enr_gpa)}</strong>
+                </div>
+              </div>
+              <div className="report-insight-list report-gpa-copy">
+                <p>
+                  UC reports average GPA for applicants, admits, and enrollees by source school.
+                  For {name}, admitted students averaged{' '}
+                  <strong>{gpa(gpaData.adm_gpa)}</strong>
+                  {latestGpaGap !== null && (
+                    <> GPA, {latestGpaGap >= 0 ? '+' : ''}{latestGpaGap.toFixed(2)} versus applicants</>
+                  )}
+                  .
+                </p>
+                <p>
+                  Full report unlocks the multi-year GPA trend, campus-by-campus GPA movement, and
+                  how GPA profile lines up with admit-rate changes.
+                </p>
+              </div>
+              <div className="report-table-wrap report-gpa-campus-preview">
+                <table className="report-table">
+                  <thead>
+                    <tr>
+                      <th>Campus</th>
+                      <th>Applicant GPA</th>
+                      <th>Admit GPA</th>
+                      <th>Enrolled GPA</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {campusGpaRows(gpaData).map(row => (
+                      <tr key={row.campus}>
+                        <td>{row.campus}</td>
+                        <td>{gpa(row.appGpa)}</td>
+                        <td>{gpa(row.admGpa)}</td>
+                        <td>{gpa(row.enrGpa)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          ) : (
+            <div className="report-insight-list">
+              <p>
+                The UC source also publishes average GPA for freshman applicants, admits, and
+                enrollees by source school, year, and campus when reporting thresholds are met.
+              </p>
+              <p>
+                The full report will add GPA context alongside admit rates so families can see
+                whether admitted and enrolled students from this high school have become more
+                academically competitive over time.
+              </p>
+            </div>
+          )}
+          <p className="report-gpa-note">
+            GPA values are shown only where UC publishes them for groups meeting its reporting
+            threshold; blanks mean the source data was redacted or unavailable.
+          </p>
         </section>
 
         <section className="report-panel report-lock-panel">
