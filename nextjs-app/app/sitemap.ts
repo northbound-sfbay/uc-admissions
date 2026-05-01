@@ -49,6 +49,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
+      url: `${BASE_URL}/insights`,
+      lastModified: generatedAt,
+      changeFrequency: 'weekly',
+      priority: 0.75,
+    },
+    {
+      url: `${BASE_URL}/insights/uc-admission-rates-by-high-school`,
+      lastModified: generatedAt,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
       url: `${BASE_URL}/about`,
       lastModified: generatedAt,
       changeFrequency: 'yearly',
