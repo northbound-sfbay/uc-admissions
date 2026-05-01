@@ -430,6 +430,63 @@ main {
   line-height: 1.45;
 }
 
+.uc-rate-benchmark {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 13px 16px;
+  display: grid;
+  grid-template-columns: minmax(240px, .75fr) minmax(0, 1.25fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.uc-rate-benchmark-copy p {
+  color: var(--text-muted);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+
+.uc-rate-benchmark-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.uc-rate-benchmark-chip {
+  border: 1px solid #dbe3ec;
+  border-radius: 9px;
+  background: #f8fafc;
+  padding: 9px 10px;
+}
+
+.uc-rate-benchmark-chip span {
+  display: block;
+  color: var(--uc-blue);
+  font-size: .76rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.uc-rate-benchmark-chip strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.uc-rate-benchmark-chip em {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: .68rem;
+  font-style: normal;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
 /* ══════════ ROW 1: Two chart panels ══════════ */
 .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: stretch; }
 
@@ -593,6 +650,7 @@ footer a:hover { text-decoration: underline; }
   .report-entry-actions { min-width: 0; justify-content: flex-start; }
   .report-hero { grid-template-columns: 1fr; }
   .report-grid { grid-template-columns: 1fr; }
+  .uc-rate-benchmark { grid-template-columns: 1fr; }
   .report-lock-grid { grid-template-columns: 1fr 1fr; }
   .related-links-body { grid-template-columns: 1fr; }
   .rankings-table-wrap { max-height: 560px; }
@@ -614,6 +672,7 @@ footer a:hover { text-decoration: underline; }
   .report-entry-link { width: 100%; }
   .report-hero h1 { font-size: 1.5rem; }
   .report-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .uc-rate-benchmark-list { grid-template-columns: 1fr; }
   .report-lock-grid { grid-template-columns: 1fr; }
   .rankings-table-wrap { max-height: 420px; padding: 8px 12px 12px; }
   footer { padding: 8px 12px 16px; }

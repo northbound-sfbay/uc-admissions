@@ -11,7 +11,21 @@ import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
 import { schoolKey, makeSlug } from '@/lib/utils'
 import type { School } from '@/lib/types'
 
+export type InteractiveToolVariant = 'home' | 'uc-rates'
+
 const LeafletMap = dynamic(() => import('./LeafletMap'), { ssr: false, loading: () => <div className="map-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>Loading map…</div> })
+
+const CAMPUS_RATE_BENCHMARKS = [
+  { campus: 'UCLA', applicants: 88267, admits: 7863, rate: 0.089 },
+  { campus: 'UC Berkeley', applicants: 71750, admits: 9102, rate: 0.127 },
+  { campus: 'UC San Diego', applicants: 86639, admits: 21332, rate: 0.246 },
+  { campus: 'UC Irvine', applicants: 85584, admits: 18680, rate: 0.218 },
+  { campus: 'UC Santa Barbara', applicants: 73885, admits: 23786, rate: 0.322 },
+  { campus: 'UC Davis', applicants: 68388, admits: 25225, rate: 0.369 },
+  { campus: 'UC Santa Cruz', applicants: 51879, admits: 37004, rate: 0.713 },
+  { campus: 'UC Riverside', applicants: 60765, admits: 52907, rate: 0.871 },
+  { campus: 'UC Merced', applicants: 42412, admits: 40854, rate: 0.963 },
+]
 
 function countySlug(county: string): string {
   return county.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
@@ -27,7 +41,40 @@ function comparisonReportUrl(schools: School[], campus: string, ethnicity: strin
   return `/report/compare?${params.toString()}`
 }
 
-export default function InteractiveTool() {
+function formatCount(value: number) {
+  return value.toLocaleString()
+}
+
+function formatRate(value: number) {
+  return `${(value * 100).toFixed(1)}%`
+}
+
+function CampusRateBenchmark() {
+  return (
+    <section className="uc-rate-benchmark" aria-label="Fall 2025 UC campus admission-rate benchmarks">
+      <div className="uc-rate-benchmark-copy">
+        <div className="ctrl-label">Fall 2025 campus benchmark</div>
+        <p>
+          Approximate admit rates from California public and private high-school source-school
+          records. Use these as a campus baseline, then search a high school below for the
+          school-specific trend.
+        </p>
+      </div>
+      <div className="uc-rate-benchmark-list">
+        {CAMPUS_RATE_BENCHMARKS.map(row => (
+          <div className="uc-rate-benchmark-chip" key={row.campus}>
+            <span>{row.campus}</span>
+            <strong>{formatRate(row.rate)}</strong>
+            <em>{formatCount(row.admits)} / {formatCount(row.applicants)}</em>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export default function InteractiveTool({ variant = 'home' }: { variant?: InteractiveToolVariant }) {
+  const isRatesPage = variant === 'uc-rates'
   const [allSchools,    setAllSchools]    = useState<School[]>([])
   const [schoolsByType, setSchoolsByType] = useState<Record<string, School[]>>({})
   const [loadedTypes,   setLoadedTypes]   = useState<Set<string>>(new Set())
@@ -257,24 +304,37 @@ export default function InteractiveTool() {
 
       <header>
         <div className="header-inner">
-          <h1>UC Admissions by High School</h1>
-          <p className="subtitle">Fall 1994 – 2025 · Applicants, Admits &amp; Enrollees by school, campus, and ethnicity</p>
+          <h1>{isRatesPage ? 'UC Admission Rates by High School' : 'UC Admissions by High School'}</h1>
+          <p className="subtitle">
+            {isRatesPage
+              ? 'Fall 1994 – 2025 · UC admit rates, applicants, admits & enrollees by school, campus, and ethnicity'
+              : 'Fall 1994 – 2025 · Applicants, Admits & Enrollees by school, campus, and ethnicity'}
+          </p>
         </div>
       </header>
 
       <main>
         <section className="seo-intro" aria-label="About this tool">
-          <p>This tool lets you look up <strong>University of California admissions data</strong> for high schools from <strong>Fall 1994 through Fall 2025</strong>. Browse applicant counts, admission rates, and enrollment numbers across all nine undergraduate UC campuses — Berkeley, Los Angeles, San Diego, Davis, Santa Barbara, Irvine, Santa Cruz, Riverside, and Merced — broken down by ethnicity. Data is sourced from the <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" rel="noopener">UC Information Center</a>.</p>
+          {isRatesPage ? (
+            <>
+              <p>
+                Looking up <strong>UC admission rates</strong> or <strong>UC acceptance rates</strong>?
+                Start with the campus benchmark, then use the time-series tool below to see how
+                students from a specific California high school performed at UCLA, UC Berkeley,
+                UC San Diego, UC Davis, and the rest of the University of California system.
+              </p>
+              <p>
+                Search by high school to compare applicant counts, admits, enrollment, admit rates,
+                and ethnicity breakdowns from <strong>Fall 1994 through Fall 2025</strong>. Data is
+                sourced from the <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" rel="noopener">UC Information Center</a>.
+              </p>
+            </>
+          ) : (
+            <p>This tool lets you look up <strong>University of California admissions data</strong> for high schools from <strong>Fall 1994 through Fall 2025</strong>. Browse applicant counts, admission rates, and enrollment numbers across all nine undergraduate UC campuses — Berkeley, Los Angeles, San Diego, Davis, Santa Barbara, Irvine, Santa Cruz, Riverside, and Merced — broken down by ethnicity. Data is sourced from the <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" rel="noopener">UC Information Center</a>.</p>
+          )}
         </section>
 
-        <div className="notes-bar">
-          <div className="notes-title">Notes</div>
-          <ul>
-            <li>Universitywide applicant counts reflect <strong>applications</strong>, not unique students — a student applying to multiple campuses is counted once per campus.</li>
-            <li>UC moved to an online application system around <strong>2002</strong>.</li>
-            <li>Since <strong>1986</strong>, students can apply to multiple UC campuses in a single application (<a href="https://www.latimes.com/archives/la-xpm-1985-05-20-mn-16535-story.html" target="_blank" rel="noopener">LA Times, 1985</a>).</li>
-          </ul>
-        </div>
+        {isRatesPage && <CampusRateBenchmark />}
 
         <div className="charts-row">
           <TimeSeriesPanel
@@ -298,6 +358,15 @@ export default function InteractiveTool() {
             onCampusChange={handleCmpCampusChange}
             onEthnicityChange={handleCmpEthnicityChange}
           />
+        </div>
+
+        <div className="notes-bar">
+          <div className="notes-title">Notes</div>
+          <ul>
+            <li>Universitywide applicant counts reflect <strong>applications</strong>, not unique students — a student applying to multiple campuses is counted once per campus.</li>
+            <li>UC moved to an online application system around <strong>2002</strong>.</li>
+            <li>Since <strong>1986</strong>, students can apply to multiple UC campuses in a single application (<a href="https://www.latimes.com/archives/la-xpm-1985-05-20-mn-16535-story.html" target="_blank" rel="noopener">LA Times, 1985</a>).</li>
+          </ul>
         </div>
 
         <section className="report-entry-panel" aria-label="Paid report previews">

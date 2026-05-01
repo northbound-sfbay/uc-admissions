@@ -1,8 +1,13 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import type { InteractiveToolVariant } from './InteractiveTool'
 
-const InteractiveTool = dynamic(() => import('./InteractiveTool'), {
+type InteractiveToolLoaderProps = {
+  variant?: InteractiveToolVariant
+}
+
+const InteractiveTool = dynamic<InteractiveToolLoaderProps>(() => import('./InteractiveTool'), {
   ssr: false,
   loading: () => (
     <div className="loading-overlay">
@@ -14,6 +19,6 @@ const InteractiveTool = dynamic(() => import('./InteractiveTool'), {
   ),
 })
 
-export default function InteractiveToolLoader() {
-  return <InteractiveTool />
+export default function InteractiveToolLoader({ variant = 'home' }: InteractiveToolLoaderProps) {
+  return <InteractiveTool variant={variant} />
 }

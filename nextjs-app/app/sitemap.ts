@@ -43,6 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${BASE_URL}/uc-admission-rates`,
+      lastModified: generatedAt,
+      changeFrequency: 'monthly',
+      priority: 0.95,
+    },
+    {
       url: `${BASE_URL}/about`,
       lastModified: generatedAt,
       changeFrequency: 'yearly',
