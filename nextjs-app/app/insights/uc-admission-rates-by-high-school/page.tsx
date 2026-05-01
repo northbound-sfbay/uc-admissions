@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 const CANONICAL = 'https://collegeacceptance.info/insights/uc-admission-rates-by-high-school'
-const TITLE = 'UC Admission Rates by High School: How to Read the Data'
+const TITLE = 'UC Admission Rates by High School: What the Data Shows'
 const DESCRIPTION =
-  'Learn what UC admission rates by high school mean, how applicants, admits, enrollees, GPA, and campus rates are calculated, and how to look up your school.'
+  'UC admission rates by high school can be useful, but one number can mislead. See how campus mix, applicant volume, GPA, and enrollment change the story.'
 
 export const metadata: Metadata = {
   title: `${TITLE} | collegeacceptance.info`,
@@ -26,13 +26,41 @@ export const metadata: Metadata = {
 const CAMPUS_BENCHMARKS = [
   ['UCLA', '88,267', '7,863', '8.9%'],
   ['UC Berkeley', '71,750', '9,102', '12.7%'],
-  ['UC San Diego', '86,639', '21,332', '24.6%'],
   ['UC Irvine', '85,584', '18,680', '21.8%'],
+  ['UC San Diego', '86,639', '21,332', '24.6%'],
   ['UC Santa Barbara', '73,885', '23,786', '32.2%'],
   ['UC Davis', '68,388', '25,225', '36.9%'],
   ['UC Santa Cruz', '51,879', '37,004', '71.3%'],
   ['UC Riverside', '60,765', '52,907', '87.1%'],
   ['UC Merced', '42,412', '40,854', '96.3%'],
+]
+
+const STAT_CARDS = [
+  {
+    label: 'California high schools with 2025 UC applicants',
+    value: '1,705',
+  },
+  {
+    label: 'Applicants in the universitywide source-school view',
+    value: '129,703',
+  },
+  {
+    label: 'Universitywide admit rate in that view',
+    value: '77.3%',
+  },
+  {
+    label: 'Admitted students who enrolled',
+    value: '41.8%',
+  },
+]
+
+const FIELD_DEFINITIONS = [
+  ['Applicants', 'Students who applied to UC from a source school', 'Shows demand and applicant volume'],
+  ['Admits', 'Students who received an offer of admission', 'Shows how many applicants cleared UC review'],
+  ['Enrollees', 'Students who accepted an offer and enrolled', 'Shows actual matriculation, not just admission'],
+  ['Admit rate', 'Admits divided by applicants', 'Useful, but incomplete by itself'],
+  ['Yield', 'Enrollees divided by admits', 'Shows whether admitted students actually chose UC'],
+  ['GPA profile', 'Average applicant, admit, and enrollee GPA', 'Helps separate applicant strength from UC selectivity'],
 ]
 
 const FAQ = [
@@ -149,119 +177,61 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
       <JsonLd />
 
       <header>
-        <div className="header-inner">
+        <div className="header-inner article-header-inner">
           <Link href="/insights" className="text-sm text-blue-200 hover:text-white">
-            Insights
+            UC Admissions Insights
           </Link>
-          <h1>UC admission rates by high school: how to read the data</h1>
+          <h1>UC admission rates by high school can be useful - if you know what you are looking at</h1>
           <p className="subtitle">
-            Applicants, admits, enrollees, GPA, campus mix, and why one admit-rate number is not enough.
+            A data guide to applicants, admits, enrollment, GPA and campus mix in the latest UC source-school tables.
           </p>
         </div>
       </header>
 
       <main className="article-shell">
         <article className="article-card">
-          <p className="article-kicker">Admissions data explainer</p>
+          <div className="article-kicker">Data analysis</div>
+          <p className="article-byline">By collegeacceptance.info · Updated May 1, 2026</p>
+
+          <p className="article-deck">
+            Families often search for a single UC acceptance rate for a high school. The data is
+            more useful than that - and more complicated. A school&apos;s UC record depends on who
+            applied, where they applied, how strong the applicant pool was, and whether admitted
+            students actually enrolled.
+          </p>
+
+          <section className="article-stat-grid" aria-label="Fall 2025 UC source-school snapshot">
+            {STAT_CARDS.map(card => (
+              <div className="article-stat-card" key={card.label}>
+                <strong>{card.value}</strong>
+                <span>{card.label}</span>
+              </div>
+            ))}
+          </section>
 
           <section className="answer-block" aria-label="Short answer">
             <h2>Short answer</h2>
             <p>
               UC admission rates by high school show how many students from a source school applied
-              to, were admitted by, and enrolled at University of California campuses. They are useful
-              for understanding a school&apos;s UC track record, but they are not the same thing as an
-              individual student&apos;s chance of admission.
-            </p>
-            <p>
-              The best use is to compare several signals together: applicant volume, admits,
-              enrollment, campus mix, GPA profile, and trends over time.
+              to, were admitted by and enrolled at University of California campuses. They are best
+              read as a historical record for a group of applicants, not as an individual student&apos;s
+              odds of admission.
             </p>
           </section>
 
           <section>
-            <h2>Key takeaways</h2>
-            <ul>
-              <li>UC high-school admit rate usually means admits divided by applicants for a specific school, year, and campus or universitywide view.</li>
-              <li>A high admit rate does not automatically mean a school is easier or better; it may reflect campus mix, applicant self-selection, or a smaller applicant pool.</li>
-              <li>Campus-specific rates matter because UCLA, UC Berkeley, UC San Diego, UC Davis, UC Irvine, and UC Merced have very different selectivity patterns.</li>
-              <li>GPA data adds context because rising admitted GPAs can show that the applicant pool is becoming stronger even when admit rates look stable.</li>
-              <li>The most useful view is a time series for one high school, not a one-year screenshot.</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>What &quot;UC admission rate by high school&quot; means</h2>
-            <p>
-              In the UC source-school data, the basic fields are applicants, admits, and enrollees.
-              The admit rate is calculated as:
-            </p>
-            <p className="formula">admits / applicants</p>
-            <p>
-              For example, if a high school had 100 applicants to UC and 70 admits, its admit rate
-              would be 70%. That number is descriptive. It tells you what happened to applicants
-              from that school in a specific year and data view.
-            </p>
-            <p>
-              It does not tell you that a future student has a 70% chance of admission. Individual
-              outcomes depend on campus choice, major, GPA, courses, essays, activities, residency,
-              and many other factors that are not captured in the source-school table.
-            </p>
-          </section>
-
-          <section>
-            <h2>Quick definitions</h2>
-            <div className="article-table-wrap">
-              <table className="article-table">
-                <thead>
-                  <tr>
-                    <th>Term</th>
-                    <th>Meaning</th>
-                    <th>Why it matters</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Applicants</td>
-                    <td>Students who applied to UC from a source school</td>
-                    <td>Shows demand and applicant volume</td>
-                  </tr>
-                  <tr>
-                    <td>Admits</td>
-                    <td>Students who received an offer of admission</td>
-                    <td>Shows how many applicants cleared UC review</td>
-                  </tr>
-                  <tr>
-                    <td>Enrollees</td>
-                    <td>Students who accepted an offer and enrolled</td>
-                    <td>Shows actual matriculation, not just admission</td>
-                  </tr>
-                  <tr>
-                    <td>Admit rate</td>
-                    <td>Admits divided by applicants</td>
-                    <td>Useful, but incomplete by itself</td>
-                  </tr>
-                  <tr>
-                    <td>Yield</td>
-                    <td>Enrollees divided by admits</td>
-                    <td>Shows whether admitted students actually chose UC</td>
-                  </tr>
-                  <tr>
-                    <td>GPA profile</td>
-                    <td>Average applicant, admit, and enrollee GPA</td>
-                    <td>Helps separate applicant strength from UC selectivity</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section>
-            <h2>Fall 2025 campus benchmark</h2>
+            <h2>The headline number hides the campus story</h2>
             <p>
               In the Fall 2025 California public and private high-school source-school data used by
-              this site, 1,705 schools had at least one UC applicant. Across those schools, the data
-              includes 129,703 applicants, 100,296 admits, and 41,887 enrollees in the universitywide
-              view.
+              this site, the universitywide admit rate was 77.3%. That sounds simple. But the same
+              dataset shows UCLA at 8.9%, UC Berkeley at 12.7%, UC San Diego at 24.6% and UC Merced
+              at 96.3%.
+            </p>
+            <p>
+              That spread is the reason a single UC rate can mislead. A high school with a 75%
+              universitywide rate could be sending many applications to less selective UC campuses.
+              Another school with the same universitywide rate could be sending many applicants to
+              UCLA, Berkeley and San Diego. Those are very different stories.
             </p>
             <div className="article-table-wrap">
               <table className="article-table benchmark-table">
@@ -285,70 +255,55 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
                 </tbody>
               </table>
             </div>
-            <p>
-              This benchmark shows why one UC admit-rate number is too broad. A school can have
-              strong outcomes at some campuses and weaker outcomes at others. A universitywide rate
-              can hide that difference.
+            <p className="article-caption">
+              Fall 2025 campus benchmark from California public and private high-school source-school records used by this site.
             </p>
           </section>
 
           <section>
-            <h2>Why campus mix changes the story</h2>
+            <h2>The best school comparison starts with volume</h2>
             <p>
-              Suppose two high schools both show a 75% universitywide UC admit rate. They may not
-              be comparable.
+              Applicant count is the first reality check. A school with 10 applicants and 8 admits
+              has an 80% admit rate, but that percentage can swing sharply the next year. A school
+              with 400 applicants and 300 admits has a 75% admit rate based on a much larger pool.
             </p>
             <p>
-              One school might send many applications to UCLA, UC Berkeley, and UC San Diego.
-              Another might send most applications to UC Riverside, UC Santa Cruz, and UC Merced.
-              The universitywide admit rate alone would miss that difference.
+              That does not make the larger school better. It makes the trend easier to interpret.
+              For small applicant pools, a multi-year view matters more than a single annual rate.
+              For large applicant pools, campus-by-campus changes can reveal whether students are
+              shifting toward more selective campuses or whether admissions outcomes are improving.
             </p>
-            <p>
-              That is why a good high-school UC analysis should show campus-by-campus outcomes. For
-              a family comparing schools, the better question is not only &quot;what is the UC admit
-              rate?&quot; but also &quot;which UC campuses are students applying to and getting into?&quot;
-            </p>
+            <aside className="article-pullquote">
+              The question is not just &quot;what was the admit rate?&quot; It is &quot;what kind of applicant pool produced that rate?&quot;
+            </aside>
           </section>
 
           <section>
-            <h2>Why applicant volume matters</h2>
+            <h2>GPA changes how the trend should be read</h2>
             <p>
-              Applicant volume tells you how much confidence to place in a rate. A school with 10
-              applicants and 8 admits has an 80% admit rate, but that number can swing dramatically
-              from year to year. A school with 400 applicants and 300 admits has a 75% admit rate
-              based on a much larger pool.
+              A rising admit rate can look like better odds. A falling admit rate can look like a
+              tougher year. But GPA data adds a second layer: it helps separate student strength
+              from campus selectivity.
             </p>
             <p>
-              For high schools with large applicant pools, trends are usually more informative than
-              a single year. For smaller schools, it is safer to look at multi-year patterns instead
-              of over-interpreting one data point.
-            </p>
-          </section>
-
-          <section>
-            <h2>Why GPA context matters</h2>
-            <p>
-              GPA data helps explain whether a trend is about UC selectivity, applicant quality, or
-              both.
+              If admitted GPAs rise while admit rates stay flat, the bar may be moving up. If
+              applicant GPA rises and admits rise too, the school may be sending a stronger applicant
+              pool. If enrollment GPA differs from admitted GPA, it may show which admitted students
+              actually chose UC.
             </p>
             <p>
-              If a school&apos;s admitted GPA rises over time while the admit rate stays flat, that may
-              mean UC admission is becoming more competitive for that school. If applicant GPA rises
-              and admits rise too, the school may simply be sending a stronger applicant pool.
-            </p>
-            <p>
-              The UC source-school data includes average GPA for applicants, admits, and enrollees
-              where enough students are present to report it. UC describes freshman GPA in this
-              dataset as weighted, capped high school GPA for 10th and 11th grade college-preparatory
+              UC&apos;s source-school tables include average GPA for applicants, admits and enrollees
+              when enough students are present to report it. UC describes freshman GPA in this data
+              as weighted, capped high school GPA for 10th and 11th grade college-preparatory
               courses.
             </p>
           </section>
 
           <section className="article-cta-panel">
-            <h2>Look up your high school</h2>
+            <h2>Look up your school&apos;s UC trend</h2>
             <p>
-              Start with the interactive UC admissions tool, then compare campus-specific admit
-              rates, enrollment, and GPA context for your school.
+              Search a California high school, then compare applicants, admits, enrollment, campus
+              mix and GPA context across time.
             </p>
             <div className="insights-actions">
               <Link href="/" className="report-entry-link primary">
@@ -368,17 +323,55 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
           </section>
 
           <section>
+            <h2>How to read a high-school page in five minutes</h2>
+            <p>
+              Start with the latest year, but do not stop there. A useful read of a school page
+              usually follows this order:
+            </p>
+            <ol className="article-steps">
+              <li>Check applicant volume. Small pools need more caution.</li>
+              <li>Compare universitywide results with campus-specific results.</li>
+              <li>Look at several years, not only the latest cycle.</li>
+              <li>Use GPA to judge whether the applicant pool changed.</li>
+              <li>Compare admits with enrollees to see whether students actually chose UC.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>What each field means</h2>
+            <div className="article-table-wrap">
+              <table className="article-table">
+                <thead>
+                  <tr>
+                    <th>Term</th>
+                    <th>Meaning</th>
+                    <th>Why it matters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {FIELD_DEFINITIONS.map(([term, meaning, why]) => (
+                    <tr key={term}>
+                      <td>{term}</td>
+                      <td>{meaning}</td>
+                      <td>{why}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
             <h2>What this data should not be used for</h2>
             <p>
               Do not use a high school&apos;s UC admit rate as a direct probability for an individual
               student. The data does not show intended major, course rigor, essays, activities,
-              recommendation context, first-generation status, family income, or individual academic
+              recommendation context, first-generation status, family income or individual academic
               details.
             </p>
             <p>
-              It is best used as historical context, not a prediction engine. It is also important
-              to distinguish campus-specific rates from universitywide rates because UC campuses
-              have different applicant pools and selectivity.
+              It is best used as historical context. The strongest use is comparing a school&apos;s
+              applicant volume, campus mix, GPA profile and admit trends over time.
             </p>
           </section>
 
@@ -402,9 +395,9 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
               University of California Information Center&apos;s Admissions by Source School data.
             </p>
             <p>
-              UC&apos;s source page defines applicants, admits, and enrollees, and notes that the
-              tables include freshman applicant counts, admit counts, enrollee counts, and mean GPA
-              by source school.
+              UC&apos;s source page defines applicants, admits and enrollees, and notes that the tables
+              include freshman applicant counts, admit counts, enrollee counts and mean GPA by source
+              school. Some small-count fields are blank because UC does not report every small group.
             </p>
             <p>
               Source:{' '}
