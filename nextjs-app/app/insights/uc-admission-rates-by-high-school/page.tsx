@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import ArticleCtaLink from '@/components/ArticleCtaLink'
 
 const CANONICAL = 'https://collegeacceptance.info/insights/uc-admission-rates-by-high-school'
+const ARTICLE_SLUG = 'uc-admission-rates-by-high-school'
 const TITLE = 'UC Admission Rates by High School: What the Data Shows'
 const DESCRIPTION =
   'UC admission rates by high school can be useful, but one number can mislead. See how campus mix, applicant volume, GPA, and enrollment change the story.'
@@ -306,19 +308,80 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
               mix and GPA context across time.
             </p>
             <div className="insights-actions">
-              <Link href="/" className="report-entry-link primary">
+              <ArticleCtaLink
+                href="/"
+                className="report-entry-link primary"
+                eventParams={{
+                  article_slug: ARTICLE_SLUG,
+                  target_type: 'homepage_search',
+                  target_label: 'Search your high school',
+                }}
+              >
                 Search your high school
-              </Link>
-              <Link href="/uc-admission-rates" className="report-entry-link">
+              </ArticleCtaLink>
+              <ArticleCtaLink
+                href="/uc-admission-rates"
+                className="report-entry-link"
+                eventParams={{
+                  article_slug: ARTICLE_SLUG,
+                  target_type: 'broad_rates_page',
+                  target_label: 'View UC admission rates',
+                }}
+              >
                 View UC admission rates
-              </Link>
+              </ArticleCtaLink>
             </div>
             <div className="article-example-links">
-              <Link href="/school/50410-burlingame-high-school">Burlingame High School</Link>
-              <Link href="/school/50130-arcadia-high-school">Arcadia High School</Link>
-              <Link href="/school/52970-lowell-high-school">Lowell High School</Link>
-              <Link href="/feeder-schools/ucla">UCLA feeder schools</Link>
-              <Link href="/feeder-schools/uc-berkeley">UC Berkeley feeder schools</Link>
+              <ArticleCtaLink
+                href="/school/50410-burlingame-high-school"
+                eventParams={{
+                  article_slug: ARTICLE_SLUG,
+                  target_type: 'school_page',
+                  target_label: 'Burlingame High School',
+                }}
+              >
+                Burlingame High School
+              </ArticleCtaLink>
+              <ArticleCtaLink
+                href="/school/50130-arcadia-high-school"
+                eventParams={{
+                  article_slug: ARTICLE_SLUG,
+                  target_type: 'school_page',
+                  target_label: 'Arcadia High School',
+                }}
+              >
+                Arcadia High School
+              </ArticleCtaLink>
+              <ArticleCtaLink
+                href="/school/52970-lowell-high-school"
+                eventParams={{
+                  article_slug: ARTICLE_SLUG,
+                  target_type: 'school_page',
+                  target_label: 'Lowell High School',
+                }}
+              >
+                Lowell High School
+              </ArticleCtaLink>
+              <ArticleCtaLink
+                href="/feeder-schools/ucla"
+                eventParams={{
+                  article_slug: ARTICLE_SLUG,
+                  target_type: 'feeder_page',
+                  target_label: 'UCLA feeder schools',
+                }}
+              >
+                UCLA feeder schools
+              </ArticleCtaLink>
+              <ArticleCtaLink
+                href="/feeder-schools/uc-berkeley"
+                eventParams={{
+                  article_slug: ARTICLE_SLUG,
+                  target_type: 'feeder_page',
+                  target_label: 'UC Berkeley feeder schools',
+                }}
+              >
+                UC Berkeley feeder schools
+              </ArticleCtaLink>
             </div>
           </section>
 
