@@ -60,9 +60,66 @@ export async function generateMetadata({
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 const CAMPUSES = [
-  'Berkeley', 'Los Angeles', 'San Diego', 'Davis',
-  'Santa Barbara', 'Irvine', 'Santa Cruz', 'Riverside', 'Merced',
+  { key: 'Berkeley', label: 'UC Berkeley' },
+  { key: 'Los Angeles', label: 'UCLA' },
+  { key: 'San Diego', label: 'UC San Diego' },
+  { key: 'Davis', label: 'UC Davis' },
+  { key: 'Santa Barbara', label: 'UC Santa Barbara' },
+  { key: 'Irvine', label: 'UC Irvine' },
+  { key: 'Santa Cruz', label: 'UC Santa Cruz' },
+  { key: 'Riverside', label: 'UC Riverside' },
+  { key: 'Merced', label: 'UC Merced' },
 ]
+
+type FaqItem = {
+  question: string
+  answer: string
+}
+
+function campusSummary(
+  name: string,
+  yr: string,
+  d: YearData,
+  campusKey: string,
+  campusLabel: string
+): string {
+  const campus = d.by_campus?.[campusKey]
+
+  if (!campus || campus.admit_rate == null) {
+    return `UC did not report enough Fall ${yr} ${campusLabel} source-school data for ${name} to show a reliable campus admit rate.`
+  }
+
+  return `In Fall ${yr}, ${name}'s ${campusLabel} admit rate was ${pct(campus.admit_rate)}, based on ${fmt(campus.app)} applicants and ${fmt(campus.adm)} admits.`
+}
+
+function buildSchoolFaq(name: string, yr: string, d: YearData): FaqItem[] {
+  const rateAnswer = d.admit_rate == null
+    ? `UC did not report a Fall ${yr} universitywide admit rate for ${name}. The page still shows the available applicants, admits, enrollment, campus, ethnicity, and trend data from the UC source-school tables.`
+    : `In Fall ${yr}, ${name} had ${fmt(d.app)} UC applicants, ${fmt(d.adm)} admits, and an overall UC admit rate of ${pct(d.admit_rate)}. Admit rate means admits divided by applicants, and families often search for the same number as a UC acceptance rate.`
+
+  return [
+    {
+      question: `What is ${name}'s UC admit rate?`,
+      answer: rateAnswer,
+    },
+    {
+      question: `What is ${name}'s UCLA admit rate?`,
+      answer: campusSummary(name, yr, d, 'Los Angeles', 'UCLA'),
+    },
+    {
+      question: `What is ${name}'s UC Berkeley admit rate?`,
+      answer: campusSummary(name, yr, d, 'Berkeley', 'UC Berkeley'),
+    },
+    {
+      question: `Does ${name}'s UC admit rate predict my student's chances?`,
+      answer: `No. ${name}'s UC admit rate is historical school-level context for a group of applicants. It is not an individual admissions prediction because UC decisions depend on the student's application, campus choices, major context, course rigor, grades, activities, essays, and the applicant pool that year.`,
+    },
+    {
+      question: `Where does the ${name} UC admissions data come from?`,
+      answer: `The data comes from the University of California Information Center admissions by source school tables. This page organizes the UC source-school data for ${name} from Fall 1994 through Fall ${yr}, including applicants, admits, enrollees, admit rates, campus breakdowns, ethnicity breakdowns, and recent trends.`,
+    },
+  ]
+}
 
 function AdmitRateBadge({ rate }: { rate: number | null }) {
   const color = rateColor(rate)
@@ -145,9 +202,58 @@ function YearSummary({ yr, d }: { yr: string; d: YearData }) {
   )
 }
 
+function DirectAnswerBlock({
+  name,
+  loc,
+  yr,
+  d,
+}: {
+  name: string
+  loc: string
+  yr: string
+  d: YearData
+}) {
+  const ucla = d.by_campus?.['Los Angeles']
+  const berkeley = d.by_campus?.Berkeley
+
+  return (
+    <section className="answer-block" aria-label={`${name} UC admissions direct answer`}>
+      <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--uc-blue)', lineHeight: 1.25 }}>
+        What are {name}&apos;s UC admission rates?
+      </h2>
+      <p style={{ color: 'var(--text)', fontSize: '.95rem', lineHeight: 1.65 }}>
+        {d.admit_rate == null ? (
+          <>
+            In Fall {yr}, {name}{loc ? ` in ${loc}` : ''} had {fmt(d.app)} UC applicants
+            and {fmt(d.adm)} admits, but UC did not publish a reliable overall admit rate
+            for this school-year view. The available campus, ethnicity, and trend data
+            below still give source-school context.
+          </>
+        ) : (
+          <>
+            In Fall {yr}, {name}{loc ? ` in ${loc}` : ''} had {fmt(d.app)} UC applicants,
+            {' '}{fmt(d.adm)} admits, and an overall UC admit rate of {pct(d.admit_rate)}.
+            Admit rate means admitted students divided by applicants, and is the same
+            number many families mean when they search for a UC acceptance rate by high school.
+          </>
+        )}
+      </p>
+      {(ucla?.admit_rate != null || berkeley?.admit_rate != null) && (
+        <p style={{ color: 'var(--text-muted)', fontSize: '.86rem', lineHeight: 1.6, marginTop: '8px' }}>
+          Campus-level rates can look very different:
+          {ucla?.admit_rate != null && <> UCLA was {pct(ucla.admit_rate)}</>}
+          {ucla?.admit_rate != null && berkeley?.admit_rate != null && <> and</>}
+          {berkeley?.admit_rate != null && <> UC Berkeley was {pct(berkeley.admit_rate)}</>}
+          {' '}for Fall {yr}. Use campus-specific rates as context, not as a prediction for one student.
+        </p>
+      )}
+    </section>
+  )
+}
+
 function CampusTable({ d }: { d: YearData }) {
   const campusRows = CAMPUSES
-    .map(campus => ({ campus, data: d.by_campus?.[campus] ?? null }))
+    .map(campus => ({ ...campus, data: d.by_campus?.[campus.key] ?? null }))
     .filter(row => row.data?.app != null)
 
   if (!campusRows.length) return null
@@ -168,9 +274,9 @@ function CampusTable({ d }: { d: YearData }) {
             </tr>
           </thead>
           <tbody>
-            {campusRows.map(({ campus, data }) => (
-              <tr key={campus} className="odd:bg-gray-50/60">
-                <td className="border-b border-gray-100 py-3 font-medium text-gray-800">UC {campus}</td>
+            {campusRows.map(({ key, label, data }) => (
+              <tr key={key} className="odd:bg-gray-50/60">
+                <td className="border-b border-gray-100 py-3 font-medium text-gray-800">{label}</td>
                 <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmt(data?.app)}</td>
                 <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmt(data?.adm)}</td>
                 <td className="border-b border-gray-100 py-3 text-right font-semibold">
@@ -180,6 +286,28 @@ function CampusTable({ d }: { d: YearData }) {
             ))}
           </tbody>
         </table>
+      </div>
+    </SectionCard>
+  )
+}
+
+function SchoolFaqSection({ name, faqItems }: { name: string; faqItems: FaqItem[] }) {
+  return (
+    <SectionCard
+      title={`${name} UC Admissions FAQ`}
+      description="Short answers for AI search, regular search, and families comparing UC outcomes by high school."
+    >
+      <div className="article-faq-list">
+        {faqItems.map(item => (
+          <div key={item.question}>
+            <h3 style={{ color: 'var(--text)', fontSize: '.98rem', fontWeight: 800, lineHeight: 1.35 }}>
+              {item.question}
+            </h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '.86rem', lineHeight: 1.6, marginTop: '6px' }}>
+              {item.answer}
+            </p>
+          </div>
+        ))}
       </div>
     </SectionCard>
   )
@@ -282,6 +410,7 @@ export default async function SchoolPage({
   const d = yr ? school.years[yr] : null
   const name = titleCase(school.school_name)
   const loc = [school.city, school.county].filter(Boolean).join(', ')
+  const faqItems = yr && d ? buildSchoolFaq(name, yr, d) : []
   const relatedFeederLinks = FEEDER_CAMPUSES.map(campus => ({
     href: `/feeder-schools/${campus.slug}`,
     label: `Top feeder schools to ${campus.label}`,
@@ -300,6 +429,8 @@ export default async function SchoolPage({
       `${name} acceptance rate`,
       `${school.city} high school UC`,
       'University of California admissions',
+      'UC admission rates by high school',
+      'UC acceptance rates by high school',
     ],
     temporalCoverage: '1994/2025',
     creator: {
@@ -308,6 +439,21 @@ export default async function SchoolPage({
       url: 'https://www.universityofcalifornia.edu',
     },
   }
+
+  const faqLd = faqItems.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map(item => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
+      }
+    : null
 
   const breadcrumbLd = {
     '@context': 'https://schema.org',
@@ -349,6 +495,12 @@ export default async function SchoolPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
+      {faqLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      )}
 
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
@@ -398,6 +550,8 @@ export default async function SchoolPage({
               )}
             </div>
           </section>
+
+          {yr && d && <DirectAnswerBlock name={name} loc={loc} yr={yr} d={d} />}
 
           {/* Most recent year summary */}
           {yr && d && <YearSummary yr={yr} d={d} />}
@@ -454,6 +608,8 @@ export default async function SchoolPage({
 
           {/* 10-year trend */}
           <TrendTable school={school} />
+
+          {faqItems.length > 0 && <SchoolFaqSection name={name} faqItems={faqItems} />}
 
           {/* Link to full interactive tool */}
           <div className="content_hint" aria-hidden="true" />
