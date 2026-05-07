@@ -4,10 +4,13 @@ const BASE_URL = 'https://collegeacceptance.info'
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-    },
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/report/'],
+      },
+    ],
     sitemap: `${BASE_URL}/sitemap.xml`,
   }
 }

@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import TimeSeriesPanel from './TimeSeriesPanel'
 import ComparePanel, { type CmpEntry } from './ComparePanel'
-import ReportIntentLink from './ReportIntentLink'
 import { trackEvent } from '@/lib/analytics'
 import { TYPE_DATA_URLS, COORDS_URL, NONPUBLIC_COORDS_URL, MAX_CMP } from '@/lib/constants'
 import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
@@ -29,16 +28,6 @@ const CAMPUS_RATE_BENCHMARKS = [
 
 function countySlug(county: string): string {
   return county.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-}
-
-function comparisonReportUrl(schools: School[], campus: string, ethnicity: string) {
-  if (!schools.length) return ''
-  const params = new URLSearchParams({
-    schools: schools.map(school => school.school_id).join(','),
-    campus,
-    ethnicity,
-  })
-  return `/report/compare?${params.toString()}`
 }
 
 function formatCount(value: number) {
@@ -253,11 +242,6 @@ export default function InteractiveTool({ variant = 'home' }: { variant?: Intera
     label: county,
     slug: countySlug(county),
   }))
-  const singleReportHref = tsSelectedSchool
-    ? `/report/school/${makeSlug(tsSelectedSchool.school_id, tsSelectedSchool.school_name)}`
-    : ''
-  const comparisonSchools = cmpSelected.slice(0, 3).map(entry => entry.school)
-  const comparisonReportHref = comparisonReportUrl(comparisonSchools, cmpCampus, cmpEthnicity)
 
   function handleTsCampusChange(value: string) {
     trackEvent('comparison_intent', {
@@ -368,55 +352,6 @@ export default function InteractiveTool({ variant = 'home' }: { variant?: Intera
             <li>Since <strong>1986</strong>, students can apply to multiple UC campuses in a single application (<a href="https://www.latimes.com/archives/la-xpm-1985-05-20-mn-16535-story.html" target="_blank" rel="noopener">LA Times, 1985</a>).</li>
           </ul>
         </div>
-
-        <section className="report-entry-panel" aria-label="Paid report previews">
-          <div className="report-entry-copy">
-            <div className="ctrl-label">Paid Reports</div>
-            <h2>Turn this lookup into a PDF-ready report</h2>
-            <p>
-              Preview a single-school trend report or a side-by-side comparison report with
-              admit-rate, campus, and GPA context.
-            </p>
-          </div>
-          <div className="report-entry-actions">
-            {tsSelectedSchool && (
-              <ReportIntentLink
-                href={singleReportHref}
-                className="report-entry-link"
-                eventParams={{
-                  report_type: 'single_school',
-                  price: 19,
-                  source: 'interactive_tool',
-                  school_slug: makeSlug(tsSelectedSchool.school_id, tsSelectedSchool.school_name),
-                  school_name: tsSelectedSchool.school_name,
-                }}
-              >
-                Preview $19 school report →
-              </ReportIntentLink>
-            )}
-            {!!comparisonSchools.length && (
-              <ReportIntentLink
-                href={comparisonReportHref}
-                className="report-entry-link primary"
-                onClick={event => {
-                  if (!comparisonReportHref) return
-                  event.preventDefault()
-                  window.location.assign(comparisonReportHref)
-                }}
-                eventParams={{
-                  report_type: 'comparison',
-                  price: 39,
-                  source: 'interactive_tool',
-                  school_count: comparisonSchools.length,
-                  campus: cmpCampus,
-                  ethnicity: cmpEthnicity,
-                }}
-              >
-                Preview $39 comparison →
-              </ReportIntentLink>
-            )}
-          </div>
-        </section>
 
         {!loading && (
           <LeafletMap
