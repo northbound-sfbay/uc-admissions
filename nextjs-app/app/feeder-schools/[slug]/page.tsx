@@ -6,6 +6,11 @@ import { countyPageHref } from '@/lib/county'
 
 export const revalidate = 86400
 
+type FaqItem = {
+  question: string
+  answer: string
+}
+
 function fmtNumber(value: number | null | undefined): string {
   if (value == null) return '—'
   return value.toLocaleString()
@@ -36,6 +41,110 @@ function StatPanel({
   )
 }
 
+function pageTitle(campusLabel: string, displayYear: string): string {
+  return `${campusLabel} Feeder Schools ${displayYear} | Top High Schools by ${campusLabel} Admits`
+}
+
+function pageDescription(campusLabel: string, displayYear: string): string {
+  return `See which California high schools sent the most admits to ${campusLabel} in Fall ${displayYear}. Compare applicants, admits, enrollees, admit rates, and school-level UC admissions pages.`
+}
+
+function buildFeederFaq(feederData: NonNullable<ReturnType<typeof getFeederData>>): FaqItem[] {
+  const topSchools = feederData.topSchools.slice(0, 3)
+  const topSchoolText = topSchools
+    .map((school, index) => {
+      const prefix = index === topSchools.length - 1 && topSchools.length > 1 ? 'and ' : ''
+      return `${prefix}${school.school_name} with ${fmtNumber(school.adm)} admits`
+    })
+    .join(topSchools.length > 2 ? ', ' : ' ')
+
+  return [
+    {
+      question: `What are the top feeder schools to ${feederData.campusLabel}?`,
+      answer: `In Fall ${feederData.displayYear}, the top high schools by admits to ${feederData.campusLabel} were ${topSchoolText}. This ranking uses admitted students, with applicants and enrollees shown separately.`,
+    },
+    {
+      question: `What does ${feederData.campusLabel} feeder school mean here?`,
+      answer: `On this page, a ${feederData.campusLabel} feeder school means a high school with reported applicants, admits, or enrollees for ${feederData.campusLabel} in the UC source-school data. The main ranking is by admitted students, not by school reputation or a special admissions relationship.`,
+    },
+    {
+      question: `Does attending a ${feederData.campusLabel} feeder school improve admissions chances?`,
+      answer: `No. These rankings are historical school-level outcomes, not individual admissions predictions. Applicant strength, course rigor, grades, activities, essays, major context, campus choices, and the applicant pool still matter.`,
+    },
+    {
+      question: `Is the ${feederData.campusLabel} feeder ranking based on admits or enrollment?`,
+      answer: `The primary ranking is based on admits to ${feederData.campusLabel} in Fall ${feederData.displayYear}. The table also shows applicants, enrollees, and admit rate so families can separate demand, admission results, and actual enrollment.`,
+    },
+    {
+      question: `Where does the ${feederData.campusLabel} feeder-school data come from?`,
+      answer: `The data comes from the University of California Information Center admissions by source school tables. collegeacceptance.info organizes the source-school data by campus, high school, county, applicants, admits, enrollees, and admit rate.`,
+    },
+  ]
+}
+
+function FeederAnswerBlock({
+  feederData,
+}: {
+  feederData: NonNullable<ReturnType<typeof getFeederData>>
+}) {
+  const topSchool = feederData.topSchools[0]
+
+  return (
+    <section className="answer-block" aria-label={`${feederData.campusLabel} feeder schools direct answer`}>
+      <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--uc-blue)', lineHeight: 1.25 }}>
+        What high schools send the most admits to {feederData.campusLabel}?
+      </h2>
+      <p style={{ color: 'var(--text)', fontSize: '.95rem', lineHeight: 1.65 }}>
+        In Fall {feederData.displayYear}, {topSchool.school_name} sent the most admits to {feederData.campusLabel},
+        with {fmtNumber(topSchool.adm)} admits from {fmtNumber(topSchool.app)} applicants. Across reported
+        California public and private high schools, this dataset shows {fmtNumber(feederData.totals.app)}
+        {' '}applicants, {fmtNumber(feederData.totals.adm)} admits, and {fmtNumber(feederData.totals.enr)}
+        {' '}enrollees for {feederData.campusLabel}.
+      </p>
+      <p style={{ color: 'var(--text-muted)', fontSize: '.86rem', lineHeight: 1.6, marginTop: '8px' }}>
+        Rankings use admitted students as the primary measure. Use the applicant, enrollee, and admit-rate
+        columns to understand whether a school has high demand, strong admission results, or high enrollment.
+      </p>
+    </section>
+  )
+}
+
+function FeederFaqSection({
+  feederData,
+  faqItems,
+}: {
+  feederData: NonNullable<ReturnType<typeof getFeederData>>
+  faqItems: FaqItem[]
+}) {
+  return (
+    <section className="chart-panel" style={{ height: 'auto' }}>
+      <div className="panel-controls">
+        <div className="ctrl-label">{feederData.campusLabel} FAQ</div>
+        <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1.2 }}>
+          {feederData.campusLabel} feeder schools FAQ
+        </h2>
+        <p style={{ fontSize: '.84rem', color: 'var(--text-muted)', maxWidth: '60ch', lineHeight: 1.6 }}>
+          Short answers for families comparing top high schools, admit volume, and campus-specific UC outcomes.
+        </p>
+      </div>
+      <div className="panel-body" style={{ paddingTop: '14px' }}>
+        <div className="article-faq-list">
+          {faqItems.map(item => (
+            <div key={item.question}>
+              <h3 style={{ color: 'var(--text)', fontSize: '.98rem', fontWeight: 800, lineHeight: 1.35 }}>
+                {item.question}
+              </h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '.86rem', lineHeight: 1.6, marginTop: '6px' }}>
+                {item.answer}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function generateStaticParams() {
   return getFeederSlugs().map(slug => ({ slug }))
 }
@@ -49,8 +158,8 @@ export async function generateMetadata({
   const feederData = getFeederData(slug)
   if (!feederData) return {}
 
-  const title = `Top Feeder Schools to ${feederData.campusLabel} | Highest-Volume Trends`
-  const description = `Explore the highest-volume feeder schools to ${feederData.campusLabel}, with applicants, admits, enrollees, and admit-rate trends for Fall ${feederData.displayYear}.`
+  const title = pageTitle(feederData.campusLabel, feederData.displayYear)
+  const description = pageDescription(feederData.campusLabel, feederData.displayYear)
 
   return {
     title,
@@ -74,6 +183,10 @@ export default async function FeederPage({
   const { slug } = await params
   const feederData = getFeederData(slug)
   if (!feederData) notFound()
+
+  const title = pageTitle(feederData.campusLabel, feederData.displayYear)
+  const description = pageDescription(feederData.campusLabel, feederData.displayYear)
+  const faqItems = buildFeederFaq(feederData)
 
   const breadcrumbLd = {
     '@context': 'https://schema.org',
@@ -100,6 +213,36 @@ export default async function FeederPage({
     ],
   }
 
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }
+
+  const articleLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description,
+    dateModified: new Date().toISOString().slice(0, 10),
+    author: {
+      '@type': 'Organization',
+      name: 'collegeacceptance.info',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'collegeacceptance.info',
+    },
+    mainEntityOfPage: `https://collegeacceptance.info/feeder-schools/${slug}`,
+  }
+
   const topCountyLinks = Array.from(
     feederData.rankedSchools.reduce((acc, school) => {
       const current = acc.get(school.county) ?? { county: school.county, adm: 0, app: 0 }
@@ -119,6 +262,14 @@ export default async function FeederPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+      />
 
       <header>
         <div className="header-inner">
@@ -130,12 +281,17 @@ export default async function FeederPage({
 
       <main>
         <section className="seo-intro" aria-label="About this feeder page">
+          <h1 style={{ color: 'var(--uc-blue)', fontSize: '1.55rem', fontWeight: 800, lineHeight: 1.25, marginBottom: '6px' }}>
+            {feederData.campusLabel} feeder schools {feederData.displayYear}: top high schools by admits
+          </h1>
           <p>
             This page summarizes <strong>{feederData.campusLabel} feeder-school admissions in Fall {feederData.displayYear}</strong>,
             ranks the California high schools sending the most admits to {feederData.campusLabel}, and highlights
             counties and schools with the strongest recent results.
           </p>
         </section>
+
+        <FeederAnswerBlock feederData={feederData} />
 
         <div className="notes-bar">
           <div className="notes-title">{feederData.campusLabel} feeder page</div>
@@ -310,6 +466,8 @@ export default async function FeederPage({
             </div>
           </div>
         </section>
+
+        <FeederFaqSection feederData={feederData} faqItems={faqItems} />
 
         <section className="map-card">
           <div className="map-controls" style={{ alignItems: 'center' }}>
