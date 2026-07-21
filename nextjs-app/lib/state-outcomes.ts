@@ -35,6 +35,7 @@ export type StateOutcomeProfile = {
     title: string
     description: string
     status: string
+    href?: string
   }>
   nextPages: Array<{
     path: string
@@ -54,16 +55,16 @@ export const STATE_OUTCOME_PROFILES: StateOutcomeProfile[] = [
     slug: 'texas',
     abbreviation: 'TX',
     name: 'Texas',
-    title: 'Texas College Acceptance and High School Outcomes',
+    title: 'Texas College Enrollment and High School Outcomes',
     description:
-      'Use official Texas higher-ed data to understand where Texas high-school graduates enroll after graduation, with 2024 statewide counts and starter high-school destination views.',
+      'Use official Texas higher-ed data to understand where Texas high-school graduates enroll, with indexable school profiles, complete destination lists, UT Austin feeder trends, and first-year GPA bands.',
     canonical: `${BASE_URL}/states/texas`,
-    updatedLabel: 'Updated May 11, 2026',
+    updatedLabel: 'Updated July 21, 2026',
     sourceYearLabel: 'FY 2024 graduates entering higher education in Fall 2024',
     shortAnswer:
-      'Texas is the best first non-California expansion because THECB publishes high-school-to-college destination files by campus, district, county, and destination institution. The data supports college-going and destination pages now, while acceptance-rate pages should come later from IPEDS, College Scorecard, and Common Data Set sources.',
+      'Texas is the first non-California expansion because THECB publishes high-school-to-college destination files by campus, district, county, and destination institution. You can now browse one indexable page per Texas high school and compare reported UT Austin feeder enrollment without mislabeling those outcomes as acceptance rates.',
     sourceSummary:
-      'The Texas Higher Education Coordinating Board publishes a long statewide summary from Fall 2000 through Fall 2024 and annual campus-level XLS files for recent cohorts. The interactive chart uses the annual campus files from Fall 2019 through Fall 2024, merging campus-code changes by high school, district, and county. The campus files report destination institutions, not admissions offers.',
+      'The Texas Higher Education Coordinating Board publishes a long statewide summary from Fall 2000 through Fall 2024, annual campus destination files, and separate first-year GPA files. The site joins the 2019–2024 files on stable nine-digit campus codes and retains all published destination rows plus six-digit FICE codes. The files report enrollment outcomes, not admissions offers.',
     heroStats: [
       {
         value: '382,023',
@@ -110,6 +111,12 @@ export const STATE_OUTCOME_PROFILES: StateOutcomeProfile[] = [
         href: 'https://reportcenter.highered.texas.gov/reports/data/?startRow=41',
         description:
           'Official THECB index where the annual campus-level XLS files are listed by fall year.',
+      },
+      {
+        label: 'High-school graduates GPA in higher education',
+        href: 'https://www.txhighereddata.org/high-school-graduates/high-school-graduates-gpa-in-higher-education/',
+        description:
+          'Official first-year GPA bands and public four-year/two-year sector counts by Texas high school.',
       },
     ],
     tables: [
@@ -161,34 +168,36 @@ export const STATE_OUTCOME_PROFILES: StateOutcomeProfile[] = [
       {
         title: 'Texas high-school destination pages',
         description:
-          'Create one page per Texas high school showing graduate count, tracked college-going rate, top destination institutions, and district/county context.',
-        status: 'Best immediate build',
+          'Browse one page per Texas high school with complete destinations, college-going trends, UT Austin enrollment, sector mix, and GPA bands.',
+        status: 'Live',
+        href: '/states/texas/high-schools',
+      },
+      {
+        title: 'UT Austin feeder schools',
+        description:
+          'Compare 2019–2024 reported UT Austin enrollment, leading high schools, graduate shares, and county patterns.',
+        status: 'Live',
+        href: '/college/university-of-texas-at-austin/feeder-schools',
       },
       {
         title: 'Texas automatic admission explainer',
         description:
-          'Pair the destination data with Texas top-percent automatic-admission rules, but keep this as policy content with review dates.',
-        status: 'Good second page',
-      },
-      {
-        title: 'Texas college profile pages',
-        description:
-          'Use Scorecard/IPEDS/CDS for UT Austin, Texas A&M, Rice, Houston, UT Dallas, Texas Tech, UNT, and other major destinations.',
-        status: 'National database dependency',
+          'Pair the destination data with Texas top-percent automatic-admission rules and explicit policy review dates.',
+        status: 'Planned',
       },
     ],
     nextPages: [
       {
-        path: '/states/texas/high-school-destinations',
-        purpose: 'Searchable table of Texas high schools, graduates, tracked enrollment rate, and top destinations.',
+        path: '/states/texas/high-schools',
+        purpose: 'Index of Texas high schools with complete individual enrollment-outcome pages.',
       },
       {
         path: '/states/texas/automatic-admission',
         purpose: 'Explain top-percent automatic admission and link to Texas public university profiles.',
       },
       {
-        path: '/college/university-of-texas-at-austin',
-        purpose: 'First Texas college profile using IPEDS, Scorecard, and Common Data Set fields.',
+        path: '/college/university-of-texas-at-austin/feeder-schools',
+        purpose: 'UT Austin feeder enrollment trends, leading schools, graduate shares, and geography.',
       },
     ],
     caveats: [
@@ -196,6 +205,7 @@ export const STATE_OUTCOME_PROFILES: StateOutcomeProfile[] = [
       'The state-level THECB summary runs back to Fall 2000, but the local high-school chart uses the annual campus-level files available for Fall 2019 through Fall 2024.',
       '"Not found" does not necessarily mean a graduate did not attend college; the report is scoped to the institutions covered by the source.',
       'The campus-level file is limited to high schools with more than 25 graduates and suppresses small destination counts into "Other" rows.',
+      'The GPA report uses activity across the academic year and may not match the fall-only enrollment counts; GPA bands are suppressed for public sectors with fewer than five students.',
     ],
     faqs: [
       {
@@ -206,7 +216,7 @@ export const STATE_OUTCOME_PROFILES: StateOutcomeProfile[] = [
       {
         question: 'What Texas content should be built first?',
         answer:
-          'Build high-school destination pages first because the official file already has high school, district, county, destination institution, and student-count fields.',
+          'The high-school destination pages and UT Austin feeder page are live. The next useful layer is policy-aware Texas college profiles using admissions sources that are distinct from the THECB enrollment outcomes.',
       },
     ],
   },

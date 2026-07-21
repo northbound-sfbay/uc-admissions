@@ -150,9 +150,12 @@ export default async function StateOutcomePage({ params }: PageProps) {
               <a href="#texas-high-school-outcomes" className="report-entry-link primary">
                 Search high schools
               </a>
-              <a href="#texas-data-sources" className="report-entry-link">
-                View sources
-              </a>
+              <Link href="/states/texas/high-schools" className="report-entry-link">
+                Browse school pages
+              </Link>
+              <Link href="/college/university-of-texas-at-austin/feeder-schools" className="report-entry-link">
+                UT Austin feeders
+              </Link>
             </div>
           </div>
 
@@ -174,7 +177,8 @@ export default async function StateOutcomePage({ params }: PageProps) {
             <h2>Start with a Texas high school</h2>
             <p>
               Compare graduates, tracked college enrollment, and top destination institutions
-              across the available 2019-2024 campus-level files.
+              across the available 2019-2024 campus-level files, then open the school&apos;s complete
+              indexable profile.
             </p>
           </div>
           <StateOutcomeExplorer stateSlug={profile.slug} stateName={profile.name} />
@@ -218,12 +222,14 @@ export default async function StateOutcomePage({ params }: PageProps) {
           ))}
 
           <section className="state-home-section">
-            <h2>What to build next</h2>
+            <h2>Explore Texas data pages</h2>
             <div className="state-home-module-grid">
               {profile.productModules.map(module => (
                 <div key={module.title}>
                   <span>{module.status}</span>
-                  <h3>{module.title}</h3>
+                  <h3>
+                    {module.href ? <Link href={module.href}>{module.title}</Link> : module.title}
+                  </h3>
                   <p>{module.description}</p>
                 </div>
               ))}

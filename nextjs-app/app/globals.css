@@ -1069,6 +1069,150 @@ main {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.texas-detail-hero h1 {
+  max-width: 15ch;
+}
+
+.texas-detail-band {
+  padding-top: 42px;
+}
+
+.texas-directory-hero h1 {
+  margin-top: 8px;
+  color: var(--uc-blue);
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  max-width: 24ch;
+}
+
+.texas-directory-hero > p:not(.state-home-kicker):not(.article-caption) {
+  margin-top: 14px;
+  max-width: 74ch;
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.texas-directory-hero .article-stat-grid {
+  margin-top: 20px;
+}
+
+.texas-directory-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.texas-directory-heading h2 {
+  margin-top: 6px;
+}
+
+.texas-directory-heading .report-entry-link {
+  flex: none;
+}
+
+.texas-table-sub {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: .72rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.texas-long-table,
+.texas-directory-table {
+  max-height: 920px;
+  overflow: auto;
+}
+
+.texas-long-table thead th,
+.texas-directory-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.texas-trend-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.texas-trend-row {
+  display: grid;
+  grid-template-columns: 52px minmax(140px, 1fr) 120px 100px;
+  align-items: center;
+  gap: 12px;
+  color: #475569;
+  font-size: .84rem;
+}
+
+.texas-trend-row > strong {
+  color: var(--text);
+}
+
+.texas-trend-row > small {
+  color: var(--text-muted);
+}
+
+.texas-trend-track {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e2e8f0;
+}
+
+.texas-trend-track span {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--uc-blue), #3b82f6);
+}
+
+.texas-county-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.texas-ut-year-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.texas-ut-year-grid div {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8fafc;
+  padding: 12px;
+}
+
+.texas-ut-year-grid span,
+.texas-ut-year-grid small {
+  display: block;
+  color: var(--text-muted);
+  font-size: .72rem;
+  line-height: 1.35;
+}
+
+.texas-ut-year-grid strong {
+  display: block;
+  margin: 5px 0;
+  color: var(--uc-blue);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.texas-sector-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
 /* ══════════ ROW 1: Two chart panels ══════════ */
 .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: stretch; }
 
@@ -1315,6 +1459,8 @@ footer a:hover { text-decoration: underline; }
   .state-home-hero h1 { max-width: 16ch; font-size: 2.35rem; }
   .state-home-module-grid,
   .state-home-faq-grid { grid-template-columns: 1fr; }
+  .texas-county-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .texas-ut-year-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .chart-header { flex-direction: column; align-items: stretch; }
   .chart-legend { gap: 8px; }
   .legend-item { white-space: normal; }
@@ -1356,6 +1502,17 @@ footer a:hover { text-decoration: underline; }
   .state-home-band { padding: 28px 12px 40px; gap: 24px; }
   .state-home-section-heading h2,
   .state-home-section h2 { font-size: 1.25rem; }
+  .texas-directory-hero h1 { font-size: 2rem; }
+  .texas-directory-heading { align-items: stretch; flex-direction: column; }
+  .texas-directory-heading .report-entry-link { width: 100%; }
+  .texas-trend-row {
+    grid-template-columns: 42px minmax(80px, 1fr) 95px;
+    gap: 8px;
+  }
+  .texas-trend-row > small { grid-column: 2 / -1; }
+  .texas-county-grid,
+  .texas-sector-grid { grid-template-columns: 1fr; }
+  .texas-ut-year-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .article-card h2 { font-size: 1.15rem; }
   .article-deck { font-size: 1.05rem !important; }
   .state-outcome-stats { grid-template-columns: 1fr; }

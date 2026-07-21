@@ -4,6 +4,10 @@ import type { MetadataRoute } from 'next'
 import { getCountySlugs } from '@/lib/county'
 import { getFeederSlugs } from '@/lib/feeder'
 import { getStateOutcomeSlugs } from '@/lib/state-outcomes'
+import {
+  getTexasOutcomeData,
+  texasHighSchoolHref,
+} from '@/lib/texas-outcomes'
 
 const BASE_URL = 'https://collegeacceptance.info'
 const SCHOOL_DATA_ROOT = path.join(process.cwd(), 'school-data')
@@ -35,6 +39,8 @@ function getSchoolEntries() {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const generatedAt = new Date()
+  const texasData = getTexasOutcomeData()
+  const texasUpdatedAt = new Date(`${texasData.generatedAt}T00:00:00Z`)
 
   const coreUrls: MetadataRoute.Sitemap = [
     {
@@ -66,6 +72,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: generatedAt,
       changeFrequency: 'weekly',
       priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/states/texas/high-schools`,
+      lastModified: texasUpdatedAt,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${BASE_URL}/college/university-of-texas-at-austin/feeder-schools`,
+      lastModified: texasUpdatedAt,
+      changeFrequency: 'monthly',
+      priority: 0.9,
     },
     {
       url: `${BASE_URL}/insights/uc-admission-rates-by-high-school`,
@@ -127,11 +145,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
+  const texasSchoolUrls: MetadataRoute.Sitemap = texasData.schools.map(school => ({
+    url: `${BASE_URL}${texasHighSchoolHref(school)}`,
+    lastModified: texasUpdatedAt,
+    changeFrequency: 'yearly',
+    priority: 0.68,
+  }))
+
   return [
     ...coreUrls,
     ...countyUrls,
     ...feederUrls,
     ...stateUrls,
+    ...texasSchoolUrls,
     ...schoolUrls,
   ]
 }

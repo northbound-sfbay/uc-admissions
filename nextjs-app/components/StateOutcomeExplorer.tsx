@@ -15,6 +15,7 @@ type OutcomeYear = {
 type Destination = {
   name: string
   students: number
+  ficeCode?: string | null
 }
 
 type OutcomeYearData = {
@@ -26,7 +27,8 @@ type OutcomeYearData = {
   coverageGapRate: number | null
   notFound: number | null
   notTrackable: number | null
-  topDestinations: Destination[]
+  destinations?: Destination[]
+  topDestinations?: Destination[]
 }
 
 type OutcomeSchool = {
@@ -83,6 +85,15 @@ function defaultSchoolId(dataset: StateOutcomeDataset): string {
     return !name.includes('virtual') && !name.includes('online') && !!school.years[latestYear]
   })
   return traditionalSchool?.id ?? dataset.schools[0]?.id ?? ''
+}
+
+function schoolProfileHref(stateSlug: string, school: OutcomeSchool): string | null {
+  if (stateSlug !== 'texas') return null
+  const nameSlug = school.schoolName
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+  return `/states/texas/high-schools/${school.id}-${nameSlug}`
 }
 
 export default function StateOutcomeExplorer({ stateSlug, stateName }: Props) {
@@ -307,7 +318,8 @@ export default function StateOutcomeExplorer({ stateSlug, stateName }: Props) {
   }
 
   const hasData = !!selectedSchool && !!latest
-  const topDestinations = latest?.data.topDestinations ?? []
+  const topDestinations = latest?.data.destinations ?? latest?.data.topDestinations ?? []
+  const profileHref = selectedSchool ? schoolProfileHref(stateSlug, selectedSchool) : null
   const primaryCountLabel = data?.primaryCountLabel ?? 'Graduates'
   const secondaryCountLabel = data?.secondaryCountLabel ?? 'Enrolled'
   const detailTitle = data?.detailTitle ?? (stateSlug === 'texas' ? 'Top destinations' : 'Destination detail')
@@ -431,6 +443,12 @@ export default function StateOutcomeExplorer({ stateSlug, stateName }: Props) {
               <p className="article-caption">
                 {data?.sourceNote ?? 'These are postsecondary enrollment outcomes, not admission offers.'}
               </p>
+
+              {profileHref ? (
+                <a className="report-entry-link primary" href={profileHref}>
+                  View complete school profile
+                </a>
+              ) : null}
             </aside>
           </div>
         </div>

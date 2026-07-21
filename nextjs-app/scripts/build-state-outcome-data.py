@@ -10,11 +10,12 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
+import subprocess
 import tempfile
 import urllib.parse
 import urllib.request
 import zipfile
-from collections import defaultdict
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -35,6 +36,25 @@ TX_CAMPUS_URL = (
     "https://reportcenter.highered.texas.gov/reports/data/"
     "high-school-graduates-enrolled-in-higher-education-by-campus-fall-{year}-xls/"
 )
+TX_GPA_URL = (
+    "https://reportcenter.highered.texas.gov/reports/data/"
+    "high-school-graduates-gpa-in-higher-education-{start_year}-{end_year}-xls/"
+)
+TX_UT_AUSTIN_FICE = "003658"
+
+TX_GPA_GROUPS = {
+    "four-year public university": "publicFourYear",
+    "two-year public colleges": "publicTwoYear",
+    "independent colleges & universities": "independent",
+}
+TX_GPA_BANDS = (
+    ("under2", "<2.0"),
+    ("from2To249", "2.0-2.49"),
+    ("from25To299", "2.5-2.99"),
+    ("from3To349", "3.0-3.49"),
+    ("over35", ">3.5"),
+    ("unknown", "Unknown"),
+)
 
 XLSX_NS = {"main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 
@@ -47,58 +67,110 @@ def normalized(value: Any) -> str:
     return compact(value).lower()
 
 
-def clean_tx_name(value: Any) -> str:
+def title_with_acronyms(value: Any) -> str:
+    """Title-case source labels without substring replacements.
+
+    The source is mostly uppercase and contains abbreviations. Replacing strings
+    such as ``Univ`` globally corrupts already-complete words (``Univ.ersity``),
+    so all normalization here is token- or phrase-boundary based.
+    """
+
     text = compact(value).title()
-    replacements = {
-        " Isd": " ISD",
-        " Cisd": " CISD",
-        " H S": " H S",
-        " J H": " J H",
-        " P-Tech": " P-TECH",
-        " Stem": " STEM",
-        " Early College": " Early College",
+    text = re.sub(r"\b([A-Za-z]+)'S\b", lambda match: f"{match.group(1)}'s", text)
+
+    token_replacements = {
+        "Isd": "ISD",
+        "Cisd": "CISD",
+        "Stem": "STEM",
+        "Ut": "UT",
+        "Utsa": "UTSA",
+        "Utpb": "UTPB",
+        "Ccd": "CCD",
+        "Hsi": "HSI",
     }
-    for old, new in replacements.items():
-        text = text.replace(old, new)
+    for old, new in token_replacements.items():
+        text = re.sub(rf"\b{re.escape(old)}\b", new, text)
+
+    text = re.sub(r"\bP-Tech\b", "P-TECH", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bA\s*&\s*M\b", "A&M", text, flags=re.IGNORECASE)
+    text = re.sub(r"\b([A-Z])\.\s+([A-Z])\b", r"\1 \2", text)
+
+    small_words = ("And", "At", "For", "In", "Of", "The")
+    for word in small_words:
+        text = re.sub(rf"(?<!^)\b{word}\b", word.lower(), text)
     return text
+
+
+def clean_tx_name(value: Any) -> str:
+    return title_with_acronyms(value)
 
 
 def clean_tx_county(value: Any) -> str:
     text = clean_tx_name(value)
-    return re.sub(r"\s+(County|Co)$", "", text)
-
-
-def canonical_tx_school_key(value: Any) -> str:
-    text = normalized(value)
-    text = re.sub(r"\bhigh school\b", "h s", text)
-    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+    # Older workbooks contain visibly truncated COUNTY suffixes (COUNT/COUN/COU).
+    return re.sub(r"\s+(County|Count|Coun|Cou|Co)$", "", text, flags=re.IGNORECASE)
 
 
 def clean_institution(value: Any) -> str:
-    text = re.sub(r"\s+\(\d+\)\s*$", "", compact(value)).title()
-    replacements = {
-        "A&M": "A&M",
-        "Ut ": "UT ",
-        "Utpb": "UTPB",
-        "Utsa": "UTSA",
-        "Univ": "Univ.",
-        "Comm College": "Community College",
-        "Coll Dist": "College District",
-        "Sys Admin": "System Administration",
-    }
-    for old, new in replacements.items():
-        text = text.replace(old, new)
+    text = compact(value)
+    phrase_replacements = (
+        (r"\bU\.\s+OF\s+TEXAS\b", "UNIVERSITY OF TEXAS"),
+        (r"\bUNIV\b\.?", "UNIVERSITY"),
+        (r"\bCOMM\b\.?", "COMMUNITY"),
+        (r"\bCOLL\b\.?", "COLLEGE"),
+        (r"\bDIST\b\.?", "DISTRICT"),
+        (r"\bSYS\b\.?", "SYSTEM"),
+        (r"\bADMIN\b\.?", "ADMINISTRATION"),
+        (r"\bT\.\s*C\.", "TECHNICAL COLLEGE"),
+    )
+    for pattern, replacement in phrase_replacements:
+        text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
+    text = title_with_acronyms(text)
+    text = re.sub(r"\b([24])-Yr\b", r"\1-year", text, flags=re.IGNORECASE)
     return text
 
 
-def slugify(value: str) -> str:
-    slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
-    return slug or "unknown"
+def normalize_tx_campus_code(value: Any) -> str:
+    digits = re.sub(r"\D", "", compact(value).split(".", 1)[0])
+    return digits.zfill(9) if digits else ""
+
+
+def parse_tx_destination(value: Any, students: int) -> dict[str, Any]:
+    raw = compact(value)
+    fice_match = re.search(r"\s+\((\d{6})\)\s*$", raw)
+    if fice_match:
+        return {
+            "name": clean_institution(raw[: fice_match.start()]),
+            "ficeCode": fice_match.group(1),
+            "students": students,
+            "aggregate": False,
+        }
+
+    aggregate_match = re.match(
+        r"^Other\s+(.+?)\s+Institution\s+\((\d+)\)\s*$",
+        raw,
+        flags=re.IGNORECASE,
+    )
+    if aggregate_match:
+        return {
+            "name": clean_institution(f"Other {aggregate_match.group(1)} institutions"),
+            "ficeCode": None,
+            "students": students,
+            "aggregate": True,
+            "institutionCount": int(aggregate_match.group(2)),
+        }
+
+    return {
+        "name": clean_institution(raw),
+        "ficeCode": None,
+        "students": students,
+        "aggregate": normalized(raw).startswith("other"),
+    }
 
 
 def parse_number(value: Any) -> int | None:
     text = compact(value)
-    if not text or text in {"<", "-", "*"}:
+    if not text or text.startswith("<") or text in {"-", "*"}:
         return None
     text = re.sub(r"[^\d.-]", "", text)
     if not text:
@@ -177,14 +249,154 @@ def xlsx_rows(path: Path) -> list[list[str]]:
     return rows
 
 
-def is_tx_destination(institution: str) -> bool:
-    text = normalized(institution)
-    return not (
-        text.startswith("not found")
-        or text.startswith("not trackable")
-        or text.startswith("total high school graduates")
-        or text.startswith("other")
-    )
+def workbook_rows(path: Path) -> list[list[str]]:
+    if zipfile.is_zipfile(path):
+        return xlsx_rows(path)
+
+    converted_path = path.with_name(f"{path.stem}-converted.xlsx")
+    if not converted_path.exists():
+        soffice = shutil.which("soffice") or shutil.which("libreoffice")
+        if not soffice:
+            raise RuntimeError(
+                f"{path} is a legacy XLS workbook. Install LibreOffice so the data "
+                "builder can convert older THECB files to XLSX."
+            )
+        with tempfile.TemporaryDirectory(prefix="thecb-xls-") as temp_dir_name:
+            temp_dir = Path(temp_dir_name)
+            legacy_path = temp_dir / f"{path.stem}.xls"
+            legacy_path.write_bytes(path.read_bytes())
+            subprocess.run(
+                [
+                    soffice,
+                    "--headless",
+                    "--convert-to",
+                    "xlsx",
+                    "--outdir",
+                    str(temp_dir),
+                    str(legacy_path),
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            converted = temp_dir / f"{path.stem}.xlsx"
+            if not converted.exists():
+                raise RuntimeError(f"LibreOffice did not convert {path}")
+            converted_path.write_bytes(converted.read_bytes())
+    return xlsx_rows(converted_path)
+
+
+def tx_gpa_group_key(value: Any) -> str | None:
+    text = normalized(value)
+    if text.startswith("four-year public universit"):
+        return "publicFourYear"
+    if text.startswith("two-year public college"):
+        return "publicTwoYear"
+    if text.startswith("independent colleges & universit"):
+        return "independent"
+    return TX_GPA_GROUPS.get(text)
+
+
+def tx_gpa_group(row: list[str]) -> dict[str, Any]:
+    students_raw = row[5] if len(row) > 5 else ""
+    group: dict[str, Any] = {
+        "students": parse_number(students_raw),
+        "suppressed": compact(students_raw).startswith("<"),
+    }
+    bands = {
+        key: parse_number(row[index + 6] if len(row) > index + 6 else "")
+        for index, (key, _) in enumerate(TX_GPA_BANDS)
+    }
+    if any(value is not None for value in bands.values()):
+        group["bands"] = bands
+    return group
+
+
+def tx_gpa_columns(rows: list[list[str]], path: Path) -> tuple[int, dict[str, int]]:
+    aliases = {
+        "county": ("county", "ctyname"),
+        "district": ("district", "distname"),
+        "campusCode": ("campus code", "teacampus"),
+        "campus": ("campus", "campname"),
+        "groupName": ("group name", "groupname"),
+        "total": ("total graduates", "total"),
+        "under2": ("<2.0",),
+        "from2To249": ("2.0-2.49",),
+        "from25To299": ("2.5-2.99",),
+        "from3To349": ("3.0-3.49",),
+        "over35": (">3.5",),
+        "unknown": ("unknown", "unk"),
+    }
+    for header_index, row in enumerate(rows[:40]):
+        headers = [normalized(cell) for cell in row]
+        if not any(alias in headers for alias in aliases["groupName"]):
+            continue
+        columns: dict[str, int] = {}
+        for key, candidates in aliases.items():
+            match = next((headers.index(alias) for alias in candidates if alias in headers), None)
+            if match is None:
+                break
+            columns[key] = match
+        if len(columns) == len(aliases):
+            return header_index, columns
+    raise RuntimeError(f"Could not find Texas GPA header row in {path}")
+
+
+def standardized_tx_gpa_row(row: list[str], columns: dict[str, int]) -> list[str]:
+    def value(key: str) -> str:
+        index = columns[key]
+        return row[index] if index < len(row) else ""
+
+    return [
+        value("county"),
+        value("district"),
+        value("campusCode"),
+        value("campus"),
+        value("groupName"),
+        value("total"),
+        *(value(key) for key, _ in TX_GPA_BANDS),
+    ]
+
+
+def add_texas_gpa(schools: dict[str, dict[str, Any]]) -> None:
+    for year in TX_YEARS:
+        path = CACHE_DIR / f"texas-gpa-{year}.xlsx"
+        fetch(
+            TX_GPA_URL.format(start_year=year - 1, end_year=year),
+            path,
+        )
+        rows = workbook_rows(path)
+
+        header_index, columns = tx_gpa_columns(rows, path)
+
+        for source_row in rows[header_index + 1 :]:
+            row = standardized_tx_gpa_row(source_row, columns)
+            if len(row) < 6:
+                continue
+            county, district, code_raw, school_name, group_name = row[:5]
+            code = normalize_tx_campus_code(code_raw)
+            group_key = tx_gpa_group_key(group_name)
+            if not code or not group_key:
+                continue
+
+            school = schools.get(code)
+            if not school:
+                # The campus enrollment file is the canonical page inventory.
+                continue
+            year_data = school["years"].get(str(year))
+            if not year_data:
+                continue
+
+            school["schoolName"] = clean_tx_name(school_name) or school["schoolName"]
+            school["district"] = clean_tx_name(district) or school["district"]
+            school["county"] = clean_tx_county(county) or school["county"]
+            year_data.setdefault(
+                "gpa",
+                {
+                    "sourceLabel": f"THECB {year - 1}-{year} graduates GPA report",
+                    "sourceUrl": TX_GPA_URL.format(start_year=year - 1, end_year=year),
+                },
+            )[group_key] = tx_gpa_group(row)
 
 
 def build_texas() -> dict[str, Any]:
@@ -193,7 +405,7 @@ def build_texas() -> dict[str, Any]:
     for year in TX_YEARS:
         path = CACHE_DIR / f"texas-campus-{year}.xlsx"
         fetch(TX_CAMPUS_URL.format(year=year), path)
-        rows = xlsx_rows(path)
+        rows = workbook_rows(path)
 
         try:
             header_index = next(
@@ -208,7 +420,8 @@ def build_texas() -> dict[str, Any]:
         for row in rows[header_index + 1 :]:
             if len(row) < 6:
                 continue
-            county, district, school_name, code, institution, students_raw = row[:6]
+            county, district, school_name, code_raw, institution, students_raw = row[:6]
+            code = normalize_tx_campus_code(code_raw)
             if not code or not institution:
                 continue
 
@@ -217,30 +430,28 @@ def build_texas() -> dict[str, Any]:
                 continue
 
             cleaned_county = clean_tx_county(county)
-            school_key = slugify(
-                f"{cleaned_county}-{district}-{canonical_tx_school_key(school_name)}"
-            )
             school = schools.setdefault(
-                school_key,
+                code,
                 {
-                    "id": school_key,
+                    "id": code,
+                    "campusCode": code,
                     "schoolName": clean_tx_name(school_name),
                     "district": clean_tx_name(district),
                     "county": cleaned_county,
                     "state": "TX",
-                    "campusCodes": [],
                     "years": {},
                 },
             )
-            if code not in school["campusCodes"]:
-                school["campusCodes"].append(code)
+            school["schoolName"] = clean_tx_name(school_name) or school["schoolName"]
+            school["district"] = clean_tx_name(district) or school["district"]
+            school["county"] = cleaned_county or school["county"]
             year_data = school["years"].setdefault(
                 str(year),
                 {
                     "graduates": None,
                     "notFound": 0,
                     "notTrackable": 0,
-                    "destinations": defaultdict(int),
+                    "destinations": {},
                 },
             )
 
@@ -251,8 +462,25 @@ def build_texas() -> dict[str, Any]:
                 year_data["notFound"] += students
             elif institution_key.startswith("not trackable"):
                 year_data["notTrackable"] += students
-            elif is_tx_destination(institution):
-                year_data["destinations"][clean_institution(institution)] += students
+            else:
+                destination = parse_tx_destination(institution, students)
+                destination_key = (
+                    f"fice:{destination['ficeCode']}"
+                    if destination.get("ficeCode")
+                    else f"label:{normalized(destination['name'])}"
+                )
+                existing = year_data["destinations"].get(destination_key)
+                if existing:
+                    existing["students"] += students
+                    if destination.get("institutionCount"):
+                        existing["institutionCount"] = max(
+                            existing.get("institutionCount", 0),
+                            destination["institutionCount"],
+                        )
+                else:
+                    year_data["destinations"][destination_key] = destination
+
+    add_texas_gpa(schools)
 
     for school in schools.values():
         latest_key = None
@@ -267,19 +495,28 @@ def build_texas() -> dict[str, Any]:
             trackable_graduates = max(graduates - not_trackable, 0)
             enrolled = max(graduates - not_found - not_trackable, 0)
             destination_rows = sorted(
-                year_data["destinations"].items(),
-                key=lambda item: (-item[1], item[0]),
-            )[:8]
+                year_data["destinations"].values(),
+                key=lambda destination: (-destination["students"], destination["name"]),
+            )
+            destination_total = sum(row["students"] for row in destination_rows)
+            ut_austin_enrollment = sum(
+                row["students"]
+                for row in destination_rows
+                if row.get("ficeCode") == TX_UT_AUSTIN_FICE
+            )
 
             year_data["trackableGraduates"] = trackable_graduates
             year_data["enrolled"] = enrolled
             year_data["enrollmentRate"] = rounded_rate(enrolled, trackable_graduates)
             year_data["coverageGap"] = not_found
             year_data["coverageGapRate"] = rounded_rate(not_found, trackable_graduates)
-            year_data["topDestinations"] = [
-                {"name": name, "students": count} for name, count in destination_rows
-            ]
-            del year_data["destinations"]
+            year_data["destinationTotal"] = destination_total
+            year_data["destinations"] = destination_rows
+            year_data["utAustinEnrollment"] = ut_austin_enrollment
+            year_data["utAustinShareOfGraduates"] = rounded_rate(
+                ut_austin_enrollment,
+                graduates,
+            )
             latest_key = max(latest_key or year_key, year_key)
 
         school["latestYear"] = latest_key
@@ -302,15 +539,20 @@ def build_texas() -> dict[str, Any]:
         "sourceUrl": "https://www.txhighereddata.org/high-school-graduates/hsgradsenrolled/",
         "sourceNote": (
             "Texas rows merge annual THECB campus-level files for Fall 2019 through "
-            "Fall 2024 by high school, district, and county. These are enrollment "
-            "outcomes, not applications or admission offers."
+            "Fall 2024 by nine-digit campus code. Destination rows retain the source "
+            "institution name, six-digit FICE code when reported, and all aggregate "
+            "Other rows. GPA bands come from the separate THECB first-year GPA files. "
+            "These are enrollment outcomes, not applications or admission offers."
         ),
+        "gpaSourceLabel": "Texas Higher Education Coordinating Board first-year GPA files",
+        "gpaSourceUrl": "https://www.txhighereddata.org/high-school-graduates/high-school-graduates-gpa-in-higher-education/",
+        "utAustinFiceCode": TX_UT_AUSTIN_FICE,
         "years": [{"key": str(year), "label": str(year)} for year in TX_YEARS],
         "rateLabel": "Tracked enrollment rate",
         "coverageGapLabel": "Not found in covered Texas higher-ed records",
         "primaryCountLabel": "Graduates",
         "secondaryCountLabel": "Enrolled",
-        "detailTitle": "Top destinations",
+        "detailTitle": "Leading destinations",
         "emptyDetailText": "No destination list is available for the selected year.",
         "schools": schools_list,
     }
