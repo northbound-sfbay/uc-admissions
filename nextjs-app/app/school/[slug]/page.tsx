@@ -37,9 +37,9 @@ export async function generateMetadata({
     ? ` ${pct(d.admit_rate, 0)} UC admit rate in ${yr}.`
     : ''
 
-  const title = `${name} UC Admissions Trends | Admit Rates & History`
+  const title = `${name} UC Acceptance Rate & Admissions Trends`
   const description =
-    `Explore UC admissions trends, admit rates, and history for ${name} in ${loc}.${rateStr} ` +
+    `Explore UC acceptance rates, admit rates, and admissions history for ${name} in ${loc}.${rateStr} ` +
     `View applicants, admits, and enrollment data from 1994–2025 across all UC campuses.`
 
   return {
@@ -246,6 +246,40 @@ function DirectAnswerBlock({
           {' '}for Fall {yr}. Use campus-specific rates as context, not as a prediction for one student.
         </p>
       )}
+    </section>
+  )
+}
+
+function SchoolSearchSummary({
+  name,
+  loc,
+  yr,
+  d,
+}: {
+  name: string
+  loc: string
+  yr: string
+  d: YearData
+}) {
+  return (
+    <section className="seo-intro" aria-label={`${name} UC acceptance rate search summary`}>
+      <p>
+        Searching for <strong>{name} acceptance rate</strong>? This page covers the
+        {' '}<strong>UC acceptance rate by high school</strong> for {name}{loc ? ` in ${loc}` : ''}:
+        applicants, admits, enrollees, admit rate, campus breakdowns, ethnicity breakdowns,
+        and recent history from UC source-school data.
+        {d.admit_rate != null && (
+          <>
+            {' '}In Fall {yr}, {name} had {fmt(d.app)} UC applicants, {fmt(d.adm)} admits,
+            and a UC admit rate of {pct(d.admit_rate)}.
+          </>
+        )}
+      </p>
+      <p>
+        This is not {name}&apos;s own high-school admissions selectivity. It is a historical
+        view of how students from {name} applied to and were admitted by University of
+        California campuses.
+      </p>
     </section>
   )
 }
@@ -552,6 +586,8 @@ export default async function SchoolPage({
 
           {yr && d && <DirectAnswerBlock name={name} loc={loc} yr={yr} d={d} />}
 
+          {yr && d && <SchoolSearchSummary name={name} loc={loc} yr={yr} d={d} />}
+
           {/* Most recent year summary */}
           {yr && d && <YearSummary yr={yr} d={d} />}
 
@@ -627,12 +663,10 @@ export default async function SchoolPage({
           <p className="text-xs text-gray-400 text-center pb-4">
             Data source:{' '}
             <a
-              href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school"
-              target="_blank"
-              rel="noopener"
+              href="/insights/uc-admissions-by-source-school"
               className="underline"
             >
-              UC Information Center
+              UC source-school data guide
             </a>
             . Fall 1994–2025.
           </p>

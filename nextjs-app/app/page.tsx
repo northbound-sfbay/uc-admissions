@@ -1,25 +1,31 @@
 import type { Metadata } from 'next'
 import InteractiveToolLoader from '@/components/InteractiveToolLoader'
+import SiteFooter from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
-  title: 'UC Admissions by High School | Interactive Trends & Charts',
-  description: 'Explore UC admissions trends for high schools with interactive charts, admit rates, applicants, and enrollment data from Fall 1994 to Fall 2025.',
+  title: 'UC Acceptance Rates by High School | UC Admissions Data',
+  description: 'Search UC acceptance rates and admissions trends by high school, with admit rates, applicants, admits, and enrollment data from Fall 1994 through Fall 2025.',
   alternates: { canonical: 'https://collegeacceptance.info' },
   openGraph: {
-    title: 'UC Admissions by High School | Interactive Trends & Charts',
-    description: 'Explore UC admissions trends for high schools with interactive charts, admit rates, applicants, and enrollment data from Fall 1994 to Fall 2025.',
+    title: 'UC Acceptance Rates by High School | UC Admissions Data',
+    description: 'Search UC acceptance rates and admissions trends by high school, with admit rates, applicants, admits, and enrollment data from Fall 1994 through Fall 2025.',
     url: 'https://collegeacceptance.info',
     type: 'website',
     images: [{ url: 'https://collegeacceptance.info/og-image.png' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'UC Admissions by High School | Interactive Trends & Charts',
-    description: 'Explore UC admissions trends for high schools with interactive charts, admit rates, applicants, and enrollment data from Fall 1994 to Fall 2025.',
+    title: 'UC Acceptance Rates by High School | UC Admissions Data',
+    description: 'Search UC acceptance rates and admissions trends by high school, with admit rates, applicants, admits, and enrollment data from Fall 1994 through Fall 2025.',
     images: ['https://collegeacceptance.info/og-image.png'],
   },
 }
 
 export default function Home() {
-  return <InteractiveToolLoader />
+  return (
+    <>
+      <InteractiveToolLoader />
+      <SiteFooter />
+    </>
+  )
 }

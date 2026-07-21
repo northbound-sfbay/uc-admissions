@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import 'leaflet/dist/leaflet.css'
-import { RECENT_YEARS, TYPE_DATA_URLS, TYPE_MAP_VIEW, CAMPUSES } from '@/lib/constants'
+import { RECENT_YEARS, TYPE_MAP_VIEW, CAMPUSES } from '@/lib/constants'
 import { getYearData, yieldRate, fmt, pct, admitColor, schoolKey } from '@/lib/utils'
 import type { School } from '@/lib/types'
 
@@ -19,7 +19,7 @@ interface Props {
 const CA_TYPES = new Set(['CA Public', 'CA Private', 'Other'])
 
 export default function LeafletMap({
-  allSchools, schoolsByType, loadedTypes, schoolCoords, allCounties,
+  allSchools, loadedTypes, schoolCoords, allCounties,
   onSchoolClick, onEnsureTypeLoaded,
 }: Props) {
   const mapContainerRef = useRef<HTMLDivElement>(null)
@@ -41,9 +41,15 @@ export default function LeafletMap({
 
   // Initialize map once
   useEffect(() => {
-    if (mapRef.current || !mapContainerRef.current) return
+    const initialContainer = mapContainerRef.current as (HTMLDivElement & { _leaflet_id?: number }) | null
+    if (mapRef.current || !initialContainer) return
+    let cancelled = false
+    const markerById = markerByIdRef.current
+
     import('leaflet').then(L => {
-      const map = L.map(mapContainerRef.current!, { center: [37.0, -119.5], zoom: 6 })
+      if (cancelled || mapRef.current) return
+      delete initialContainer._leaflet_id
+      const map = L.map(initialContainer, { center: [37.0, -119.5], zoom: 6 })
       L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -61,12 +67,26 @@ export default function LeafletMap({
         }).addTo(map)
       }).catch(() => {})
     })
+
+    return () => {
+      cancelled = true
+      markersRef.current.forEach(marker => marker.remove())
+      markersRef.current = []
+      markerById.clear()
+      countyLayerRef.current?.remove()
+      countyLayerRef.current = null
+      mapRef.current?.remove()
+      mapRef.current = null
+      delete initialContainer._leaflet_id
+    }
   }, [])
 
   // Update markers whenever relevant state changes (including after map init)
   useEffect(() => {
     if (!mapReady || !mapRef.current) return
     import('leaflet').then(L => updateMap(L))
+    // updateMap reads the same state values listed in this dependency array.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allSchools, schoolCoords, mapYear, mapCampus, mapCounty, selectedTypes, mapReady])
 
   function updateMap(L: typeof import('leaflet')) {

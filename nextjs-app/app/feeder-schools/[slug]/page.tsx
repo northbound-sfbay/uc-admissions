@@ -42,10 +42,16 @@ function StatPanel({
 }
 
 function pageTitle(campusLabel: string, displayYear: string): string {
+  if (campusLabel === 'UCLA') {
+    return `UCLA Feeder Schools ${displayYear} | Top California High Schools for UCLA`
+  }
   return `${campusLabel} Feeder Schools ${displayYear} | Top High Schools by ${campusLabel} Admits`
 }
 
 function pageDescription(campusLabel: string, displayYear: string): string {
+  if (campusLabel === 'UCLA') {
+    return `Explore UCLA feeder schools in California using Fall ${displayYear} UC source-school data. Compare high schools by UCLA applicants, admits, enrollees, admit rates, and school-level UC admissions history.`
+  }
   return `See which California high schools sent the most admits to ${campusLabel} in Fall ${displayYear}. Compare applicants, admits, enrollees, admit rates, and school-level UC admissions pages.`
 }
 
@@ -285,9 +291,10 @@ export default async function FeederPage({
             {feederData.campusLabel} feeder schools {feederData.displayYear}: top high schools by admits
           </h1>
           <p>
-            This page summarizes <strong>{feederData.campusLabel} feeder-school admissions in Fall {feederData.displayYear}</strong>,
+            This page summarizes <strong>{feederData.campusLabel} feeder schools in Fall {feederData.displayYear}</strong>,
             ranks the California high schools sending the most admits to {feederData.campusLabel}, and highlights
-            counties and schools with the strongest recent results.
+            counties and schools with the strongest recent results. Use it to compare {feederData.campusLabel}
+            applicants, admits, enrollees, admit rates, and school-level UC admissions histories.
           </p>
         </section>
 

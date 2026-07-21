@@ -2,20 +2,41 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'UC Admissions Insights | collegeacceptance.info',
+  title: 'College Acceptance Insights | collegeacceptance.info',
   description:
-    'Data-backed explainers on UC admission rates, source-school trends, campus feeder patterns, and GPA context for California high schools.',
+    'Data-backed explainers on UC admission rates, source-school trends, state college-going outcomes, campus feeder patterns, and GPA context.',
   alternates: { canonical: 'https://collegeacceptance.info/insights' },
   openGraph: {
-    title: 'UC Admissions Insights',
+    title: 'College Acceptance Insights',
     description:
-      'Data-backed explainers on UC admission rates, source-school trends, campus feeder patterns, and GPA context.',
+      'Data-backed explainers on UC admission rates, source-school trends, state college-going outcomes, campus feeder patterns, and GPA context.',
     url: 'https://collegeacceptance.info/insights',
     type: 'website',
   },
 }
 
 const ARTICLES = [
+  {
+    title: 'UC admissions by source school: how to read the data',
+    href: '/insights/uc-admissions-by-source-school',
+    description:
+      'Methodology notes for UC source data, applicants, admits, enrollees, admit rates, campus views, ethnicity views, and common limitations.',
+    eyebrow: 'Source data guide',
+  },
+  {
+    title: 'Texas and Virginia college outcome data: first state expansion hubs',
+    href: '/states',
+    description:
+      'Browse official state sources for Texas and Virginia high-school college destinations, postsecondary enrollment, locality admissions, and future college-profile pages.',
+    eyebrow: 'State expansion',
+  },
+  {
+    title: 'UC GPA by high school: applicant GPA, admitted GPA, and what it means',
+    href: '/insights/uc-gpa-by-high-school',
+    description:
+      'Use source-school GPA data carefully: compare applicant GPA, admit GPA, enrollee GPA, campus mix, and applicant volume before drawing conclusions.',
+    eyebrow: 'GPA data guide',
+  },
   {
     title: 'UC admission rates by high school: how to read the data',
     href: '/insights/uc-admission-rates-by-high-school',
@@ -30,9 +51,9 @@ export default function InsightsPage() {
     <>
       <header>
         <div className="header-inner">
-          <h1>UC Admissions Insights</h1>
+          <h1>College Acceptance Insights</h1>
           <p className="subtitle">
-            Data-backed explainers for reading UC high-school admissions trends.
+            Data-backed explainers for reading UC and state college outcome data.
           </p>
         </div>
       </header>
@@ -40,14 +61,21 @@ export default function InsightsPage() {
       <main className="insights-shell">
         <section className="insights-hero">
           <div className="ctrl-label">Insights</div>
-          <h2>Use the UC data more carefully</h2>
+          <h2>Use official admissions and outcome data more carefully</h2>
           <p>
-            These articles explain how to interpret UC source-school data: admit rates, applicant
-            volume, campus mix, GPA trends, feeder patterns, and enrollment outcomes.
+            These articles explain how to interpret UC source-school data and the first broader
+            state outcome datasets: admit rates, applicant volume, campus mix, GPA trends, feeder
+            patterns, college destinations, and enrollment outcomes.
           </p>
           <div className="insights-actions">
             <Link href="/" className="report-entry-link primary">
               Search your high school
+            </Link>
+            <Link href="/rankings" className="report-entry-link">
+              View UC rankings
+            </Link>
+            <Link href="/states" className="report-entry-link">
+              Browse TX and VA
             </Link>
             <Link href="/uc-admission-rates" className="report-entry-link">
               View UC admission rates

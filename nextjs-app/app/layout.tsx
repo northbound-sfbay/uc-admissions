@@ -4,6 +4,13 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'UC Admissions by High School',
   description: 'UC admissions data by California high school, 1994–2025.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/brand-icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

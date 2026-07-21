@@ -3,6 +3,7 @@ import path from 'path'
 import type { MetadataRoute } from 'next'
 import { getCountySlugs } from '@/lib/county'
 import { getFeederSlugs } from '@/lib/feeder'
+import { getStateOutcomeSlugs } from '@/lib/state-outcomes'
 
 const BASE_URL = 'https://collegeacceptance.info'
 const SCHOOL_DATA_ROOT = path.join(process.cwd(), 'school-data')
@@ -49,13 +50,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
+      url: `${BASE_URL}/rankings`,
+      lastModified: generatedAt,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/insights`,
       lastModified: generatedAt,
       changeFrequency: 'weekly',
       priority: 0.75,
     },
     {
+      url: `${BASE_URL}/states`,
+      lastModified: generatedAt,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${BASE_URL}/insights/uc-admission-rates-by-high-school`,
+      lastModified: generatedAt,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${BASE_URL}/insights/uc-admissions-by-source-school`,
+      lastModified: generatedAt,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${BASE_URL}/insights/uc-gpa-by-high-school`,
       lastModified: generatedAt,
       changeFrequency: 'monthly',
       priority: 0.85,
@@ -88,6 +113,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }))
 
+  const stateUrls: MetadataRoute.Sitemap = getStateOutcomeSlugs().map(slug => ({
+    url: `${BASE_URL}/states/${slug}`,
+    lastModified: generatedAt,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
+
   const schoolUrls: MetadataRoute.Sitemap = getSchoolEntries().map(({ school_id, school_name }) => ({
     url: `${BASE_URL}/school/${makeSlug(school_id, school_name)}`,
     lastModified: generatedAt,
@@ -99,6 +131,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...coreUrls,
     ...countyUrls,
     ...feederUrls,
+    ...stateUrls,
     ...schoolUrls,
   ]
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import TimeSeriesPanel from './TimeSeriesPanel'
 import ComparePanel, { type CmpEntry } from './ComparePanel'
 import { trackEvent } from '@/lib/analytics'
@@ -314,7 +315,7 @@ export default function InteractiveTool({ variant = 'home' }: { variant?: Intera
               </p>
             </>
           ) : (
-            <p>This tool lets you look up <strong>University of California admissions data</strong> for high schools from <strong>Fall 1994 through Fall 2025</strong>. Browse applicant counts, admission rates, and enrollment numbers across all nine undergraduate UC campuses — Berkeley, Los Angeles, San Diego, Davis, Santa Barbara, Irvine, Santa Cruz, Riverside, and Merced — broken down by ethnicity. Data is sourced from the <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" rel="noopener">UC Information Center</a>.</p>
+            <p>This tool lets you look up <strong>UC acceptance rates by high school</strong> and <strong>University of California admissions data</strong> from <strong>Fall 1994 through Fall 2025</strong>. Browse applicant counts, admit rates, and enrollment numbers across all nine undergraduate UC campuses — Berkeley, Los Angeles, San Diego, Davis, Santa Barbara, Irvine, Santa Cruz, Riverside, and Merced — broken down by ethnicity. Data is sourced from the <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" rel="noopener">UC Information Center</a>; read the <Link href="/insights/uc-admissions-by-source-school">source-school data guide</Link> for methodology notes.</p>
           )}
         </section>
 
@@ -448,10 +449,6 @@ export default function InteractiveTool({ variant = 'home' }: { variant?: Intera
           </section>
         </div>
       </main>
-
-      <footer>
-        <p>Data: <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" target="_blank" rel="noopener">UC Information Center</a> · School locations: California Dept. of Education &amp; OpenStreetMap contributors · Map: © CARTO · <a href="/insights">Insights</a> · <a href="/about">About this site</a> · <a href="/privacy">Privacy Policy</a></p>
-      </footer>
     </>
   )
 }

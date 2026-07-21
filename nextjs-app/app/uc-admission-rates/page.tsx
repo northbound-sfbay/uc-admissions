@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import InteractiveToolLoader from '@/components/InteractiveToolLoader'
+import SiteFooter from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
   title: 'UC Admission Rates by High School | Interactive UC Trends',
@@ -24,5 +25,10 @@ export const metadata: Metadata = {
 }
 
 export default function UcAdmissionRatesPage() {
-  return <InteractiveToolLoader variant="uc-rates" />
+  return (
+    <>
+      <InteractiveToolLoader variant="uc-rates" />
+      <SiteFooter />
+    </>
+  )
 }
