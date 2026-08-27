@@ -92,6 +92,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${BASE_URL}/insights/uc-acceptance-rates-2026`,
+      lastModified: new Date('2026-08-26T00:00:00Z'),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/insights/uc-admissions-by-source-school`,
       lastModified: generatedAt,
       changeFrequency: 'monthly',

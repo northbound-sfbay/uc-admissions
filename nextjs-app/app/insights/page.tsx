@@ -17,6 +17,13 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    title: 'UC acceptance rates 2026: official results for every campus',
+    href: '/insights/uc-acceptance-rates-2026',
+    description:
+      'See the preliminary Fall 2026 applicant, admit, and acceptance-rate figures, compare every campus with 2025, and understand what the 78% California headline means.',
+    eyebrow: 'New Fall 2026 data',
+  },
+  {
     title: 'UC admissions by source school: how to read the data',
     href: '/insights/uc-admissions-by-source-school',
     description:
@@ -63,9 +70,10 @@ export default function InsightsPage() {
           <div className="ctrl-label">Insights</div>
           <h2>Use official admissions and outcome data more carefully</h2>
           <p>
-            These articles explain how to interpret UC source-school data and the first broader
-            state outcome datasets: admit rates, applicant volume, campus mix, GPA trends, feeder
-            patterns, college destinations, and enrollment outcomes.
+            These articles cover the latest UC campus results, explain how to interpret UC
+            source-school data, and examine broader state outcome datasets: admit rates, applicant
+            volume, campus mix, GPA trends, feeder patterns, college destinations, and enrollment
+            outcomes.
           </p>
           <div className="insights-actions">
             <Link href="/" className="report-entry-link primary">

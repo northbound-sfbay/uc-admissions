@@ -299,6 +299,34 @@ export default function InteractiveTool({ variant = 'home' }: { variant?: Intera
       </header>
 
       <main>
+        {!isRatesPage && (
+          <section className="fall-2026-banner" aria-labelledby="fall-2026-banner-title">
+            <div className="fall-2026-banner-copy">
+              <span>New official data · Fall 2026</span>
+              <h2 id="fall-2026-banner-title">UC acceptance rates for every campus are out</h2>
+              <p>
+                See the preliminary 2026 results, the Berkeley–UCLA shift, and the campuses with
+                the largest year-over-year changes. High-school results in the tool below remain
+                finalized through Fall 2025.
+              </p>
+            </div>
+            <Link
+              href="/insights/uc-acceptance-rates-2026"
+              className="fall-2026-banner-link"
+              onClick={() => {
+                trackEvent('article_cta_click', {
+                  article_slug: 'uc-acceptance-rates-2026',
+                  target_type: 'homepage_banner',
+                  target_label: 'Explore Fall 2026 results',
+                  target_url: '/insights/uc-acceptance-rates-2026',
+                })
+              }}
+            >
+              Explore Fall 2026 results →
+            </Link>
+          </section>
+        )}
+
         <section className="seo-intro" aria-label="About this tool">
           {isRatesPage ? (
             <>

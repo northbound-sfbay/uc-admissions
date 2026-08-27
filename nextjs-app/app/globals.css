@@ -82,6 +82,66 @@ main {
 .seo-intro a { color: var(--uc-blue); text-decoration: none; }
 .seo-intro a:hover { text-decoration: underline; }
 
+/* ─── Fall 2026 data banner ─── */
+.fall-2026-banner {
+  background: linear-gradient(120deg, #fff8df 0%, #ffffff 48%, #edf6ff 100%);
+  border: 1px solid #e8cf78;
+  border-left: 4px solid var(--uc-gold);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.fall-2026-banner-copy span {
+  display: block;
+  color: #785600;
+  font-size: .68rem;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.fall-2026-banner-copy h2 {
+  color: var(--uc-blue);
+  font-size: 1.15rem;
+  line-height: 1.25;
+  margin-top: 4px;
+}
+
+.fall-2026-banner-copy p {
+  color: #566274;
+  font-size: .8rem;
+  line-height: 1.55;
+  margin-top: 5px;
+  max-width: 84ch;
+}
+
+.fall-2026-banner-link {
+  align-items: center;
+  background: var(--uc-blue);
+  border: 1px solid var(--uc-blue);
+  border-radius: 8px;
+  color: #fff;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: .82rem;
+  font-weight: 800;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.fall-2026-banner-link:hover {
+  background: #06457f;
+  border-color: #06457f;
+}
+
 /* ─── Notes bar ─── */
 .notes-bar {
   background: #eff6ff;
@@ -823,6 +883,89 @@ main {
   padding: 13px;
 }
 
+/* ─── UC annual rate-change visual ─── */
+.rate-change-card {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-top: 16px;
+  padding: 16px;
+}
+
+.rate-change-legend {
+  color: var(--text-muted);
+  display: flex;
+  font-size: .7rem;
+  font-weight: 750;
+  justify-content: space-between;
+  margin: 0 72px 10px 126px;
+}
+
+.rate-change-list {
+  display: grid;
+  gap: 10px;
+}
+
+.rate-change-row {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 114px minmax(180px, 1fr) 62px;
+}
+
+.rate-change-row > strong {
+  color: var(--text);
+  font-size: .78rem;
+  line-height: 1.2;
+}
+
+.rate-change-plot {
+  background: linear-gradient(90deg, #fff 0%, #fff 49.7%, #cbd5e1 49.7%, #cbd5e1 50.3%, #fff 50.3%, #fff 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 12px;
+  overflow: hidden;
+}
+
+.rate-change-half {
+  align-items: stretch;
+  display: flex;
+}
+
+.rate-change-negative {
+  justify-content: flex-end;
+}
+
+.rate-change-positive {
+  justify-content: flex-start;
+}
+
+.rate-change-bar.increase {
+  background: #15803d;
+  border-radius: 0 999px 999px 0;
+}
+
+.rate-change-bar.decrease {
+  background: #b91c1c;
+  border-radius: 999px 0 0 999px;
+}
+
+.rate-delta {
+  font-size: .76rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.rate-delta.increase {
+  color: #166534;
+}
+
+.rate-delta.decrease {
+  color: #991b1b;
+}
+
 .state-home-header {
   background: #ffffff;
   color: var(--text);
@@ -1467,6 +1610,8 @@ footer a:hover { text-decoration: underline; }
   .state-outcome-grid { grid-template-columns: 1fr; }
   .state-outcome-sidebar { border-left: 0; border-top: 1px solid var(--border); padding-left: 0; padding-top: 14px; }
   .state-outcome-chart .chart-canvas-wrap { height: 280px; }
+  .fall-2026-banner { align-items: stretch; flex-direction: column; gap: 12px; }
+  .fall-2026-banner-link { align-self: flex-start; }
 }
 @media (max-width: 600px) {
   header { padding: 10px 16px; }
@@ -1518,6 +1663,13 @@ footer a:hover { text-decoration: underline; }
   .state-outcome-stats { grid-template-columns: 1fr; }
   .state-outcome-chart .chart-canvas-wrap { height: 240px; }
   .article-stat-grid { grid-template-columns: 1fr; }
+  .fall-2026-banner { padding: 14px; }
+  .fall-2026-banner-link { align-self: stretch; width: 100%; }
+  .rate-change-card { padding: 12px; }
+  .rate-change-legend { margin-left: 92px; margin-right: 58px; }
+  .rate-change-row { gap: 8px; grid-template-columns: 78px minmax(120px, 1fr) 54px; }
+  .rate-change-row > strong { font-size: .7rem; }
+  .rate-delta { font-size: .68rem; }
   .report-lock-grid { grid-template-columns: 1fr; }
   .rankings-table-wrap { max-height: 420px; padding: 8px 12px 12px; }
   footer { padding: 8px 12px 16px; }
