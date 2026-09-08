@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { countySchoolHref, getCountyData, getCountySlugs } from '@/lib/county'
 import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
@@ -109,14 +108,15 @@ export default async function CountyPage({
 
       <header>
         <div className="header-inner">
-          <Link href="/" className="text-sm text-blue-200 hover:text-white">
+          <a href="/" className="text-sm text-blue-200 hover:text-white">
             ← UC Admissions by High School
-          </Link>
+          </a>
         </div>
       </header>
 
       <main>
         <section className="seo-intro" aria-label="About this county page">
+          <h1>{countyData.county} County UC admissions</h1>
           <p>
             This page summarizes <strong>{countyData.county} County UC admissions in Fall {countyData.displayYear}</strong>,
             ranks the county&apos;s top high schools, highlights feeder patterns to major UC campuses, and links users
@@ -184,9 +184,9 @@ export default async function CountyPage({
                     <div>
                       <div className="ctrl-label" style={{ marginBottom: '2px' }}>{`Rank ${index + 1}`}</div>
                       <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--uc-blue)' }}>
-                        <Link href={countySchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--uc-blue)' }}>
+                        <a href={countySchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--uc-blue)' }}>
                           {school.school_name}
-                        </Link>
+                        </a>
                       </div>
                       <div className="chart-sub" style={{ marginTop: '4px' }}>
                         {school.city}
@@ -277,9 +277,9 @@ export default async function CountyPage({
                     <div>
                       <div className="ctrl-label" style={{ marginBottom: '2px' }}>{row.campus}</div>
                       <div style={{ fontSize: '.95rem', fontWeight: 700, color: 'var(--text)' }}>
-                        <Link href={countySchoolHref(row.school_id, row.school_name)} style={{ color: 'var(--text)' }}>
+                        <a href={countySchoolHref(row.school_id, row.school_name)} style={{ color: 'var(--text)' }}>
                           {row.school_name}
-                        </Link>
+                        </a>
                       </div>
                       <div className="chart-sub" style={{ marginTop: '2px' }}>{row.city}</div>
                     </div>
@@ -320,9 +320,9 @@ export default async function CountyPage({
                     <div>
                       <div className="ctrl-label" style={{ marginBottom: '2px' }}>{`Rank ${index + 1}`}</div>
                       <div style={{ fontSize: '.95rem', fontWeight: 700, color: 'var(--text)' }}>
-                        <Link href={countySchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--text)' }}>
+                        <a href={countySchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--text)' }}>
                           {school.school_name}
-                        </Link>
+                        </a>
                       </div>
                       <div className="chart-sub" style={{ marginTop: '2px' }}>
                         {school.city} · {fmtNumber(school.app)} applicants
@@ -369,9 +369,9 @@ export default async function CountyPage({
                 {countyData.rankedSchools.map((school, index) => (
                   <tr key={school.school_id} className={index % 2 === 0 ? 'bg-gray-50/60' : ''}>
                     <td className="border-b border-gray-100 py-3 font-medium text-gray-800">
-                      <Link href={countySchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--uc-blue)' }}>
+                      <a href={countySchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--uc-blue)' }}>
                         {school.school_name}
-                      </Link>
+                      </a>
                     </td>
                     <td className="border-b border-gray-100 py-3 text-gray-600">{school.city}</td>
                     <td className="border-b border-gray-100 py-3 text-gray-600">{school.school_type}</td>
@@ -400,7 +400,7 @@ export default async function CountyPage({
               <div className="related-links-group-title">Major UC Feeder Pages</div>
               <div className="related-links-list">
                 {FEEDER_CAMPUSES.map(campus => (
-                  <Link
+                  <a
                     key={campus.slug}
                     href={`/feeder-schools/${campus.slug}`}
                     className="related-links-item"
@@ -409,7 +409,7 @@ export default async function CountyPage({
                     <span className="related-links-item-sub">
                       Compare admits, applicants, and admit rates for {campus.label}.
                     </span>
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -418,7 +418,7 @@ export default async function CountyPage({
               <div className="related-links-group-title">Featured School Pages</div>
               <div className="related-links-list">
                 {countyData.topSchools.slice(0, 4).map(school => (
-                  <Link
+                  <a
                     key={school.school_id}
                     href={countySchoolHref(school.school_id, school.school_name)}
                     className="related-links-item"
@@ -427,7 +427,7 @@ export default async function CountyPage({
                     <span className="related-links-item-sub">
                       {school.city} · {fmtNumber(school.app)} applicants in Fall {countyData.displayYear}
                     </span>
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>

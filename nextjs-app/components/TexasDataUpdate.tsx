@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-html-link-for-pages -- Full navigation preserves the site ad lifecycle. */
 export default function TexasDataUpdate() {
   return <section className="state-home-section answer-block" aria-label="Texas data update">
     <h2>Latest Texas data: what changed in 2026?</h2>

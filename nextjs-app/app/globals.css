@@ -1674,3 +1674,69 @@ footer a:hover { text-decoration: underline; }
   .rankings-table-wrap { max-height: 420px; padding: 8px 12px 12px; }
   footer { padding: 8px 12px 16px; }
 }
+
+/* School discovery and comparison flow */
+.lookup-main { gap: 12px; }
+.lookup-intro { color: var(--text-muted); font-size: .95rem; }
+.school-tool { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 16px; }
+.tool-status { color: var(--text-muted); padding: 4px 0; font-size: .85rem; }
+.tool-status button, .quick-school-finder button { text-decoration: underline; cursor: pointer; color: var(--uc-blue); }
+.school-profile-action { display: block; width: fit-content; margin-top: 8px; padding: 8px 12px; border: 1px solid #b7cde0; border-radius: 6px; color: var(--uc-blue); background: #edf5fc; font-size: .85rem; font-weight: 650; text-decoration: none; }
+.school-profile-action:hover { background: #dfedf8; }
+.school-profile-title { font-size: clamp(1.65rem, 4vw, 3rem); font-weight: 750; color: var(--uc-blue); line-height: 1.15; }
+.comparison-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.comparison-actions input { width: 100%; background: white; padding: 10px; border: 1px solid var(--border); }
+.comparison-actions span { color: var(--text-muted); }
+button.county-entry-link { cursor: pointer; font: inherit; }
+button:disabled { opacity: .55; cursor: wait; }
+.discovery-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.discovery-links a { border: 1px solid #cbd9e6; background: #fff; border-radius: 7px; color: var(--uc-blue); padding: 9px 12px; line-height: 1.4; text-decoration: none; }
+.discovery-links a:hover { background: #eaf3fa; border-color: #98b5ce; }
+.compact-update, .next-steps, .map-entry { border: 1px solid var(--border); background: #fff; border-radius: 10px; padding: 20px; }
+.compact-update { border-left: 4px solid var(--uc-gold); }
+.compact-update h2, .next-steps h2, .map-entry h2 { font-size: 1.2rem; font-weight: 750; color: var(--uc-blue); }
+.next-steps h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 750; color: var(--uc-blue); }
+.compact-update p, .next-steps > p, .map-entry > p { color: var(--text-muted); max-width: 90ch; margin: 7px 0 14px; line-height: 1.65; }
+.compact-update > a { color: var(--uc-blue); font-weight: 650; }
+.quick-school-finder { width: 100%; max-width: 640px; padding: 12px 0; }
+.quick-school-finder > label { display: block; margin-bottom: 6px; }
+.quick-school-finder .school-input { min-height: 44px; background: #fff; }
+.peer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 16px 0; }
+.peer-card { display: flex; flex-direction: column; gap: 8px; padding: 14px; border: 1px solid var(--border); border-radius: 8px; }
+.peer-card > a { font-weight: 650; color: var(--uc-blue); }
+.peer-card span { color: var(--text-muted); font-size: .85rem; }
+.peer-card .peer-compare { padding-top: 6px; font-size: .85rem; }
+.recent-schools { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: .85rem; align-items: center; }
+.recent-schools span { color: var(--text-muted); }
+.recent-schools a, .recent-schools button { color: var(--uc-blue); text-decoration: underline; }
+.recent-schools button { cursor: pointer; }
+.tool-notes { color: var(--text-muted); padding: 12px 16px; background: white; border: 1px solid var(--border); border-radius: 8px; }
+.tool-notes summary { cursor: pointer; font-weight: 650; color: var(--uc-blue); }
+.tool-notes p { padding: 10px 0; max-width: 100ch; }
+.tool-notes a { text-decoration: underline; }
+.map-entry .map-card { margin-top: 16px; }
+.growth-rankings { border-collapse: collapse; width: 100%; min-width: 700px; }
+.growth-rankings th, .growth-rankings td { padding: 12px; border-bottom: 1px solid var(--border); text-align: right; }
+.growth-rankings th:first-child, .growth-rankings td:nth-child(2) { text-align: left; }
+.growth-rankings tbody th { font-weight: 550; }
+.growth-rankings small { display: block; font-weight: 400; color: var(--text-muted); margin-top: 3px; }
+.growth-rankings a { color: var(--uc-blue); }
+.growth-rankings tbody tr:nth-child(odd) { background: #f6f8fb; }
+.rank-number { color: var(--text-muted); }
+.ranking-pagination { padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.ranking-pagination a { color: var(--uc-blue); font-weight: 650; padding: 8px 0; }
+[data-tool-controls] input, [data-tool-controls] select, [data-tool-controls] button { scroll-margin-block: 130px 260px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid #d59900; outline-offset: 3px; }
+@media (max-width: 900px) { .peer-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  .lookup-intro { font-size: .85rem; }
+  .compact-update, .next-steps, .map-entry { padding: 15px; }
+  .school-tool { padding-bottom: 100px; }
+  .tool-charts .chart-panel { height: auto; min-height: var(--panel-h); }
+  .tool-charts .panel-controls { gap: 10px; }
+  .school-profile-action { min-height: 42px; }
+  .discovery-links a { min-height: 44px; display: flex; align-items: center; }
+  .comparison-actions { align-items: stretch; }
+  .comparison-actions > button { width: 100%; }
+  .ranking-pagination { font-size: .85rem; }
+}

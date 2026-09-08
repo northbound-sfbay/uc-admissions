@@ -65,11 +65,15 @@ def main():
         out_type_dir = OUT_DIR / type_slug
         out_type_dir.mkdir(parents=True, exist_ok=True)
 
+        public_type_dir = PUBLIC_DIR / 'data' / 'schools' / type_slug
+        public_type_dir.mkdir(parents=True, exist_ok=True)
+
         for school in schools:
             sid = school['school_id']
             out_path = out_type_dir / f'{sid}.json'
             with open(out_path, 'w') as f:
                 json.dump(school, f, separators=(',', ':'))
+            (public_type_dir / f'{sid}.json').write_text(json.dumps(school, separators=(',', ':')))
 
         all_ca_schools.extend(schools)
         print(f'  Wrote {len(schools)} files to {out_type_dir}/')
@@ -93,6 +97,20 @@ def main():
                 json.dump(school, f, separators=(',', ':'))
 
         print(f'  Wrote {len(schools)} GPA files to {out_type_dir}/')
+
+    # Lightweight search/peer index: histories stay in selected-school files.
+    index = []
+    for school in all_ca_schools:
+        years = school.get('years', {})
+        latest = next((yr for yr in sorted(years, reverse=True) if (years[yr].get('app') or 0) > 0), None)
+        index.append({
+            **{key: school.get(key, '') for key in ('school_id', 'school_name', 'school_type', 'city', 'county')},
+            'years': {}, 'latest_year': latest,
+            'latest_applicants': years[latest].get('app') if latest else None,
+        })
+    index.sort(key=lambda school: (school['school_name'], school['school_id']))
+    (PUBLIC_DIR / 'data').mkdir(parents=True, exist_ok=True)
+    (PUBLIC_DIR / 'data' / 'school-index.json').write_text(json.dumps(index, separators=(',', ':')))
 
     # Build top300.json — sorted by total applicants
     all_ca_schools.sort(key=total_apps, reverse=True)

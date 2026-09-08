@@ -1,482 +1,198 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 import TimeSeriesPanel from './TimeSeriesPanel'
 import ComparePanel, { type CmpEntry } from './ComparePanel'
+import RecentSchools from './RecentSchools'
 import { trackEvent } from '@/lib/analytics'
+import { loadSchool, loadSchoolIndex } from '@/lib/school-client'
+import { readToolState, toolHref } from '@/lib/tool-state'
 import { TYPE_DATA_URLS, COORDS_URL, NONPUBLIC_COORDS_URL, MAX_CMP } from '@/lib/constants'
 import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
 import { schoolKey, makeSlug } from '@/lib/utils'
 import type { School } from '@/lib/types'
 
 export type InteractiveToolVariant = 'home' | 'uc-rates'
+const LeafletMap = dynamic(() => import('./LeafletMap'), { ssr: false, loading: () => <p role="status">Loading map…</p> })
 
-const LeafletMap = dynamic(() => import('./LeafletMap'), { ssr: false, loading: () => <div className="map-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>Loading map…</div> })
-
-const CAMPUS_RATE_BENCHMARKS = [
-  { campus: 'UCLA', applicants: 88267, admits: 7863, rate: 0.089 },
-  { campus: 'UC Berkeley', applicants: 71750, admits: 9102, rate: 0.127 },
-  { campus: 'UC San Diego', applicants: 86639, admits: 21332, rate: 0.246 },
-  { campus: 'UC Irvine', applicants: 85584, admits: 18680, rate: 0.218 },
-  { campus: 'UC Santa Barbara', applicants: 73885, admits: 23786, rate: 0.322 },
-  { campus: 'UC Davis', applicants: 68388, admits: 25225, rate: 0.369 },
-  { campus: 'UC Santa Cruz', applicants: 51879, admits: 37004, rate: 0.713 },
-  { campus: 'UC Riverside', applicants: 60765, admits: 52907, rate: 0.871 },
-  { campus: 'UC Merced', applicants: 42412, admits: 40854, rate: 0.963 },
-]
-
-function countySlug(county: string): string {
-  return county.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-}
-
-function formatCount(value: number) {
-  return value.toLocaleString()
-}
-
-function formatRate(value: number) {
-  return `${(value * 100).toFixed(1)}%`
-}
-
-function CampusRateBenchmark() {
-  return (
-    <section className="uc-rate-benchmark" aria-label="Fall 2025 UC campus admission-rate benchmarks">
-      <div className="uc-rate-benchmark-copy">
-        <div className="ctrl-label">Fall 2025 campus benchmark</div>
-        <p>
-          Approximate admit rates from California public and private high-school source-school
-          records. Use these as a campus baseline, then search a high school below for the
-          school-specific trend.
-        </p>
-      </div>
-      <div className="uc-rate-benchmark-list">
-        {CAMPUS_RATE_BENCHMARKS.map(row => (
-          <div className="uc-rate-benchmark-chip" key={row.campus}>
-            <span>{row.campus}</span>
-            <strong>{formatRate(row.rate)}</strong>
-            <em>{formatCount(row.admits)} / {formatCount(row.applicants)}</em>
-          </div>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-export default function InteractiveTool({ variant = 'home' }: { variant?: InteractiveToolVariant }) {
-  const isRatesPage = variant === 'uc-rates'
-  const [allSchools,    setAllSchools]    = useState<School[]>([])
-  const [schoolsByType, setSchoolsByType] = useState<Record<string, School[]>>({})
-  const [loadedTypes,   setLoadedTypes]   = useState<Set<string>>(new Set())
-  const [schoolCoords,  setSchoolCoords]  = useState<Record<string, { lat: number; lng: number }>>({})
-  const [allCounties,   setAllCounties]   = useState<string[]>([])
-  const [loading,       setLoading]       = useState(true)
-  const [loadingMsg,    setLoadingMsg]    = useState('Loading admissions data…')
-
+export default function InteractiveTool() {
+  const [allSchools, setAllSchools] = useState<School[]>([])
   const [tsSelectedSchool, setTsSelectedSchool] = useState<School | null>(null)
-  const [tsCampus,         setTsCampus]         = useState('universitywide')
-  const [tsEthnicity,      setTsEthnicity]      = useState('all')
-  const [tsInput,          setTsInput]          = useState('')
+  const [tsCampus, setTsCampus] = useState('universitywide')
+  const [tsEthnicity, setTsEthnicity] = useState('all')
+  const [tsInput, setTsInput] = useState('')
+  const [cmpSelected, setCmpSelected] = useState<CmpEntry[]>([])
+  const [cmpCampus, setCmpCampus] = useState('universitywide')
+  const [cmpEthnicity, setCmpEthnicity] = useState('all')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [retry, setRetry] = useState(0)
+  const [shareStatus, setShareStatus] = useState('')
+  const [shareFallback, setShareFallback] = useState('')
+  const [schoolsByType, setSchoolsByType] = useState<Record<string, School[]>>({})
+  const [loadedTypes, setLoadedTypes] = useState<Set<string>>(new Set())
+  const [schoolCoords, setSchoolCoords] = useState<Record<string, { lat: number; lng: number }>>({})
+  const [showMap, setShowMap] = useState(false)
+  const [mapLoading, setMapLoading] = useState(false)
+  const typeRequests = useRef(new Map<string, Promise<void>>())
+  const selectionRequest = useRef(0)
+  const pendingComparisons = useRef(new Set<string>())
 
-  const [cmpSelected,   setCmpSelected]   = useState<CmpEntry[]>([])
-  const [cmpCampus,     setCmpCampus]     = useState('universitywide')
-  const [cmpEthnicity,  setCmpEthnicity]  = useState('all')
-  const [countyPageSlug, setCountyPageSlug] = useState('')
-  const [feederPageSlug, setFeederPageSlug] = useState<string>(FEEDER_CAMPUSES[0].slug)
-
-  const allSchoolsRef    = useRef<School[]>([])
-  const schoolsByTypeRef = useRef<Record<string, School[]>>({})
-  const loadedTypesRef   = useRef<Set<string>>(new Set())
-  const schoolCoordsRef  = useRef<Record<string, { lat: number; lng: number }>>({})
-
-  function selectTsSchool(
-    school: School,
-    options: { updateUrl?: boolean; updateMeta?: boolean } = {}
-  ) {
-    const { updateUrl = true, updateMeta = true } = options
-    setTsSelectedSchool(school)
-    setTsInput(school.school_name)
-
-    if (updateUrl) {
-      const slug = makeSlug(school.school_id, school.school_name)
-      window.history.replaceState(null, '', `/school/${slug}`)
-    }
-
-    if (updateMeta) {
-      document.title = `${school.school_name} | UC Admissions | collegeacceptance.info`
-      document.querySelector('meta[name="description"]')?.setAttribute('content',
-        `UC admissions data for ${school.school_name}, ${school.city}. View trends from 1994–2025.`)
-    }
-  }
-
-  // Initial data load
   useEffect(() => {
-    async function load() {
-      setLoadingMsg('Loading admissions data…')
-      const [caPublic, caPrivate, pubCoords, nonpubCoords] = await Promise.all([
-        fetch(TYPE_DATA_URLS['CA Public']).then(r => r.json() as Promise<School[]>),
-        fetch(TYPE_DATA_URLS['CA Private']).then(r => r.json() as Promise<School[]>).catch(() => [] as School[]),
-        fetch(COORDS_URL).then(r => r.json() as Promise<{ school_type?: string; school_id: string; lat: number; lng: number }[]>),
-        fetch(NONPUBLIC_COORDS_URL).then(r => r.json() as Promise<{ school_type?: string; school_id: string; lat: number; lng: number }[]>).catch(() => []),
-      ])
-
-      const byType: Record<string, School[]> = {
-        'CA Public':  caPublic,
-        'CA Private': caPrivate,
-      }
-      const loaded = new Set(['CA Public', 'CA Private'])
-      const coords: Record<string, { lat: number; lng: number }> = {}
-      for (const c of [...pubCoords, ...nonpubCoords]) {
-        coords[`${c.school_type ?? 'CA Public'}:${c.school_id}`] = { lat: c.lat, lng: c.lng }
-      }
-
-      const all = [...caPublic, ...caPrivate]
-      const counties = [...new Set(caPublic.map(s => s.county).filter(Boolean))].sort()
-
-      schoolsByTypeRef.current = byType
-      loadedTypesRef.current   = loaded
-      allSchoolsRef.current    = all
-      schoolCoordsRef.current  = coords
-
-      setSchoolsByType(byType)
-      setLoadedTypes(new Set(loaded))
-      setAllSchools(all)
-      setSchoolCoords(coords)
-      setAllCounties(counties)
-      if (counties.length) setCountyPageSlug(countySlug(counties[0]))
+    let cancelled = false
+    async function initialize() {
+      setLoading(true)
+      setError('')
+      const index = await loadSchoolIndex()
+      if (cancelled) return
+      setAllSchools(index)
+      const state = readToolState(window.location.search)
+      setTsCampus(state.campus)
+      setTsEthnicity(state.ethnicity)
+      setCmpCampus(state.compareCampus)
+      setCmpEthnicity(state.compareEthnicity)
+      const selected = index.find(s => s.school_id === (state.school || '52350')) ?? index[0]
+      const ids = state.hasCompare ? state.compare : [selected.school_id, '52970']
+      const comparisonSchools = ids.map(id => index.find(s => s.school_id === id)).filter((s): s is School => Boolean(s))
+      const [school, comparison] = await Promise.all([loadSchool(selected), Promise.all(comparisonSchools.map(loadSchool))])
+      if (cancelled) return
+      setTsSelectedSchool(school)
+      setTsInput(school.school_name)
+      setCmpSelected(comparison.map((item, i) => ({ school: item, colorIdx: i })))
+      if (state.school && !index.some(item => item.school_id === state.school)) setError('That school link was not found. Search for a school below.')
       setLoading(false)
-
-      // Set default school
-      const def = caPublic.find(s => s.school_name.toUpperCase().includes('PALO ALTO') && s.school_name.toUpperCase().includes('HIGH')) ?? caPublic[0]
-      if (def) selectTsSchool(def, { updateUrl: false, updateMeta: false })
-
-      // Default compare
-      const defaults = [
-        caPublic.find(s => s.school_name.toUpperCase().includes('PALO ALTO SENIOR HIGH')),
-        caPublic.find(s => s.school_name.toUpperCase().includes('LOWELL HIGH SCHOOL') && s.city === 'San Francisco'),
-      ].filter(Boolean) as School[]
-      setCmpSelected(defaults.map((school, i) => ({ school, colorIdx: i })))
-
-      // Apply URL param
-      const id = new URLSearchParams(window.location.search).get('school')
-      if (id) {
-        const found = all.find(s => s.school_id === id)
-        if (found) selectTsSchool(found, { updateUrl: false })
-      }
-
-      // Background-load Foreign
-      fetch(TYPE_DATA_URLS['Foreign']).then(r => r.json() as Promise<School[]>).then(schools => {
-        schoolsByTypeRef.current['Foreign'] = schools
-        loadedTypesRef.current.add('Foreign')
-        const next = Object.values(schoolsByTypeRef.current).flat()
-        allSchoolsRef.current = next
-        setSchoolsByType({ ...schoolsByTypeRef.current })
-        setLoadedTypes(new Set(loadedTypesRef.current))
-        setAllSchools(next)
-      }).catch(() => {})
     }
-
-    load().catch(err => {
-      setLoadingMsg('Failed to load data: ' + err.message)
+    initialize().catch(() => {
+      if (!cancelled) { setLoading(false); setError('School data could not load. Please try again.') }
     })
-  }, [])
+    return () => { cancelled = true }
+  }, [retry])
 
-  const handleSelectTsSchool = useCallback((school: School) => {
-    trackEvent('comparison_intent', {
-      interaction_type: 'select_school',
-      school_name: school.school_name,
-      school_slug: makeSlug(school.school_id, school.school_name),
-    })
-    selectTsSchool(school)
-  }, [])
-
-  const handleMapSchoolClick = useCallback((school: School) => {
-    trackEvent('comparison_intent', {
-      interaction_type: 'map_school_click',
-      school_name: school.school_name,
-      school_slug: makeSlug(school.school_id, school.school_name),
-    })
-    selectTsSchool(school)
-    setCmpSelected(prev => {
-      const key = schoolKey(school)
-      if (prev.some(e => schoolKey(e.school) === key)) return prev
-      if (prev.length >= MAX_CMP) return prev
-      return [...prev, { school, colorIdx: prev.length }]
-    })
-  }, [])
-
-  const handleAddCmp = useCallback((school: School) => {
-    trackEvent('comparison_intent', {
-      interaction_type: 'add_compare_school',
-      school_name: school.school_name,
-      school_slug: makeSlug(school.school_id, school.school_name),
-    })
-    setCmpSelected(prev => {
-      const key = schoolKey(school)
-      if (prev.some(e => schoolKey(e.school) === key)) return prev
-      if (prev.length >= MAX_CMP) return prev
-      return [...prev, { school, colorIdx: prev.length }]
-    })
-  }, [])
-
-  const handleRemoveCmp = useCallback((key: string) => {
-    setCmpSelected(prev => {
-      const next = prev.filter(e => schoolKey(e.school) !== key)
-      return next.map((e, i) => ({ ...e, colorIdx: i }))
-    })
-  }, [])
-
-  const ensureTypeLoaded = useCallback(async (type: string) => {
-    if (loadedTypesRef.current.has(type) || !TYPE_DATA_URLS[type]) return
-    const schools = await fetch(TYPE_DATA_URLS[type]).then(r => r.json() as Promise<School[]>).catch(() => [] as School[])
-    schoolsByTypeRef.current[type] = schools
-    loadedTypesRef.current.add(type)
-    const next = Object.values(schoolsByTypeRef.current).flat()
-    allSchoolsRef.current = next
-    setSchoolsByType({ ...schoolsByTypeRef.current })
-    setLoadedTypes(new Set(loadedTypesRef.current))
-    setAllSchools(next)
-    setSchoolCoords({ ...schoolCoordsRef.current })
-  }, [])
-
-  const countyPageOptions = allCounties.map(county => ({
-    label: county,
-    slug: countySlug(county),
-  }))
-
-  function handleTsCampusChange(value: string) {
-    trackEvent('comparison_intent', {
-      interaction_type: 'timeseries_campus_change',
-      campus: value,
-    })
-    setTsCampus(value)
+  async function selectSchool(summary: School, source = 'school_search') {
+    const request = ++selectionRequest.current
+    setTsInput(summary.school_name)
+    setError('')
+    try {
+      const school = await loadSchool(summary)
+      if (request !== selectionRequest.current) return
+      setTsSelectedSchool(school)
+      trackEvent('school_search_complete', { source, school_slug: makeSlug(school.school_id, school.school_name) })
+      trackEvent('comparison_intent', { interaction_type: 'select_school', school_slug: makeSlug(school.school_id, school.school_name) })
+    } catch { if (request === selectionRequest.current) setError('This school could not load. Select it again to retry.') }
   }
 
-  function handleTsEthnicityChange(value: string) {
-    trackEvent('comparison_intent', {
-      interaction_type: 'timeseries_ethnicity_change',
-      ethnicity: value,
-    })
-    setTsEthnicity(value)
+  async function addComparison(summary: School) {
+    const key = schoolKey(summary)
+    if (cmpSelected.some(entry => schoolKey(entry.school) === key) || pendingComparisons.current.has(key)) return
+    if (cmpSelected.length + pendingComparisons.current.size >= MAX_CMP) { setError(`You can compare up to ${MAX_CMP} schools. Remove one to add another.`); return }
+    pendingComparisons.current.add(key)
+    setError('')
+    try {
+      const school = await loadSchool(summary)
+      setCmpSelected(previous => previous.some(entry => schoolKey(entry.school) === key) || previous.length >= MAX_CMP
+        ? previous : [...previous, { school, colorIdx: previous.length }])
+      trackEvent('comparison_intent', { interaction_type: 'add_compare_school', school_slug: makeSlug(school.school_id, school.school_name) })
+    } catch { setError('This comparison could not load. Select the school again to retry.') }
+    finally { pendingComparisons.current.delete(key) }
   }
 
-  function handleCmpCampusChange(value: string) {
-    trackEvent('comparison_intent', {
-      interaction_type: 'compare_campus_change',
-      campus: value,
-    })
-    setCmpCampus(value)
+  function changeFilter(type: string, value: string, update: (value: string) => void) {
+    update(value)
+    trackEvent('comparison_intent', { interaction_type: type, selection: value })
   }
 
-  function handleCmpEthnicityChange(value: string) {
-    trackEvent('comparison_intent', {
-      interaction_type: 'compare_ethnicity_change',
-      ethnicity: value,
-    })
-    setCmpEthnicity(value)
+  async function shareComparison() {
+    if (!tsSelectedSchool) return
+    const chosen = [tsSelectedSchool, ...cmpSelected.map(entry => entry.school)]
+    if (chosen.some(s => !['CA Public', 'CA Private'].includes(s.school_type))) {
+      setShareStatus('Share links currently support California public and private high schools.')
+      return
+    }
+    const href = window.location.origin + toolHref(tsSelectedSchool.school_id, cmpSelected.map(entry => entry.school.school_id), tsCampus, tsEthnicity, cmpCampus, cmpEthnicity)
+    try {
+      await navigator.clipboard.writeText(href)
+      setShareFallback('')
+      setShareStatus('Comparison link copied.')
+      trackEvent('comparison_share', { school_count: cmpSelected.length, method: 'copy_link' })
+    } catch { setShareFallback(href); setShareStatus('Copy this link to share your comparison.') }
   }
 
+  function ensureTypeLoaded(type: string): Promise<void> {
+    const existing = typeRequests.current.get(type)
+    if (existing) return existing
+    const url = TYPE_DATA_URLS[type]
+    if (!url) return Promise.resolve()
+    const request = fetch(url).then(response => {
+      if (!response.ok) throw new Error('Map data could not load.')
+      return response.json() as Promise<School[]>
+    }).then(schools => {
+      setSchoolsByType(previous => ({ ...previous, [type]: schools }))
+      setLoadedTypes(previous => new Set([...previous, type]))
+      setAllSchools(previous => {
+        const merged = new Map(previous.map(s => [schoolKey(s), s]))
+        schools.forEach(s => merged.set(schoolKey(s), s))
+        return [...merged.values()]
+      })
+    }).catch(error => { typeRequests.current.delete(type); throw error })
+    typeRequests.current.set(type, request)
+    return request
+  }
+
+  async function openMap() {
+    setMapLoading(true)
+    setError('')
+    try {
+      const [, , coords] = await Promise.all([
+        ensureTypeLoaded('CA Public'), ensureTypeLoaded('CA Private'),
+        Promise.all([COORDS_URL, NONPUBLIC_COORDS_URL].map(url => fetch(url).then(response => {
+          if (!response.ok) throw new Error('School locations could not load.')
+          return response.json() as Promise<{ school_type?: string; school_id: string; lat: number; lng: number }[]>
+        }))),
+      ])
+      setSchoolCoords(Object.fromEntries(coords.flat().map(c => [`${c.school_type ?? 'CA Public'}:${c.school_id}`, { lat: c.lat, lng: c.lng }])))
+      setShowMap(true)
+      trackEvent('map_open')
+    } catch { setError('The map could not load. You can still search schools, or try opening the map again.') }
+    finally { setMapLoading(false) }
+  }
+
+  const counties = [...new Set(allSchools.filter(s => s.school_type === 'CA Public').map(s => s.county).filter(Boolean))].sort()
   return (
-    <>
-      {loading && (
-        <div className="loading-overlay">
-          <div className="loading-box">
-            <div className="spinner"></div>
-            <p className="loading-msg">{loadingMsg}</p>
-          </div>
-        </div>
-      )}
-
-      <header>
-        <div className="header-inner">
-          <h1>{isRatesPage ? 'UC Admission Rates by High School' : 'UC Admissions by High School'}</h1>
-          <p className="subtitle">
-            {isRatesPage
-              ? 'Fall 1994 – 2025 · UC admit rates, applicants, admits & enrollees by school, campus, and ethnicity'
-              : 'Fall 1994 – 2025 · Applicants, Admits & Enrollees by school, campus, and ethnicity'}
-          </p>
-        </div>
-      </header>
-
-      <main>
-        {!isRatesPage && (
-          <section className="fall-2026-banner" aria-labelledby="fall-2026-banner-title">
-            <div className="fall-2026-banner-copy">
-              <span>New official data · Fall 2026</span>
-              <h2 id="fall-2026-banner-title">UC acceptance rates for every campus are out</h2>
-              <p>
-                See the preliminary 2026 results, the Berkeley–UCLA shift, and the campuses with
-                the largest year-over-year changes. High-school results in the tool below remain
-                finalized through Fall 2025.
-              </p>
-            </div>
-            <Link
-              href="/insights/uc-acceptance-rates-2026"
-              className="fall-2026-banner-link"
-              onClick={() => {
-                trackEvent('article_cta_click', {
-                  article_slug: 'uc-acceptance-rates-2026',
-                  target_type: 'homepage_banner',
-                  target_label: 'Explore Fall 2026 results',
-                  target_url: '/insights/uc-acceptance-rates-2026',
-                })
-              }}
-            >
-              Explore Fall 2026 results →
-            </Link>
-          </section>
-        )}
-
-        <section className="seo-intro" aria-label="About this tool">
-          {isRatesPage ? (
-            <>
-              <p>
-                Looking up <strong>UC admission rates</strong> or <strong>UC acceptance rates</strong>?
-                Start with the campus benchmark, then use the time-series tool below to see how
-                students from a specific California high school performed at UCLA, UC Berkeley,
-                UC San Diego, UC Davis, and the rest of the University of California system.
-              </p>
-              <p>
-                Search by high school to compare applicant counts, admits, enrollment, admit rates,
-                and ethnicity breakdowns from <strong>Fall 1994 through Fall 2025</strong>. Data is
-                sourced from the <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" rel="noopener">UC Information Center</a>.
-              </p>
-            </>
-          ) : (
-            <p>This tool lets you look up <strong>UC acceptance rates by high school</strong> and <strong>University of California admissions data</strong> from <strong>Fall 1994 through Fall 2025</strong>. Browse applicant counts, admit rates, and enrollment numbers across all nine undergraduate UC campuses — Berkeley, Los Angeles, San Diego, Davis, Santa Barbara, Irvine, Santa Cruz, Riverside, and Merced — broken down by ethnicity. Data is sourced from the <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" rel="noopener">UC Information Center</a>; read the <Link href="/insights/uc-admissions-by-source-school">source-school data guide</Link> for methodology notes.</p>
-          )}
-        </section>
-
-        {isRatesPage && <CampusRateBenchmark />}
-
-        <div className="charts-row">
-          <TimeSeriesPanel
-            allSchools={allSchools}
-            selectedSchool={tsSelectedSchool}
-            campus={tsCampus}
-            ethnicity={tsEthnicity}
-            onSelectSchool={handleSelectTsSchool}
-            onCampusChange={handleTsCampusChange}
-            onEthnicityChange={handleTsEthnicityChange}
-            tsInput={tsInput}
-            onTsInputChange={v => { setTsInput(v) }}
-          />
-          <ComparePanel
-            allSchools={allSchools}
-            selected={cmpSelected}
-            campus={cmpCampus}
-            ethnicity={cmpEthnicity}
-            onAdd={handleAddCmp}
-            onRemove={handleRemoveCmp}
-            onCampusChange={handleCmpCampusChange}
-            onEthnicityChange={handleCmpEthnicityChange}
-          />
-        </div>
-
-        <div className="notes-bar">
-          <div className="notes-title">Notes</div>
-          <ul>
-            <li>Universitywide applicant counts reflect <strong>applications</strong>, not unique students — a student applying to multiple campuses is counted once per campus.</li>
-            <li>UC moved to an online application system around <strong>2002</strong>.</li>
-            <li>Since <strong>1986</strong>, students can apply to multiple UC campuses in a single application (<a href="https://www.latimes.com/archives/la-xpm-1985-05-20-mn-16535-story.html" target="_blank" rel="noopener">LA Times, 1985</a>).</li>
-          </ul>
-        </div>
-
-        {!loading && (
-          <LeafletMap
-            allSchools={allSchools}
-            schoolsByType={schoolsByType}
-            loadedTypes={loadedTypes}
-            schoolCoords={schoolCoords}
-            allCounties={allCounties}
-            onSchoolClick={handleMapSchoolClick}
-            onEnsureTypeLoaded={ensureTypeLoaded}
-          />
-        )}
-
-        <div className="charts-row" style={{ gridTemplateColumns: '1fr 1fr', alignItems: 'stretch' }}>
-          <section className="county-entry-panel" aria-label="Browse by county" style={{ width: '100%' }}>
-            <div className="county-entry-copy">
-              <div className="ctrl-label">Browse by County</div>
-              <p>
-                Explore feeder schools, admit rates, and countywide UC trends.
-              </p>
-            </div>
-            <div className="county-entry-actions">
-              <div className="filter-group county-entry-select">
-                <label className="ctrl-label" htmlFor="county-page-select">County</label>
-                <select
-                  id="county-page-select"
-                  value={countyPageSlug}
-                  onChange={e => setCountyPageSlug(e.target.value)}
-                >
-                  {countyPageOptions.map(option => (
-                    <option key={option.slug} value={option.slug}>{option.label}</option>
-                  ))}
-                </select>
-              </div>
-              <a
-                className="county-entry-link"
-                href={countyPageSlug ? `/county/${countyPageSlug}` : '#'}
-                onClick={() => {
-                  if (!countyPageSlug) return
-                  trackEvent('county_or_feeder_navigation', {
-                    destination_type: 'county',
-                    destination_slug: countyPageSlug,
-                  })
-                  trackEvent('lead_or_capture_click', {
-                    cta_type: 'view_county_page',
-                    destination_slug: countyPageSlug,
-                  })
-                }}
-                aria-disabled={!countyPageSlug}
-                style={!countyPageSlug ? { pointerEvents: 'none', opacity: 0.6 } : undefined}
-              >
-                View county page →
-              </a>
-            </div>
-          </section>
-
-          <section className="county-entry-panel" aria-label="Browse feeder pages" style={{ width: '100%' }}>
-            <div className="county-entry-copy">
-              <div className="ctrl-label">Browse by Campus</div>
-              <p>
-                See top feeder schools and strongest admit-rate schools for major UC campuses.
-              </p>
-            </div>
-            <div className="county-entry-actions">
-              <div className="filter-group county-entry-select">
-                <label className="ctrl-label" htmlFor="feeder-page-select">Campus</label>
-                <select
-                  id="feeder-page-select"
-                  value={feederPageSlug}
-                  onChange={e => setFeederPageSlug(e.target.value)}
-                >
-                  {FEEDER_CAMPUSES.map(option => (
-                    <option key={option.slug} value={option.slug}>{option.label}</option>
-                  ))}
-                </select>
-              </div>
-              <a
-                className="county-entry-link"
-                href={`/feeder-schools/${feederPageSlug}`}
-                onClick={() => {
-                  trackEvent('county_or_feeder_navigation', {
-                    destination_type: 'feeder',
-                    destination_slug: feederPageSlug,
-                  })
-                  trackEvent('lead_or_capture_click', {
-                    cta_type: 'view_feeder_page',
-                    destination_slug: feederPageSlug,
-                  })
-                }}
-              >
-                View feeder page →
-              </a>
-            </div>
-          </section>
-        </div>
-      </main>
-    </>
+    <section id="school-tool" className="school-tool" aria-label="Search and compare high schools">
+      {loading && <p className="tool-status" role="status">Loading school search and selected histories…</p>}
+      {error && <p className="tool-status" role="alert">{error} <button type="button" onClick={() => setRetry(value => value + 1)}>Reload school search</button></p>}
+      <div className="charts-row tool-charts" inert={loading} aria-busy={loading}>
+        <TimeSeriesPanel allSchools={allSchools} selectedSchool={tsSelectedSchool} campus={tsCampus} ethnicity={tsEthnicity}
+          onSelectSchool={school => { void selectSchool(school) }} onCampusChange={value => changeFilter('timeseries_campus_change', value, setTsCampus)}
+          onEthnicityChange={value => changeFilter('timeseries_ethnicity_change', value, setTsEthnicity)} tsInput={tsInput} onTsInputChange={setTsInput} />
+        <ComparePanel allSchools={allSchools} selected={cmpSelected} campus={cmpCampus} ethnicity={cmpEthnicity}
+          onAdd={school => { void addComparison(school) }} onRemove={key => setCmpSelected(previous => previous.filter(entry => schoolKey(entry.school) !== key).map((entry, i) => ({ ...entry, colorIdx: i })))}
+          onCampusChange={value => changeFilter('compare_campus_change', value, setCmpCampus)} onEthnicityChange={value => changeFilter('compare_ethnicity_change', value, setCmpEthnicity)} />
+      </div>
+      <div className="comparison-actions" data-tool-controls>
+        <button className="county-entry-link" type="button" disabled={!tsSelectedSchool} onClick={() => { void shareComparison() }}>Copy comparison link</button>
+        <span role="status">{shareStatus}</span>
+        {shareFallback && <input aria-label="Comparison link" readOnly value={shareFallback} onFocus={event => event.target.select()} />}
+      </div>
+      <RecentSchools />
+      <nav className="discovery-links" aria-label="Browse campus feeder schools" data-navigation-source="tool_campuses">
+        {FEEDER_CAMPUSES.map(campus => <a key={campus.slug} href={`/feeder-schools/${campus.slug}`}>{campus.label} feeder schools</a>)}
+        <a href="/rankings">Statewide rankings</a>
+      </nav>
+      <details className="tool-notes"><summary>How to read these figures</summary>
+        <p>Universitywide applicant counts reflect applications across campuses, not unique students. Admit rate is admits divided by applicants; enrollment yield is enrollees divided by admits. These historical outcomes are not individual admission predictions.</p>
+        <a href="/insights/uc-admissions-by-source-school">Read the source-school methodology</a>
+      </details>
+      <section className="map-entry" aria-label="Explore the school map">
+        <h2>Explore schools on the map</h2>
+        <p>Browse locations, counties, campus results, and school types.</p>
+        {!showMap && <button type="button" className="county-entry-link" onClick={() => { void openMap() }} disabled={mapLoading}>{mapLoading ? 'Loading map and school locations…' : 'Open interactive map'}</button>}
+        {showMap && <LeafletMap allSchools={allSchools} schoolsByType={schoolsByType} loadedTypes={loadedTypes} schoolCoords={schoolCoords} allCounties={counties}
+          onSchoolClick={school => { void selectSchool(school, 'map'); void addComparison(school) }}
+          onEnsureTypeLoaded={async type => { try { await ensureTypeLoaded(type) } catch { setError('This school type could not load. Please try again.') } }} />}
+      </section>
+      <noscript><p>Interactive charts need JavaScript. You can browse <a href="/rankings">school rankings</a> and <a href="/feeder-schools/ucla">campus feeder pages</a> without it.</p></noscript>
+    </section>
   )
 }

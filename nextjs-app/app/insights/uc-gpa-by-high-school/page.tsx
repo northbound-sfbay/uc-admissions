@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import ArticleCtaLink from '@/components/ArticleCtaLink'
 import { getGpaInsightData, type GpaRankingRow } from '@/lib/rankings'
 
@@ -74,7 +73,7 @@ function fmtGpa(value: number | null | undefined): string {
 function SchoolCell({ row }: { row: GpaRankingRow }) {
   return (
     <td>
-      <Link href={row.href}>{row.school_name}</Link>
+      <a href={row.href}>{row.school_name}</a>
       <span className="article-caption" style={{ display: 'block', marginTop: '2px' }}>
         {row.city}, {row.county}
         {row.school_type !== 'CA Public' ? ` - ${row.school_type}` : ''}
@@ -169,9 +168,9 @@ export default function UcGpaByHighSchoolArticle() {
 
       <header>
         <div className="header-inner article-header-inner">
-          <Link href="/insights" className="text-sm text-blue-200 hover:text-white">
+          <a href="/insights" className="text-sm text-blue-200 hover:text-white">
             UC Admissions Insights
-          </Link>
+          </a>
           <h1>UC GPA by high school is useful only when you compare it with applicants and admits</h1>
           <p className="subtitle">
             A guide to UC applicant GPA, admitted GPA, enrollee GPA, and the limits of source-school averages.
@@ -405,8 +404,8 @@ export default function UcGpaByHighSchoolArticle() {
 
       <footer>
         <p>
-          <Link href="/insights">UC Admissions Insights</Link> - <Link href="/">UC admissions tool</Link> -{' '}
-          <Link href="/rankings">Rankings</Link>
+          <a href="/insights">UC Admissions Insights</a> - <a href="/">UC admissions tool</a> -{' '}
+          <a href="/rankings">Rankings</a>
         </p>
       </footer>
     </>

@@ -1,6 +1,5 @@
 import TexasDataUpdate from '@/components/TexasDataUpdate'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import StateOutcomeExplorer from '@/components/StateOutcomeExplorer'
 import {
@@ -127,14 +126,14 @@ export default async function StateOutcomePage({ params }: PageProps) {
 
       <header className="state-home-header">
         <nav className="state-home-nav" aria-label="Primary navigation">
-          <Link href="/" className="state-home-brand">
+          <a href="/" className="state-home-brand">
             collegeacceptance.info
-          </Link>
+          </a>
           <div className="state-home-nav-links">
-            <Link href="/">UC tool</Link>
-            <Link href="/rankings">Rankings</Link>
-            <Link href="/insights">Insights</Link>
-            <Link href="/states">States</Link>
+            <a href="/">UC tool</a>
+            <a href="/rankings">Rankings</a>
+            <a href="/insights">Insights</a>
+            <a href="/states">States</a>
           </div>
         </nav>
 
@@ -151,12 +150,12 @@ export default async function StateOutcomePage({ params }: PageProps) {
               <a href="#texas-high-school-outcomes" className="report-entry-link primary">
                 Search high schools
               </a>
-              <Link href="/states/texas/high-schools" className="report-entry-link">
+              <a href="/states/texas/high-schools" className="report-entry-link">
                 Browse school pages
-              </Link>
-              <Link href="/college/university-of-texas-at-austin/feeder-schools" className="report-entry-link">
+              </a>
+              <a href="/college/university-of-texas-at-austin/feeder-schools" className="report-entry-link">
                 UT Austin feeders
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -231,7 +230,7 @@ export default async function StateOutcomePage({ params }: PageProps) {
                 <div key={module.title}>
                   <span>{module.status}</span>
                   <h3>
-                    {module.href ? <Link href={module.href}>{module.title}</Link> : module.title}
+                    {module.href ? <a href={module.href}>{module.title}</a> : module.title}
                   </h3>
                   <p>{module.description}</p>
                 </div>
@@ -264,8 +263,8 @@ export default async function StateOutcomePage({ params }: PageProps) {
 
       <footer>
         <p>
-          <Link href="/">UC admissions tool</Link> | <Link href="/states">States</Link> |{' '}
-          <Link href="/rankings">Rankings</Link> | <Link href="/about">About</Link>
+          <a href="/">UC admissions tool</a> | <a href="/states">States</a> |{' '}
+          <a href="/rankings">Rankings</a> | <a href="/about">About</a>
         </p>
       </footer>
     </>

@@ -1,5 +1,7 @@
+import FeederRankings from '@/components/FeederRankings'
+import SchoolFinder from '@/components/SchoolFinder'
+import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { feederSchoolHref, getFeederData, getFeederSlugs } from '@/lib/feeder'
 import { countyPageHref } from '@/lib/county'
@@ -43,9 +45,9 @@ function StatPanel({
 
 function pageTitle(campusLabel: string, displayYear: string): string {
   if (campusLabel === 'UCLA') {
-    return `UCLA Feeder Schools ${displayYear} | Top California High Schools for UCLA`
+    return `UCLA Feeder Schools ${displayYear} | Rankings & School Lookup`
   }
-  return `${campusLabel} Feeder Schools ${displayYear} | Top High Schools by ${campusLabel} Admits`
+  return `${campusLabel} Feeder Schools ${displayYear} | Rankings & Admit Rates`
 }
 
 function pageDescription(campusLabel: string, displayYear: string): string {
@@ -279,9 +281,9 @@ export default async function FeederPage({
 
       <header>
         <div className="header-inner">
-          <Link href="/" className="text-sm text-blue-200 hover:text-white">
+          <a href="/" className="text-sm text-blue-200 hover:text-white">
             ← UC Admissions by High School
-          </Link>
+          </a>
         </div>
       </header>
 
@@ -299,6 +301,15 @@ export default async function FeederPage({
         </section>
 
         <FeederAnswerBlock feederData={feederData} />
+        <section className="next-steps" data-navigation-source="feeder_search">
+          <h2>Find your school’s campus results</h2>
+          <SchoolFinder source={`feeder_${slug}`} />
+          <nav className="discovery-links" aria-label="Explore another campus">
+            <a href="#full-rankings">Browse all {feederData.rankedSchools.length.toLocaleString()} schools</a>
+            {FEEDER_CAMPUSES.filter(campus => campus.slug !== slug).slice(0, 4).map(campus => <a key={campus.slug} href={`/feeder-schools/${campus.slug}`}>{campus.label} feeders</a>)}
+          </nav>
+        </section>
+        <div className="content_hint" aria-hidden="true" />
 
         <div className="notes-bar">
           <div className="notes-title">{feederData.campusLabel} feeder page</div>
@@ -360,9 +371,9 @@ export default async function FeederPage({
                     <div>
                       <div className="ctrl-label" style={{ marginBottom: '2px' }}>{`Rank ${index + 1}`}</div>
                       <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--uc-blue)' }}>
-                        <Link href={feederSchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--uc-blue)' }}>
+                        <a href={feederSchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--uc-blue)' }}>
                           {school.school_name}
-                        </Link>
+                        </a>
                       </div>
                       <div className="chart-sub" style={{ marginTop: '4px' }}>
                         {school.city}, {school.county}
@@ -453,9 +464,9 @@ export default async function FeederPage({
                     <div>
                       <div className="ctrl-label" style={{ marginBottom: '2px' }}>{`Rank ${index + 1}`}</div>
                       <div style={{ fontSize: '.95rem', fontWeight: 700, color: 'var(--text)' }}>
-                        <Link href={feederSchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--text)' }}>
+                        <a href={feederSchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--text)' }}>
                           {school.school_name}
-                        </Link>
+                        </a>
                       </div>
                       <div className="chart-sub" style={{ marginTop: '2px' }}>
                         {school.city} · {fmtNumber(school.app)} applicants
@@ -476,52 +487,7 @@ export default async function FeederPage({
 
         <FeederFaqSection feederData={feederData} faqItems={faqItems} />
 
-        <section className="map-card">
-          <div className="map-controls" style={{ alignItems: 'center' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-              <div className="ctrl-label">Full Rankings</div>
-              <div style={{ fontSize: '1.55rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1.2 }}>
-                California schools ranked by {feederData.campusLabel} admits, applicants, and admit rate
-              </div>
-            </div>
-            <div className="map-school-count">{feederData.rankedSchools.length} schools with Fall {feederData.displayYear} records</div>
-          </div>
-
-          <div className="rankings-table-wrap">
-            <table className="w-full text-sm rankings-table">
-              <thead>
-                <tr className="border-b border-gray-100 text-left text-gray-500">
-                  <th className="pb-3 pt-2 font-medium">School</th>
-                  <th className="pb-3 pt-2 font-medium">City</th>
-                  <th className="pb-3 pt-2 font-medium">County</th>
-                  <th className="pb-3 pt-2 font-medium">Type</th>
-                  <th className="pb-3 pt-2 font-medium text-right">Applicants</th>
-                  <th className="pb-3 pt-2 font-medium text-right">Admitted</th>
-                  <th className="pb-3 pt-2 font-medium text-right">Enrolled</th>
-                  <th className="pb-3 pt-2 font-medium text-right">Admit Rate</th>
-                </tr>
-              </thead>
-              <tbody>
-                {feederData.rankedSchools.map((school, index) => (
-                  <tr key={school.school_id} className={index % 2 === 0 ? 'bg-gray-50/60' : ''}>
-                    <td className="border-b border-gray-100 py-3 font-medium text-gray-800">
-                      <Link href={feederSchoolHref(school.school_id, school.school_name)} style={{ color: 'var(--uc-blue)' }}>
-                        {school.school_name}
-                      </Link>
-                    </td>
-                    <td className="border-b border-gray-100 py-3 text-gray-600">{school.city}</td>
-                    <td className="border-b border-gray-100 py-3 text-gray-600">{school.county}</td>
-                    <td className="border-b border-gray-100 py-3 text-gray-600">{school.school_type}</td>
-                    <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmtNumber(school.app)}</td>
-                    <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmtNumber(school.adm)}</td>
-                    <td className="border-b border-gray-100 py-3 text-right text-gray-600">{fmtNumber(school.enr)}</td>
-                    <td className="border-b border-gray-100 py-3 text-right font-semibold">{fmtPercent(school.admitRate)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+        <FeederRankings data={feederData} />
 
         <section className="map-card">
           <div className="map-controls" style={{ alignItems: 'center' }}>
@@ -537,7 +503,7 @@ export default async function FeederPage({
               <div className="related-links-group-title">Top Counties for {feederData.campusLabel}</div>
               <div className="related-links-list">
                 {topCountyLinks.map(county => (
-                  <Link
+                  <a
                     key={county.county}
                     href={countyPageHref(county.county)}
                     className="related-links-item"
@@ -546,7 +512,7 @@ export default async function FeederPage({
                     <span className="related-links-item-sub">
                       {fmtNumber(county.adm)} admits and {fmtNumber(county.app)} applicants to {feederData.campusLabel}.
                     </span>
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -555,7 +521,7 @@ export default async function FeederPage({
               <div className="related-links-group-title">Featured School Pages</div>
               <div className="related-links-list">
                 {feederData.topSchools.slice(0, 4).map(school => (
-                  <Link
+                  <a
                     key={school.school_id}
                     href={feederSchoolHref(school.school_id, school.school_name)}
                     className="related-links-item"
@@ -564,7 +530,7 @@ export default async function FeederPage({
                     <span className="related-links-item-sub">
                       {school.city}, {school.county} · {fmtNumber(school.adm)} admits to {feederData.campusLabel}
                     </span>
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>

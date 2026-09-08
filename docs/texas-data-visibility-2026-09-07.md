@@ -50,7 +50,7 @@ Reviewed September 7, 2026. This extends the concurrent UC growth work with a sp
 
 The JSON includes a source URL, publication date, verification date, workbook SHA-256, and source row for each institution/year. It retains statewide rows separately and does not reconstruct masked numbers or derive overall/nonresident/non-automatic rates from mismatched columns.
 
-Independent openpyxl extraction checked all **1,296 imported institution counts** and nine statewide accepted totals against the workbook. The high-school JSON is unchanged. Production build, focused lint, HTTP metadata/link checks, and browser interaction/layout checks are part of the release gate. Full-project lint has pre-existing failures outside these Texas changes; record the exact result in the deployment report.
+Independent openpyxl extraction checked all **1,296 imported institution counts** and nine statewide accepted totals against the workbook. The high-school JSON is unchanged. Production build, focused lint, HTTP metadata/link checks, and browser interaction/layout checks are part of the release gate. The concurrent growth commit resolves the earlier navigation lint rule conflict; run full-project lint again after integration.
 
 ## Discovery and measurement
 
@@ -62,4 +62,4 @@ Check indexing and discovery before expanding more Texas pages. A useful next in
 
 ## Concurrent production work
 
-Changes are isolated in `/Users/lee/Documents/projects/uc_college_texas_update` on `codex/texas-data-visibility`. The original dirty growth checkout is left untouched. Fetch origin/main and verify the live deployment immediately before deployment; merge newer production work, retain native anchors and `/counselors`, rebuild, and compare the complete live sitemap inventory before pushing. Use an ordinary fast-forward push so a concurrently advanced main cannot be overwritten.
+Changes are isolated in `/Users/lee/Documents/projects/uc_college_texas_update` on `codex/texas-data-visibility`. The original growth checkout is left untouched. Growth commit `40310f9` was incorporated, preserving its native anchors, new counselor route, feeder pagination, lightweight school loading and analytics/ad lifecycle changes. Fetch origin/main and verify the live deployment immediately before deployment; merge newer production work, retain native anchors and `/counselors`, rebuild, and compare the complete live sitemap inventory before pushing. Use an ordinary fast-forward push so a concurrently advanced main cannot be overwritten.

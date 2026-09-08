@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-html-link-for-pages -- Full navigation preserves the site ad lifecycle. */
 import type { Metadata } from 'next'
 import { getTexasCollegeFeeders } from '@/lib/texas-feeders'
 import { texasHighSchoolHref } from '@/lib/texas-outcomes'

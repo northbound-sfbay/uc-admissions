@@ -1,5 +1,7 @@
+import SchoolFinder from '@/components/SchoolFinder'
+import SchoolNextSteps from '@/components/SchoolNextSteps'
+import RecentSchools from '@/components/RecentSchools'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import SchoolPageAnalytics from '@/components/SchoolPageAnalytics'
 import { readSchoolById, getTop300, idFromSlug, recentYear } from '@/lib/data'
 import { countyPageHref } from '@/lib/county'
@@ -539,9 +541,9 @@ export default async function SchoolPage({
         {/* Header */}
         <header>
           <div className="header-inner">
-            <Link href="/" className="text-sm text-blue-200 hover:text-white">
+            <a href="/" className="text-sm text-blue-200 hover:text-white">
               ← UC Admissions by High School
-            </Link>
+            </a>
           </div>
         </header>
 
@@ -553,9 +555,7 @@ export default async function SchoolPage({
                 <div className="ctrl-label">
                   School Profile
                 </div>
-                <div style={{ fontSize: '3rem', fontWeight: 700, color: 'var(--uc-blue)', lineHeight: 1.05 }}>
-                  {name}
-                </div>
+                <h1 className="school-profile-title">{name} UC admissions</h1>
                 <div style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>
                   {loc}
                   {school.school_type !== 'CA Public' && (
@@ -584,6 +584,8 @@ export default async function SchoolPage({
             </div>
           </section>
 
+          <SchoolFinder />
+          <RecentSchools current={{ slug, name }} />
           {yr && d && <DirectAnswerBlock name={name} loc={loc} yr={yr} d={d} />}
 
           {yr && d && <SchoolSearchSummary name={name} loc={loc} yr={yr} d={d} />}
@@ -601,6 +603,8 @@ export default async function SchoolPage({
             {/* Ethnicity breakdown */}
             {yr && d && <EthnicityTable d={d} />}
           </section>
+
+          <SchoolNextSteps school={school} />
 
           {/* 10-year trend */}
           <TrendTable school={school} />
@@ -636,12 +640,12 @@ export default async function SchoolPage({
               <div className="related-links-group">
                 <div className="related-links-group-title">County Page</div>
                 <div className="related-links-list">
-                  <Link href={countyPageHref(school.county)} className="related-links-item">
+                  <a href={countyPageHref(school.county)} className="related-links-item">
                     {school.county} County UC admissions
                     <span className="related-links-item-sub">
                       See top schools, admit rates, and countywide trends.
                     </span>
-                  </Link>
+                  </a>
                 </div>
               </div>
 
@@ -649,10 +653,10 @@ export default async function SchoolPage({
                 <div className="related-links-group-title">Major UC Feeder Pages</div>
                 <div className="related-links-list">
                   {relatedFeederLinks.map(link => (
-                    <Link key={link.href} href={link.href} className="related-links-item">
+                    <a key={link.href} href={link.href} className="related-links-item">
                       {link.label}
                       <span className="related-links-item-sub">{link.sublabel}</span>
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>

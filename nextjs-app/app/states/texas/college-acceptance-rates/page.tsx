@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-html-link-for-pages -- Full navigation preserves the site ad lifecycle. */
 import type { Metadata } from 'next'
 import TexasAdmissionsTable from '@/components/TexasAdmissionsTable'
 import { texasAdmissions, TEXAS_ADMISSIONS_PATH, acceptanceRate, admissionNumber, admissionPercent } from '@/lib/texas-admissions'
@@ -99,6 +98,7 @@ export default function TexasCollegeAcceptanceRatesPage() {
         <h2>Sources and methodology</h2>
         <p>We retain each university&apos;s “Total” row from the <a href={texasAdmissions.sourceUrl}>THECB 2017–2025 workbook</a>, joining years by its six-digit FICE institution identifier. Rates divide “Accepted (Total Texas)” by “Applied (Total Texas).” Counts retain source values; rates round to one decimal, and changes use unrounded rates. Statewide rows are kept separately in the <a href="/data/texas-admissions.json">downloadable data</a> and are not added to the university rows.</p>
         <p>The <a href="https://www.texaseducationinfo.org/infopage/tpeir_hed_admission.html">state admissions reporting documentation</a> describes completed applications. University news releases and Common Data Sets can use different populations and reporting definitions. For example, UT Austin&apos;s <a href="https://news.utexas.edu/2025/09/18/ut-sets-all-time-highs-for-enrollment-and-student-performance/">Fall 2025 news release</a> reports 90,690 freshman applications, while this THECB workbook lists {admissionNumber(ut.allApplicants)} in its all-applicant column. Those denominators should not be combined with the Texas accepted count.</p>
+        <p>Source values are retained even when unusual: Midwestern State University&apos;s Fall 2025 Total row reports five Texas enrollees. Treat that as a source-reported value, not a verified total freshman class size.</p>
         <p>The workbook covers public universities; it does not provide admissions rates for private universities such as Rice, Baylor, SMU, or TCU. Its all-applicant counts lack matching all-applicant accepted totals, and its class-rank columns lack matching applicant denominators. We therefore do not derive overall, out-of-state, or non-automatic-admission rates. Source row numbers in the table refer to the selected “Fall YEAR” worksheet.</p>
       </section>
       <section className="state-home-section"><h2>Texas admissions FAQ</h2><div className="state-home-faq-grid">{faq.map(item => <div key={item.question}><h3>{item.question}</h3><p>{item.answer}</p></div>)}</div></section>

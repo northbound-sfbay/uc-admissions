@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import ArticleCtaLink from '@/components/ArticleCtaLink'
 
 const CANONICAL = 'https://collegeacceptance.info/insights/uc-admission-rates-by-high-school'
@@ -180,9 +179,9 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
 
       <header>
         <div className="header-inner article-header-inner">
-          <Link href="/insights" className="text-sm text-blue-200 hover:text-white">
+          <a href="/insights" className="text-sm text-blue-200 hover:text-white">
             UC Admissions Insights
-          </Link>
+          </a>
           <h1>UC admission rates by high school can be useful - if you know what you are looking at</h1>
           <p className="subtitle">
             A data guide to applicants, admits, enrollment, GPA and campus mix in the latest UC source-school tables.
@@ -478,8 +477,8 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
 
       <footer>
         <p>
-          <Link href="/insights">UC Admissions Insights</Link> · <Link href="/">UC admissions tool</Link> ·{' '}
-          <Link href="/about">About</Link>
+          <a href="/insights">UC Admissions Insights</a> · <a href="/">UC admissions tool</a> ·{' '}
+          <a href="/about">About</a>
         </p>
       </footer>
     </>

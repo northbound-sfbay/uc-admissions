@@ -24,7 +24,21 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <InteractiveToolLoader />
+      <header><div className="header-inner"><h1>UC admissions by high school</h1><p className="subtitle">Official source-school outcomes · Fall 1994–2025</p></div></header>
+      <main className="lookup-main">
+        <p className="lookup-intro">Find your school, explore UC campus results, and compare admissions trends.</p>
+        <InteractiveToolLoader />
+        <section className="compact-update" data-navigation-source="home_update">
+          <h2>Looking for Fall 2026 campus results?</h2>
+          <p>The new preliminary campus totals are available. School-specific outcomes above remain finalized through Fall 2025.</p>
+          <a href="/insights/uc-acceptance-rates-2026">See 2026 acceptance rates for every UC campus →</a>
+        </section>
+        <section className="seo-intro">
+          <h2>Understand your school’s UC outcomes</h2>
+          <p>Explore applicants, admits, enrollment, and admit rates across all nine undergraduate UC campuses. Start with your high school, then compare campus and year patterns. The <a href="/insights/uc-admissions-by-source-school">source-school guide</a> explains the calculations and their limits.</p>
+          <nav className="discovery-links" aria-label="Admissions guides"><a href="/uc-admission-rates">UC campus admission-rate benchmarks</a><a href="/insights/uc-gpa-by-high-school">Understand UC GPA data</a><a href="/counselors">Counselor resources</a></nav>
+        </section>
+      </main>
       <SiteFooter />
     </>
   )

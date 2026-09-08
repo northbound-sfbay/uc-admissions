@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import GrowthAnalytics from '@/components/GrowthAnalytics'
+import AdScript from '@/components/AdScript'
 
 export const metadata: Metadata = {
   title: 'UC Admissions by High School',
@@ -27,19 +29,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {enableAnalytics && (
           <>
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-V9PW2YBH8Q"></script>
             <script dangerouslySetInnerHTML={{ __html: `
+              if (['collegeacceptance.info', 'www.collegeacceptance.info'].includes(window.location.hostname) || ${analyticsInDev}) {
               window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
+              window.gtag = function(){dataLayer.push(arguments);};
               gtag('js', new Date());
               gtag('config', 'G-V9PW2YBH8Q'${gtagConfigExtras});
               gtag('config', 'G-WC3LKM6FL4'${gtagConfigExtras});
+              var analyticsScript = document.createElement('script');
+              analyticsScript.async = true;
+              analyticsScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-V9PW2YBH8Q';
+              document.head.appendChild(analyticsScript);
+              }
             `}} />
-            <script type="text/javascript" async data-noptimize="1" data-cfasync="false" src="//scripts.scriptwrapper.com/tags/aa59193f-60f2-447a-8f32-c32465b3f92b.js" />
           </>
         )}
       </head>
-      <body>{children}</body>
+      <body>{children}<GrowthAnalytics />{enableAnalytics && <AdScript />}</body>
     </html>
   )
 }

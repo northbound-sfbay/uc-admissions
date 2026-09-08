@@ -16,7 +16,7 @@ export default function TexasAdmissionsTable({ institutions, years }: {
   const [sort, setSort] = useState('name')
   const previousYear = String(Number(year) - 1)
   const rows = institutions.filter(item => item.years[year] &&
-    `${item.name} ${item.years[year].sourceName}`.toLowerCase().includes(query.trim().toLowerCase()))
+    `${item.name} ${item.name.replace(/^The University of Texas at /, 'UT ')} ${item.years[year].sourceName}`.toLowerCase().includes(query.trim().toLowerCase()))
     .sort((a, b) => sort === 'rate'
       ? (acceptanceRate(a.years[year]) ?? Infinity) - (acceptanceRate(b.years[year]) ?? Infinity) || a.name.localeCompare(b.name)
       : sort === 'applicants'
@@ -41,7 +41,7 @@ export default function TexasAdmissionsTable({ institutions, years }: {
             <th scope="row">{row.sourceName}<small className="texas-table-sub">FICE {item.ficeCode} · source row {row.sourceRow}</small></th>
             <td>{admissionNumber(row.texasApplicants)}</td><td>{admissionNumber(row.texasAccepted)}</td>
             <td><strong>{admissionPercent(acceptanceRate(row))}</strong></td>
-            <td>{change == null ? 'Not available' : `${change > 0 ? '+' : ''}${change.toFixed(1)} pp`}</td>
+            <td>{change == null ? 'Not available' : Math.abs(change) < 0.05 ? '0.0 pp' : `${change > 0 ? '+' : ''}${change.toFixed(1)} pp`}</td>
             <td>{admissionNumber(row.texasEnrolled)}</td>
           </tr>
         })}</tbody>

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 const CANONICAL = 'https://collegeacceptance.info/insights/uc-admissions-by-source-school'
 const TITLE = 'UC Admissions by Source School: How to Read the Data'
@@ -128,9 +127,9 @@ export default function UcAdmissionsBySourceSchoolPage() {
 
       <header>
         <div className="header-inner article-header-inner">
-          <Link href="/insights" className="text-sm text-blue-200 hover:text-white">
+          <a href="/insights" className="text-sm text-blue-200 hover:text-white">
             UC Admissions Insights
-          </Link>
+          </a>
           <h1>UC admissions by source school: how to read the data</h1>
           <p className="subtitle">
             Methodology notes for applicants, admits, enrollees, admit rates, campus views, and source-school limits.
@@ -230,10 +229,10 @@ export default function UcAdmissionsBySourceSchoolPage() {
               county pages, and the UC admission-rate explainer to compare results carefully.
             </p>
             <div className="article-example-links">
-              <Link href="/">Search a high school</Link>
-              <Link href="/uc-admission-rates">UC admission rates</Link>
-              <Link href="/feeder-schools/ucla">UCLA feeder schools</Link>
-              <Link href="/rankings">UC rankings</Link>
+              <a href="/">Search a high school</a>
+              <a href="/uc-admission-rates">UC admission rates</a>
+              <a href="/feeder-schools/ucla">UCLA feeder schools</a>
+              <a href="/rankings">UC rankings</a>
             </div>
           </section>
 

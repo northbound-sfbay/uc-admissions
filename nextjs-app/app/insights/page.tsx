@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'College Acceptance Insights | collegeacceptance.info',
@@ -88,29 +87,29 @@ export default function InsightsPage() {
             outcomes.
           </p>
           <div className="insights-actions">
-            <Link href="/" className="report-entry-link primary">
+            <a href="/" className="report-entry-link primary">
               Search your high school
-            </Link>
-            <Link href="/rankings" className="report-entry-link">
+            </a>
+            <a href="/rankings" className="report-entry-link">
               View UC rankings
-            </Link>
-            <Link href="/states" className="report-entry-link">
+            </a>
+            <a href="/states" className="report-entry-link">
               Browse Texas data
-            </Link>
-            <Link href="/uc-admission-rates" className="report-entry-link">
+            </a>
+            <a href="/uc-admission-rates" className="report-entry-link">
               View UC admission rates
-            </Link>
+            </a>
           </div>
         </section>
 
         <section className="insights-list" aria-label="Published insights">
           {ARTICLES.map(article => (
-            <Link className="insight-card" href={article.href} key={article.href}>
+            <a className="insight-card" href={article.href} key={article.href}>
               <span>{article.eyebrow}</span>
               <h3>{article.title}</h3>
               <p>{article.description}</p>
               <strong>Read article</strong>
-            </Link>
+            </a>
           ))}
         </section>
       </main>
@@ -125,7 +124,7 @@ export default function InsightsPage() {
           >
             UC Information Center
           </a>{' '}
-          · <Link href="/">UC admissions tool</Link> · <Link href="/about">About</Link>
+          · <a href="/">UC admissions tool</a> · <a href="/about">About</a>
         </p>
       </footer>
     </>

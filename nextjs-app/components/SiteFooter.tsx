@@ -1,4 +1,3 @@
-import Link from 'next/link'
 
 export default function SiteFooter() {
   return (
@@ -13,13 +12,14 @@ export default function SiteFooter() {
           UC Information Center
         </a>{' '}
         · School locations: California Dept. of Education &amp; OpenStreetMap contributors · Map: © CARTO ·{' '}
-        <Link href="/rankings">Rankings</Link> ·{' '}
-        <Link href="/states">State admissions data</Link> ·{' '}
-        <Link href="/states/texas">Texas high-school outcomes</Link> ·{' '}
-        <Link href="/insights/uc-admissions-by-source-school">Methodology</Link> ·{' '}
-        <Link href="/insights">Insights</Link> ·{' '}
-        <Link href="/about">About this site</Link> ·{' '}
-        <Link href="/privacy">Privacy Policy</Link>
+        <a href="/counselors">Counselor resources</a> ·{' '}
+        <a href="/rankings">Rankings</a> ·{' '}
+        <a href="/states">State admissions data</a> ·{' '}
+        <a href="/states/texas">Texas high-school outcomes</a> ·{' '}
+        <a href="/insights/uc-admissions-by-source-school">Methodology</a> ·{' '}
+        <a href="/insights">Insights</a> ·{' '}
+        <a href="/about">About this site</a> ·{' '}
+        <a href="/privacy">Privacy Policy</a>
       </p>
     </footer>
   )

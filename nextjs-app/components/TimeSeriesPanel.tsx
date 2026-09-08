@@ -111,7 +111,7 @@ export default function TimeSeriesPanel({
 
   return (
     <div className="chart-panel" id="ts-panel">
-      <div className="panel-controls">
+      <div className="panel-controls" data-tool-controls>
         <div className="school-picker-wrap">
           <label className="ctrl-label">High School</label>
           <SchoolAutocomplete
@@ -125,13 +125,13 @@ export default function TimeSeriesPanel({
         <div className="inline-filters">
           <div className="filter-group">
             <label className="ctrl-label">Campus</label>
-            <select value={campus} onChange={e => onCampusChange(e.target.value)}>
+            <select aria-label="School trend campus" value={campus} onChange={e => onCampusChange(e.target.value)}>
               {CAMPUSES.map(c => <option key={c} value={c}>{c === 'universitywide' ? 'Universitywide' : c}</option>)}
             </select>
           </div>
           <div className="filter-group">
             <label className="ctrl-label">Ethnic Group</label>
-            <select value={ethnicity} onChange={e => onEthnicityChange(e.target.value)}>
+            <select aria-label="School trend ethnic group" value={ethnicity} onChange={e => onEthnicityChange(e.target.value)}>
               <option value="all">All students</option>
               {ETHNICITIES.map(e => <option key={e} value={e}>{e === "Int'l" ? 'International' : e === 'Hispanic/ Latinx' ? 'Hispanic / Latinx' : e}</option>)}
             </select>
@@ -145,7 +145,7 @@ export default function TimeSeriesPanel({
             <h2 className="chart-title">{school?.school_name ?? '—'}</h2>
             <p className="chart-sub">
               {sub}
-              {school && (
+              {school && ['CA Public', 'CA Private'].includes(school.school_type) && (
                 <a
                   href={`/school/${makeSlug(school.school_id, school.school_name)}`}
                   onClick={() => {
@@ -155,9 +155,9 @@ export default function TimeSeriesPanel({
                       school_name: school.school_name,
                     })
                   }}
-                  style={{ marginLeft: '0.75rem', fontSize: '0.8rem', color: '#2563eb', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                  className="school-profile-action"
                 >
-                  View school page →
+                  Explore full school profile →
                 </a>
               )}
             </p>

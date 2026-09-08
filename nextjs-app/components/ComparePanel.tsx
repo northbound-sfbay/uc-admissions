@@ -86,7 +86,7 @@ export default function ComparePanel({
 
   return (
     <div className="chart-panel" id="cmp-panel">
-      <div className="panel-controls">
+      <div className="panel-controls" data-tool-controls>
         <div className="school-picker-wrap">
           <label className="ctrl-label">Add School to Compare</label>
           <SchoolAutocomplete
@@ -98,13 +98,13 @@ export default function ComparePanel({
         <div className="inline-filters">
           <div className="filter-group">
             <label className="ctrl-label">Campus</label>
-            <select value={campus} onChange={e => onCampusChange(e.target.value)}>
+            <select aria-label="Comparison campus" value={campus} onChange={e => onCampusChange(e.target.value)}>
               {CAMPUSES.map(c => <option key={c} value={c}>{c === 'universitywide' ? 'Universitywide' : c}</option>)}
             </select>
           </div>
           <div className="filter-group">
             <label className="ctrl-label">Ethnic Group</label>
-            <select value={ethnicity} onChange={e => onEthnicityChange(e.target.value)}>
+            <select aria-label="Comparison ethnic group" value={ethnicity} onChange={e => onEthnicityChange(e.target.value)}>
               <option value="all">All students</option>
               {ETHNICITIES.map(e => <option key={e} value={e}>{e === "Int'l" ? 'International' : e === 'Hispanic/ Latinx' ? 'Hispanic / Latinx' : e}</option>)}
             </select>

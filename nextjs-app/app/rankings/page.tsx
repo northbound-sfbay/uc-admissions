@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { getStatewideRankings, type RankingSchoolRow } from '@/lib/rankings'
 
 const CANONICAL = 'https://collegeacceptance.info/rankings'
@@ -45,7 +44,7 @@ function fmtPointChange(value: number | null | undefined): string {
 function SchoolCell({ row }: { row: RankingSchoolRow }) {
   return (
     <td>
-      <Link href={row.href}>{row.school_name}</Link>
+      <a href={row.href}>{row.school_name}</a>
       <span className="article-caption" style={{ display: 'block', marginTop: '2px' }}>
         {row.city}, {row.county}
         {row.school_type !== 'CA Public' ? ` - ${row.school_type}` : ''}
@@ -112,9 +111,9 @@ export default function RankingsPage() {
 
       <header>
         <div className="header-inner article-header-inner">
-          <Link href="/" className="text-sm text-blue-200 hover:text-white">
+          <a href="/" className="text-sm text-blue-200 hover:text-white">
             UC Admissions by High School
-          </Link>
+          </a>
           <h1>UC admissions rankings by high school</h1>
           <p className="subtitle">
             Fall {rankings.displayYear} statewide rankings for applicants, admits, admit rates,
@@ -272,7 +271,7 @@ export default function RankingsPage() {
             </p>
             <div className="insights-list" aria-label="Campus feeder leaders">
               {rankings.campusSummaries.map(campus => (
-                <Link
+                <a
                   className="insight-card"
                   href={`/feeder-schools/${campus.slug}`}
                   key={campus.slug}
@@ -287,7 +286,7 @@ export default function RankingsPage() {
                   <strong>
                     {fmtPercent(campus.admitRate)} campus admit rate - view rankings
                   </strong>
-                </Link>
+                </a>
               ))}
             </div>
             <p className="article-caption">
@@ -313,7 +312,7 @@ export default function RankingsPage() {
                   {rankings.countyLeaders.slice(0, 12).map(row => (
                     <tr key={row.county}>
                       <td>
-                        <Link href={row.href}>{row.county} County</Link>
+                        <a href={row.href}>{row.county} County</a>
                       </td>
                       <td>{fmtNumber(row.schools)}</td>
                       <td>{fmtNumber(row.app)}</td>
@@ -400,16 +399,16 @@ export default function RankingsPage() {
               ethnicity, admit-rate trend, and enrollment context.
             </p>
             <div className="insights-actions">
-              <Link href="/" className="report-entry-link primary">
+              <a href="/" className="report-entry-link primary">
                 Search your high school
-              </Link>
-              <Link href="/insights/uc-gpa-by-high-school" className="report-entry-link">
+              </a>
+              <a href="/insights/uc-gpa-by-high-school" className="report-entry-link">
                 Read the GPA guide
-              </Link>
+              </a>
               {topCampus && (
-                <Link href={`/feeder-schools/${topCampus.slug}`} className="report-entry-link">
+                <a href={`/feeder-schools/${topCampus.slug}`} className="report-entry-link">
                   View {topCampus.campusLabel} feeders
-                </Link>
+                </a>
               )}
             </div>
           </section>
@@ -443,8 +442,8 @@ export default function RankingsPage() {
 
       <footer>
         <p>
-          <Link href="/">UC admissions tool</Link> - <Link href="/insights">Insights</Link> -{' '}
-          <Link href="/about">About</Link>
+          <a href="/">UC admissions tool</a> - <a href="/insights">Insights</a> -{' '}
+          <a href="/about">About</a>
         </p>
       </footer>
     </>
