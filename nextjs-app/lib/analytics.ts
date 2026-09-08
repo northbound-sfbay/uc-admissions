@@ -8,5 +8,9 @@ declare global {
 
 export function trackEvent(name: string, params: AnalyticsParams = {}) {
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
-  window.gtag('event', name, params)
+  window.gtag('event', name, {
+    transport_type: 'beacon',
+    page_family: window.location.pathname.split('/')[1] || 'home',
+    ...params,
+  })
 }

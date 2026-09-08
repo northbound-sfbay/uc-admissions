@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import {
   getTexasOutcomeData,
   getTexasSchoolsAlphabetically,
@@ -51,12 +50,12 @@ export default function TexasHighSchoolIndexPage() {
 
       <header className="state-home-header">
         <nav className="state-home-nav" aria-label="Primary navigation">
-          <Link href="/" className="state-home-brand">collegeacceptance.info</Link>
+          <a href="/" className="state-home-brand">collegeacceptance.info</a>
           <div className="state-home-nav-links">
-            <Link href="/states/texas">Texas</Link>
-            <Link href="/college/university-of-texas-at-austin/feeder-schools">UT Austin feeders</Link>
-            <Link href="/rankings">UC rankings</Link>
-            <Link href="/insights">Insights</Link>
+            <a href="/states/texas">Texas</a>
+            <a href="/college/university-of-texas-at-austin/feeder-schools">UT Austin feeders</a>
+            <a href="/rankings">UC rankings</a>
+            <a href="/insights">Insights</a>
           </div>
         </nav>
       </header>
@@ -102,9 +101,9 @@ export default function TexasHighSchoolIndexPage() {
                 <p className="state-home-kicker">All reporting schools</p>
                 <h2>Browse by county and school</h2>
               </div>
-              <Link href="/college/university-of-texas-at-austin/feeder-schools" className="report-entry-link primary">
+              <a href="/college/university-of-texas-at-austin/feeder-schools" className="report-entry-link primary">
                 See UT Austin feeder schools
-              </Link>
+              </a>
             </div>
             <p>
               The table is sorted by county. The year shown is the most recent year available for
@@ -128,7 +127,7 @@ export default function TexasHighSchoolIndexPage() {
                     return (
                       <tr key={school.campusCode}>
                         <td>
-                          <Link href={texasHighSchoolHref(school)}>{school.schoolName}</Link>
+                          <a href={texasHighSchoolHref(school)}>{school.schoolName}</a>
                           <small className="texas-table-sub">
                             {school.district} · campus {school.campusCode}
                           </small>
@@ -150,9 +149,9 @@ export default function TexasHighSchoolIndexPage() {
 
       <footer>
         <p>
-          <Link href="/states/texas">Texas outcomes</Link> |{' '}
-          <Link href="/college/university-of-texas-at-austin/feeder-schools">UT Austin feeders</Link> |{' '}
-          <Link href="/">UC admissions tool</Link>
+          <a href="/states/texas">Texas outcomes</a> |{' '}
+          <a href="/college/university-of-texas-at-austin/feeder-schools">UT Austin feeders</a> |{' '}
+          <a href="/">UC admissions tool</a>
         </p>
       </footer>
     </>

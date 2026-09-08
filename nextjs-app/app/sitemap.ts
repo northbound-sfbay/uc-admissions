@@ -38,7 +38,7 @@ function getSchoolEntries() {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const generatedAt = new Date()
+  const generatedAt = new Date('2026-09-08T00:00:00Z')
   const texasData = getTexasOutcomeData()
   const texasUpdatedAt = new Date(`${texasData.generatedAt}T00:00:00Z`)
 
@@ -116,6 +116,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     {
+      url: `${BASE_URL}/counselors`,
+      lastModified: new Date('2026-09-08T00:00:00Z'),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
       url: `${BASE_URL}/privacy`,
       lastModified: generatedAt,
       changeFrequency: 'yearly',
@@ -146,7 +152,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const schoolUrls: MetadataRoute.Sitemap = getSchoolEntries().map(({ school_id, school_name }) => ({
     url: `${BASE_URL}/school/${makeSlug(school_id, school_name)}`,
-    lastModified: generatedAt,
     changeFrequency: 'yearly',
     priority: 0.7,
   }))

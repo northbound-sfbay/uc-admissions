@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'About | UC Admissions by California High School | collegeacceptance.info',
@@ -90,11 +89,11 @@ export default function AboutPage() {
           <li>Ethnicity breakdowns per school, per year, per campus</li>
         </ul>
 
-        <Link href="/" style={{ color: '#2563eb', fontSize: '0.9rem' }}>← Back to the tool</Link>
+        <a href="/" style={{ color: '#2563eb', fontSize: '0.9rem' }}>← Back to the tool</a>
       </main>
 
       <footer>
-        <p>Data: <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" target="_blank" rel="noopener">UC Information Center</a> · School locations: California Dept. of Education &amp; OpenStreetMap contributors · Map: © CARTO · <Link href="/insights">Insights</Link></p>
+        <p>Data: <a href="https://www.universityofcalifornia.edu/about-us/information-center/admissions-source-school" target="_blank" rel="noopener">UC Information Center</a> · School locations: California Dept. of Education &amp; OpenStreetMap contributors · Map: © CARTO · <a href="/insights">Insights</a></p>
       </footer>
     </>
   )

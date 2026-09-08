@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | collegeacceptance.info',
@@ -45,10 +44,10 @@ export default function PrivacyPage() {
         lineHeight: '1.7',
       }}>
         <h2 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '0.25rem' }}>Privacy Policy</h2>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1.5rem' }}>Last updated: April 2026</p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1.5rem' }}>Last updated: September 2026</p>
 
         <p style={P}>
-          This privacy policy describes how collegeacceptance.info ("this site") collects and uses
+          This privacy policy describes how collegeacceptance.info (&quot;this site&quot;) collects and uses
           information when you visit. This site does not collect any personally identifiable
           information directly.
         </p>
@@ -75,7 +74,7 @@ export default function PrivacyPage() {
             to this and other websites.
           </p>
           <p style={P}>
-            Mediavine's advertising partners include Google and other third-party ad networks. For
+            Mediavine&apos;s advertising partners include Google and other third-party ad networks. For
             more information on how Mediavine handles data, see the{' '}
             <a href="https://www.mediavine.com/privacy-policy/" target="_blank" rel="noopener">
               Mediavine Privacy Policy
@@ -104,6 +103,11 @@ export default function PrivacyPage() {
             advertising purposes as described above. You can control cookies through your browser
             settings; disabling cookies may affect site functionality.
           </p>
+          <p style={P}>
+            Recently viewed schools are saved in local storage on your browser so you can return
+            to them. Use the Clear button beside that list to remove it. This list is not sent to
+            our server, and school lookup works when local storage is unavailable.
+          </p>
         </div>
 
         <div style={SECTION}>
@@ -126,7 +130,7 @@ export default function PrivacyPage() {
           </p>
         </div>
 
-        <Link href="/" style={{ color: '#2563eb', fontSize: '0.9rem' }}>← Back to the tool</Link>
+        <a href="/" style={{ color: '#2563eb', fontSize: '0.9rem' }}>← Back to the tool</a>
       </main>
 
       <footer>

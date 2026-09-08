@@ -43,3 +43,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Derived client lookup assets; regenerated before every build.
+/public/data/schools/
+/public/data/school-index.json

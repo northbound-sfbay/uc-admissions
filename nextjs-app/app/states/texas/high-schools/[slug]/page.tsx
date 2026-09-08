@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound, permanentRedirect } from 'next/navigation'
 import {
   getTexasHighSchool,
@@ -149,11 +148,11 @@ export default async function TexasHighSchoolPage({ params }: PageProps) {
 
       <header className="state-home-header">
         <nav className="state-home-nav" aria-label="Primary navigation">
-          <Link href="/" className="state-home-brand">collegeacceptance.info</Link>
+          <a href="/" className="state-home-brand">collegeacceptance.info</a>
           <div className="state-home-nav-links">
-            <Link href="/states/texas">Texas</Link>
-            <Link href="/states/texas/high-schools">All Texas high schools</Link>
-            <Link href="/college/university-of-texas-at-austin/feeder-schools">UT Austin feeders</Link>
+            <a href="/states/texas">Texas</a>
+            <a href="/states/texas/high-schools">All Texas high schools</a>
+            <a href="/college/university-of-texas-at-austin/feeder-schools">UT Austin feeders</a>
           </div>
         </nav>
       </header>
@@ -238,9 +237,9 @@ export default async function TexasHighSchoolPage({ params }: PageProps) {
               })}
             </div>
             <p className="article-caption">
-              <Link href="/college/university-of-texas-at-austin/feeder-schools">
+              <a href="/college/university-of-texas-at-austin/feeder-schools">
                 Compare this school with the statewide UT Austin feeder-school ranking.
-              </Link>
+              </a>
             </p>
           </section>
 
@@ -395,9 +394,9 @@ export default async function TexasHighSchoolPage({ params }: PageProps) {
 
       <footer>
         <p>
-          <Link href="/states/texas/high-schools">All Texas high schools</Link> |{' '}
-          <Link href="/states/texas">Texas outcomes</Link> |{' '}
-          <Link href="/college/university-of-texas-at-austin/feeder-schools">UT Austin feeders</Link>
+          <a href="/states/texas/high-schools">All Texas high schools</a> |{' '}
+          <a href="/states/texas">Texas outcomes</a> |{' '}
+          <a href="/college/university-of-texas-at-austin/feeder-schools">UT Austin feeders</a>
         </p>
       </footer>
     </>

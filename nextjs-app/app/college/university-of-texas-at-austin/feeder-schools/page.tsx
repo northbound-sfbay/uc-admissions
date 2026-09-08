@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { getUtAustinFeederData, texasHighSchoolHref } from '@/lib/texas-outcomes'
 
 const CANONICAL = 'https://collegeacceptance.info/college/university-of-texas-at-austin/feeder-schools'
@@ -88,12 +87,12 @@ export default function UtAustinFeederSchoolsPage() {
 
       <header className="state-home-header">
         <nav className="state-home-nav" aria-label="Primary navigation">
-          <Link href="/" className="state-home-brand">collegeacceptance.info</Link>
+          <a href="/" className="state-home-brand">collegeacceptance.info</a>
           <div className="state-home-nav-links">
-            <Link href="/">UC tool</Link>
-            <Link href="/states/texas">Texas</Link>
-            <Link href="/states/texas/high-schools">Texas high schools</Link>
-            <Link href="/insights">Insights</Link>
+            <a href="/">UC tool</a>
+            <a href="/states/texas">Texas</a>
+            <a href="/states/texas/high-schools">Texas high schools</a>
+            <a href="/insights">Insights</a>
           </div>
         </nav>
 
@@ -108,7 +107,7 @@ export default function UtAustinFeederSchoolsPage() {
             </p>
             <div className="state-home-actions">
               <a href="#top-ut-feeders" className="report-entry-link primary">See top schools</a>
-              <Link href="/states/texas/high-schools" className="report-entry-link">Browse all Texas schools</Link>
+              <a href="/states/texas/high-schools" className="report-entry-link">Browse all Texas schools</a>
             </div>
           </div>
 
@@ -191,7 +190,7 @@ export default function UtAustinFeederSchoolsPage() {
                   {feeder.topSchools.slice(0, 75).map(row => (
                     <tr key={row.school.campusCode}>
                       <td>
-                        <Link href={texasHighSchoolHref(row.school)}>{row.school.schoolName}</Link>
+                        <a href={texasHighSchoolHref(row.school)}>{row.school.schoolName}</a>
                         <small className="texas-table-sub">{row.school.district}</small>
                       </td>
                       <td>{row.school.county}</td>
@@ -267,9 +266,9 @@ export default function UtAustinFeederSchoolsPage() {
 
       <footer>
         <p>
-          <Link href="/states/texas">Texas outcomes</Link> |{' '}
-          <Link href="/states/texas/high-schools">Texas high schools</Link> |{' '}
-          <Link href="/">UC admissions tool</Link>
+          <a href="/states/texas">Texas outcomes</a> |{' '}
+          <a href="/states/texas/high-schools">Texas high schools</a> |{' '}
+          <a href="/">UC admissions tool</a>
         </p>
       </footer>
     </>

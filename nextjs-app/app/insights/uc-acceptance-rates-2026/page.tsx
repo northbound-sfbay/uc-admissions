@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import ArticleCtaLink from '@/components/ArticleCtaLink'
 
 const CANONICAL = 'https://collegeacceptance.info/insights/uc-acceptance-rates-2026'
@@ -241,9 +240,9 @@ export default function UcAcceptanceRates2026Article() {
 
       <header>
         <div className="header-inner article-header-inner">
-          <Link href="/insights" className="text-sm text-blue-200 hover:text-white">
+          <a href="/insights" className="text-sm text-blue-200 hover:text-white">
             UC Admissions Insights
-          </Link>
+          </a>
           <h1>UC acceptance rates 2026: official results for every campus</h1>
           <p className="subtitle">
             Preliminary Fall 2026 first-year admission offers, campus changes, and the limits of the headline numbers.
@@ -282,6 +281,7 @@ export default function UcAcceptanceRates2026Article() {
             </div>
           </section>
 
+          <div className="content_hint" aria-hidden="true" />
           <section className="answer-block" aria-label="Short answer">
             <h2>Short answer</h2>
             <p>
@@ -317,6 +317,7 @@ export default function UcAcceptanceRates2026Article() {
             </ul>
           </section>
 
+          <div className="content_hint" aria-hidden="true" />
           <section>
             <h2>How UC campus admit rates changed from 2025 to 2026</h2>
             <p>
@@ -643,8 +644,8 @@ export default function UcAcceptanceRates2026Article() {
 
       <footer>
         <p>
-          <Link href="/insights">UC Admissions Insights</Link> · <Link href="/">UC admissions tool</Link> ·{' '}
-          <Link href="/about">About</Link>
+          <a href="/insights">UC Admissions Insights</a> · <a href="/">UC admissions tool</a> ·{' '}
+          <a href="/about">About</a>
         </p>
       </footer>
     </>
