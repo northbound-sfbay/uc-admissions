@@ -1740,3 +1740,51 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .comparison-actions > button { width: 100%; }
   .ranking-pagination { font-size: .85rem; }
 }
+.related-data-stories { margin: 28px 0; padding: 22px; border: 1px solid #dbe4ec; border-radius: 14px; background: #f5f8fb; }
+.related-data-stories h2 { margin: 0 0 14px; color: var(--uc-blue); font-size: 1.2rem; line-height: 1.35; }
+.related-data-stories > div { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.related-data-stories a { padding: 14px; border: 1px solid #dbe4ec; border-radius: 9px; background: #fff; color: var(--uc-blue); text-decoration: none; line-height: 1.45; }
+.related-data-stories a:hover { border-color: var(--uc-blue); text-decoration: underline; }
+.related-data-stories a span { display: block; margin-bottom: 5px; font-size: .73rem; color: #536779; font-weight: 500; }
+.related-data-stories a strong { font-size: .9rem; }
+.data-story { min-width: 0; }
+.data-story > section { margin-top: 32px; }
+.data-story .answer-block { margin-top: 24px; }
+.data-story .article-table { min-width: 620px; font-variant-numeric: tabular-nums; }
+.data-story .article-table caption { padding: 0 0 12px; text-align: left; color: #536779; font-size: .85rem; }
+.data-story .article-table tbody th { background: transparent; font-weight: 600; text-transform: none; letter-spacing: normal; }
+.data-story .article-table td small { display: block; color: #536779; white-space: nowrap; }
+.data-story .article-table-wrap { margin-top: 18px; }
+.cohort-rate-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
+.cohort-rate-cards > div { padding: 20px; background: #f5f8fb; border: 1px solid #dbe4ec; border-radius: 12px; }
+.cohort-rate-cards strong { display: block; color: var(--uc-blue); font-size: 2.5rem; line-height: 1.4; }
+.cohort-rate-cards p { font-size: .85rem; line-height: 1.5; }
+.cohort-rate-cards small { color: #536779; font-size: .75rem; }
+.cohort-rate-track, .enrollment-bar-track { height: 12px; background: #dce6ef; border-radius: 3px; overflow: hidden; }
+.cohort-rate-track { margin-top: 16px; }
+.cohort-rate-track span, .enrollment-bar-track span { display: block; height: 100%; background: #174b80; }
+.cohort-trend-figure, .enrollment-bars { margin: 22px 0 0; }
+.cohort-chart-scroll { overflow-x: auto; }
+.chart-scroll-note { display: none; }
+.cohort-chart-scroll > svg { display: block; width: 100%; min-width: 540px; }
+.cohort-chart-scroll text { fill: #405369; font-size: 13px; }
+.cohort-chart-legend { display: flex; flex-wrap: wrap; gap: 12px 20px; margin: 12px 0; }
+.cohort-chart-legend span { display: inline-flex; align-items: center; gap: 7px; font-size: .85rem; color: #405369; }
+.cohort-chart-legend svg { width: 28px; height: 6px; }
+.data-story figcaption { margin-top: 14px; font-size: .84rem; line-height: 1.6; color: #536779; }
+.enrollment-scale { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0 106px 12px 108px; font-size: .72rem; color: #536779; }
+.enrollment-scale span:nth-child(2) { text-align: center; }
+.enrollment-scale span:last-child { text-align: right; }
+.enrollment-bar-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 94px; gap: 12px; align-items: center; margin: 18px 0; font-size: .84rem; color: #405369; }
+.enrollment-bar-track { height: 24px; }
+.enrollment-bar-row > span { text-align: right; font-variant-numeric: tabular-nums; }
+.story-data-details { margin-top: 18px; padding: 16px; border: 1px solid #dbe4ec; border-radius: 8px; }
+.story-data-details summary { cursor: pointer; font-weight: 650; color: var(--uc-blue); }
+@media (max-width: 600px) {
+  .data-story .chart-scroll-note { display: block; margin-bottom: 10px; color: #536779; font-size: .8rem; }
+  .related-data-stories { padding: 16px; }
+  .related-data-stories > div { grid-template-columns: 1fr; }
+  .cohort-rate-cards { grid-template-columns: 1fr; }
+  .enrollment-bar-row { grid-template-columns: 76px minmax(0, 1fr) 72px; gap: 8px; font-size: .76rem; }
+  .enrollment-scale { margin-left: 84px; margin-right: 80px; }
+}

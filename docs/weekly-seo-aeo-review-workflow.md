@@ -1,164 +1,51 @@
-# Weekly SEO/AEO Review Workflow
+# Weekly search and ad-revenue review
 
-Use this once per week to decide what to publish, update, internally link, or measure for `collegeacceptance.info`.
+Updated September 8, 2026. Useful reading and ad revenue are the business objectives. This workflow supersedes the earlier weekly-article quota and paid-report conversion plan. Keep private account metrics in the locally excluded `docs/growth-reviews/` directory, never in this public repository.
 
-## Goal
+## Repeatable growth pattern
 
-Find the highest-leverage search opportunities, especially queries where the site already has impressions, then turn them into tool-first articles, route pages, or internal-link improvements.
+1. Find a real question in Search Console page/query pairs. Prefer relevant queries with impressions and positions 6–30. Inspect the existing destination first.
+2. Improve that page when it already answers the intent. Publish a separate analysis only for a distinct question, original calculation and useful next action.
+3. Explain the finding with comparable groups, counts, denominators, years, sources and limitations. Link to the relevant school, campus, county or comparison tool. Use normal navigation between real pages; never turn filters into artificial page views.
+4. Link from the visible Insights hub and relevant existing pages. Verify source calculations, mobile reading, events, metadata, canonical and sitemap before launch.
+5. Review at 7, 28 and 90 days. Expand patterns that earn relevant discovery and useful onward reading. Revise weak pages before increasing volume.
 
-## Cadence
+## Cadence and expense discipline
 
-- Frequency: weekly.
-- Suggested day: Monday or Tuesday.
-- Lookback windows: last 7 days, last 28 days, and compare to previous period.
-- Output: one short weekly note with actions for the next publishing cycle.
+The scheduled review runs Mondays at 10 a.m. America/Los_Angeles. The run falling on calendar day 3–9 also includes the previous month's business review. Each review recommends one existing-page improvement and, if justified, one next brief. Reviews do not authorize publishing, outreach, purchases or account changes.
 
-## Weekly Publish Schedule
+After the initial three-story release, cap new analyses at two per month during the 90-day pilot. There is no minimum quota. Record hours and incremental cost privately. Prefer useful public resources and separately approved sharing over buying traffic to earn display-ad revenue.
 
-- Monday: review Search Console and GA, then pick one topic.
-- Tuesday: write the article brief using `docs/article-brief-template.md`.
-- Wednesday: draft the article locally.
-- Thursday: review data accuracy, SEO/AEO structure, internal links, and CTA tracking.
-- Friday: publish, submit the URL in Search Console, and add the page to `docs/content-calendar.md`.
+## Inputs and definitions
 
-Default pace: one article or meaningful content update per week.
+- Journey: revenue, page views, sessions, impressions, page RPM and session RPM. State exact dates and traffic definition.
+- GA: use the single reporting property in the private runbook. Inspect organic and AI landing sessions, engagement, device mix, return visits and actual onward page loads. `article_cta_click`, `school_search_complete`, `internal_navigation` and `comparison_intent` measure intent; a click is not a completed second page.
+- Search Console: queries and destinations, clicks, impressions, CTR, position, country and device. Distinguish adjacent-topic hypotheses from proven exact-query demand.
+- Site: publication date, cohort URLs, changed links, canonical/sitemap, data releases, rendering/ad regressions and concurrent deployments.
 
-## Inputs
+Page RPM = Journey revenue / Journey page views × 1,000. Session RPM = Journey revenue / Journey sessions × 1,000. Views/session = Journey page views / Journey sessions. Never mix sources, periods, or monetizable-only and all-traffic denominators.
 
-Google Search Console:
+Calculate article-to-school progression only with an ordered same-session funnel and the same eligible landing-session denominator. Missing reports or custom dimensions are unavailable, not zero. Unrelated event-user ratios are not conversion rates.
 
-- Queries.
-- Pages.
-- Clicks.
-- Impressions.
-- CTR.
-- Average position.
-- Page/query pairs.
+## Readouts
 
-Google Analytics:
+| Readout | Question | Action |
+|---|---|---|
+| 7 days | Do pages render, link and track correctly? Are discovery signals present? | Repair technical problems; avoid verdicts from tiny samples. |
+| 28 days | Which questions attract relevant readers who continue into school/campus data? | Compare with the preceding period and existing-page cohort. Improve weak answers, snippets or next steps; choose the next distinct brief from evidence. |
+| 90 days | Did rolling-30-day traffic and revenue targets in the private runbook materialize? | Keep, revise or stop each pattern; set the next target from acquisition, depth and page RPM. |
 
-- Landing page users.
-- Engagement time.
-- Scroll and click events.
-- `article_cta_click`.
-- `comparison_intent`.
-- `school_page_view`.
-- `report_preview_open`.
-- `report_cta_click`.
+Weekly: seven fully reported days versus the preceding seven, plus a separate rolling-30-day scorecard. Monthly: full calendar months plus per-day figures. Account for admissions seasonality, source/device mix, lag, small samples and concurrent Texas changes. This bundled release is not a randomized experiment.
 
-Site context:
+## Decision rules
 
-- New pages published.
-- Pages changed.
-- Known SEO targets: `/`, `/uc-admission-rates`, school pages, feeder pages, county pages, future `/insights/` articles.
+- Relevant query at positions 6–15 with a suitable page: strengthen its direct answer and contextual links first.
+- Distinct question with original data: brief the query evidence, audience, finding, chart, cohort rules, links, caveats and measurement dates.
+- Relevant landings but weak onward reading: improve the next action and mobile placement. Assess engagement and revenue/session together.
+- Impressions but low CTR: inspect intent and position before testing an accurate title/description. No unsupported years or claims.
+- Little discovery after 28 days: check indexability and links, then reassess demand. Allow the 90-day window rather than mass-producing variants.
+- Overlap with a stronger page: consolidate the answer or improve links instead of creating competing thin pages.
 
-## Search Console Review
+## Weekly output
 
-Check `Performance > Search results`.
-
-Filters:
-
-- Search type: Web.
-- Date: last 28 days.
-- Optional country: United States.
-
-Questions to answer:
-
-- Which queries have high impressions but low CTR?
-- Which queries rank positions 6-15 and could move to page 1?
-- Which queries rank positions 16-30 and need a dedicated article or stronger internal links?
-- Which pages receive impressions for queries they are not designed to answer?
-- Are broad queries such as `uc admission rates`, `uc acceptance rates`, or `ucla feeder schools` increasing?
-- Are school-specific queries appearing for schools without strong pages or report previews?
-
-Opportunity buckets:
-
-- Improve snippet: position 1-5, low CTR.
-- Add internal links: position 6-15, good page exists.
-- Publish article: position 10-30, intent is informational.
-- Build route page: repeated query pattern needs scalable page type.
-- Ignore: irrelevant, unsupported, or too broad.
-
-## GA Review
-
-Check `Reports > Engagement > Pages and screens`.
-
-Filters:
-
-- Page path contains `/uc-admission-rates`, `/school/`, `/feeder-schools/`, `/county/`, and future `/insights/`.
-- For article pages, segment traffic source = organic search when possible.
-
-Questions to answer:
-
-- Which landing pages bring engaged users?
-- Which articles drive `article_cta_click`?
-- Which pages create downstream `comparison_intent` or `school_page_view`?
-- Which pages create `report_preview_open` or `report_cta_click`?
-- Are users clicking from informational pages into the tool?
-- Are there pages with traffic but weak engagement or no downstream action?
-
-Key ratios:
-
-- Article CTA rate = `article_cta_click users / article landing page users`.
-- Tool intent rate = `comparison_intent users / landing page users`.
-- School-page progression = `school_page_view users / landing page users`.
-- Report preview rate = `report_preview_open users / landing page users`.
-- Report CTA rate = `report_cta_click users / report_preview_open users`.
-
-## Weekly Output Template
-
-Date range:
-
-Top wins:
-
-- Query/page:
-- What changed:
-- Why it matters:
-
-Top opportunities:
-
-| Priority | Query | Page | Impressions | Clicks | CTR | Avg position | Action |
-|---|---:|---:|---:|---:|---:|---:|---|
-| P1 |  |  |  |  |  |  |  |
-| P2 |  |  |  |  |  |  |  |
-| P3 |  |  |  |  |  |  |  |
-
-Publishing decision:
-
-- New article to write:
-- Existing page to update:
-- Internal links to add:
-- Page to monitor:
-
-Conversion readout:
-
-- Organic landing page users:
-- `article_cta_click` users:
-- `comparison_intent` users:
-- `school_page_view` users:
-- `report_preview_open` users:
-- `report_cta_click` users:
-- Notes:
-
-Next actions:
-
-- Action:
-- Owner:
-- Due:
-
-## Decision Rules
-
-- If a query has impressions and average position 6-15, first try improving title/meta/H1/internal links before writing a new article.
-- If a query has impressions and average position 16-30 with clear informational intent, consider an article.
-- If many queries follow the same pattern, consider a scalable page template instead of one-off articles.
-- If an article gets traffic but no tool clicks, improve CTA placement and internal links before writing more similar articles.
-- If an article ranks but overlaps with a product page, consolidate or repoint internal links to avoid cannibalization.
-
-## Automation Later
-
-When GA/Search Console API access is available, automate:
-
-- Weekly export of GSC query/page rows.
-- Weekly export of GA landing-page and event rows.
-- Opportunity scoring.
-- Draft brief generation for the top 3 article/update candidates.
+Save a private note with exact windows, actuals versus target, acquisition/depth/yield diagnosis, cohort results, limitations and three next actions. Each action needs a specific page, evidence, proposed change and review date. Give mature experiments a keep/revise/stop decision. Maintain the public calendar using publication facts only.

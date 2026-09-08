@@ -2,6 +2,7 @@ import FeederRankings from '@/components/FeederRankings'
 import SchoolFinder from '@/components/SchoolFinder'
 import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
 import type { Metadata } from 'next'
+import RelatedDataStories from '@/components/RelatedDataStories'
 import { notFound } from 'next/navigation'
 import { feederSchoolHref, getFeederData, getFeederSlugs } from '@/lib/feeder'
 import { countyPageHref } from '@/lib/county'
@@ -239,7 +240,7 @@ export default async function FeederPage({
     '@type': 'Article',
     headline: title,
     description,
-    dateModified: new Date().toISOString().slice(0, 10),
+    dateModified: '2026-09-08',
     author: {
       '@type': 'Organization',
       name: 'collegeacceptance.info',
@@ -343,6 +344,7 @@ export default async function FeederPage({
           />
         </section>
 
+        <RelatedDataStories campus={feederData.campusKey} />
         <section className="charts-row" style={{ alignItems: 'start' }}>
           <div className="chart-panel" style={{ height: '760px' }}>
             <div className="panel-controls">

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { DATA_STORIES, storyHref } from '@/lib/data-stories'
 
 export const metadata: Metadata = {
   title: 'College Acceptance Insights | collegeacceptance.info',
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 }
 
 const ARTICLES = [
+  ...DATA_STORIES.map(story => ({ ...story, href: storyHref(story) })),
   {
     title: 'Texas college acceptance rates: Fall 2025 results, released in 2026',
     href: '/states/texas/college-acceptance-rates',

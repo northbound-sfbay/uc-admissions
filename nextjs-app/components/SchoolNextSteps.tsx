@@ -3,6 +3,7 @@ import { getPeerSchools } from '@/lib/peers'
 import { makeSlug, titleCase } from '@/lib/utils'
 import { countyPageHref } from '@/lib/county'
 import { toolHref } from '@/lib/tool-state'
+import RelatedDataStories from './RelatedDataStories'
 
 export default function SchoolNextSteps({ school }: { school: School }) {
   const peers = getPeerSchools(school)
@@ -23,6 +24,7 @@ export default function SchoolNextSteps({ school }: { school: School }) {
         {school.county && <a href={countyPageHref(school.county)}>Explore {school.county} County</a>}
         <a href="/feeder-schools/uc-davis">UC Davis feeder schools</a>
       </nav>
+      <RelatedDataStories county={school.county} />
     </section>
   )
 }

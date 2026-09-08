@@ -66,6 +66,10 @@ const FIELD_DEFINITIONS = [
 
 const FAQ = [
   {
+    question: 'Are Fall 2026 UC admission rates by high school available here?',
+    answer: 'The school-level records on this site are finalized through Fall 2025. Preliminary Fall 2026 campus-wide results are available separately; they cannot be used as a high school’s 2026 admit rate.',
+  },
+  {
     question: 'Where can I find UC admission rates by high school?',
     answer:
       'You can search UC admission rates by high school using the interactive lookup on collegeacceptance.info. It shows applicants, admits, enrollees, admit rates, campus breakdowns, ethnicity views, and trends from Fall 1994 through Fall 2025.',
@@ -104,7 +108,7 @@ function JsonLd() {
     headline: TITLE,
     description: DESCRIPTION,
     datePublished: '2026-05-01',
-    dateModified: '2026-05-01',
+    dateModified: '2026-09-08',
     author: {
       '@type': 'Organization',
       name: 'collegeacceptance.info',
@@ -192,7 +196,7 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
       <main className="article-shell">
         <article className="article-card">
           <div className="article-kicker">Data analysis</div>
-          <p className="article-byline">By collegeacceptance.info · Updated May 1, 2026</p>
+          <p className="article-byline">By collegeacceptance.info · Updated September 8, 2026</p>
 
           <p className="article-deck">
             Families often search for a single UC acceptance rate for a high school. The data is
@@ -200,6 +204,11 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
             applied, where they applied, how strong the applicant pool was, and whether admitted
             students actually enrolled.
           </p>
+
+          <section id="data-year" className="answer-block">
+            <h2>Looking for 2026 results by high school?</h2>
+            <p>The school-level records on this site are finalized through <strong>Fall 2025</strong>. The separate <a href="/insights/uc-acceptance-rates-2026">preliminary Fall 2026 campus results</a> cover each campus as a whole. They do not provide a school’s 2026 admit rate. Choose a school in the <a href="/">lookup tool</a> to see the latest available school-level year.</p>
+          </section>
 
           <section className="article-stat-grid" aria-label="Fall 2025 UC source-school snapshot">
             {STAT_CARDS.map(card => (

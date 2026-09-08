@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import InteractiveToolLoader from '@/components/InteractiveToolLoader'
 import SiteFooter from '@/components/SiteFooter'
+import RelatedDataStories from '@/components/RelatedDataStories'
 
 export const metadata: Metadata = {
   title: 'UC Acceptance Rates by High School | UC Admissions Data',
@@ -32,7 +33,9 @@ export default function Home() {
           <h2>Looking for Fall 2026 campus results?</h2>
           <p>The new preliminary campus totals are available. School-specific outcomes above remain finalized through Fall 2025.</p>
           <a href="/insights/uc-acceptance-rates-2026">See 2026 acceptance rates for every UC campus →</a>
+          <p><a href="/insights/uc-admission-rates-by-high-school#data-year">Why school-level results still use Fall 2025</a></p>
         </section>
+        <RelatedDataStories all />
         <section className="seo-intro">
           <h2>Understand your school’s UC outcomes</h2>
           <p>Explore applicants, admits, enrollment, and admit rates across all nine undergraduate UC campuses. Start with your high school, then compare campus and year patterns. The <a href="/insights/uc-admissions-by-source-school">source-school guide</a> explains the calculations and their limits.</p>

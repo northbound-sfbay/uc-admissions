@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import type { MetadataRoute } from 'next'
+import { DATA_STORIES, STORY_DATE, storyHref } from '@/lib/data-stories'
 import { getCountySlugs } from '@/lib/county'
 import { getFeederSlugs } from '@/lib/feeder'
 import { getStateOutcomeSlugs } from '@/lib/state-outcomes'
@@ -177,6 +178,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...coreUrls,
+    ...DATA_STORIES.map(story => ({ url: `${BASE_URL}${storyHref(story)}`, lastModified: new Date(STORY_DATE), changeFrequency: 'monthly' as const, priority: 0.8 })),
     ...countyUrls,
     ...feederUrls,
     ...stateUrls,

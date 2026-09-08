@@ -1,50 +1,39 @@
-# UC Admissions Content Calendar
+# College Acceptance content calendar
 
-Use this as the rolling weekly publishing plan for `collegeacceptance.info`.
+Updated September 8, 2026. This publication register and evidence-dependent queue replaces the stale May–June planned schedule. Private search and earnings metrics belong in local growth reviews. See `weekly-seo-aeo-review-workflow.md` for the operating process.
 
-## Cadence
+## Current destinations
 
-- Monday: review Search Console and GA.
-- Tuesday: choose one topic and write the article brief.
-- Wednesday: draft the article locally.
-- Thursday: review data, SEO/AEO structure, internal links, and CTA placement.
-- Friday: publish, submit URL in Search Console, and add the new page to the next weekly review.
+| Page | Role | Next useful action |
+|---|---|---|
+| `/` | School lookup | School profile or saved comparison |
+| `/uc-admission-rates` | Campus-wide benchmarks | Campus feeder detail |
+| `/insights/uc-acceptance-rates-2026` | Preliminary Fall 2026 campus release | Finalized school history with year caveat |
+| `/insights/uc-admission-rates-by-high-school` | Interpretation; updated September 8 to clarify 2026 versus 2025 | School lookup |
+| `/insights/uc-gpa-by-high-school` | GPA interpretation | School GPA detail |
+| `/insights/uc-admissions-by-source-school` | Source and methodology | School/campus data |
+| `/counselors` | Shareable counseling resource | School lookup and interpretation |
+| `/states/texas/college-acceptance-rates` | Texas university applications, acceptances and enrollment | University/year comparison |
+| `/college/texas-am-university/feeder-schools` | Texas high-school enrollment destinations | High-school detail |
 
-## Topic Selection Rules
+## Initial analysis release: September 8, 2026
 
-- Prefer queries where Search Console average position is 6-30.
-- Prefer topics that naturally route users to the tool, school pages, feeder pages, county pages, or report previews.
-- Prefer original data views using UC source-school outcomes, GPA, campus mix, enrollment, or long-term trends.
-- Avoid broad college-advice content without a data moat.
-- Avoid pages that only summarize UC's official page without adding analysis.
+| URL | Distinct question | Cohort | Next useful action |
+|---|---|---|---|
+| `/insights/ucla-vs-uc-berkeley-feeder-schools` | Do the same schools show the same pattern at UCLA and Berkeley? | 386 California schools, Fall 2025, qualifying counts at both campuses | School profile, restored two-campus comparison or feeder lists |
+| `/insights/bay-area-uc-admission-trends` | Did applications and admits move together over five years? | Same 127 Bay Area schools, 2021–2025, four campuses | School history or county context |
+| `/insights/uc-admit-rate-vs-enrollment-yield` | Why do admit rate and enrollment tell different stories? | Same 51 California schools, Fall 2025, complete counts at four campuses | School/campus detail or counselor guide |
 
-## Rolling Schedule
+The stories use existing source records and reproducible calculations in `nextjs-app/scripts/build-uc-analysis.py`. Downloadable `/data/uc-analysis.json` contains analyzed counts and cohort school IDs. No admissions records are edited. Every story has a visible Insights listing and contextual links.
 
-| Target publish date | Status | Topic | Primary query | Page type | Main CTA |
-|---|---|---|---|---|---|
-| 2026-05-01 | Published | UC admission rates by high school: what the data shows | `uc admission rates by high school` | Data article | Search high school |
-| 2026-05-08 | Planned | UCLA acceptance rates by high school: why campus-level data matters | `ucla acceptance rates by high school` | Campus data article | UCLA feeder page |
-| 2026-05-15 | Planned | UC Berkeley acceptance rates by high school: how to read the numbers | `uc berkeley acceptance rates by high school` | Campus data article | UC Berkeley feeder page |
-| 2026-05-22 | Planned | UC GPA trends by high school: what applicant, admit, and enrollee GPA reveal | `uc gpa by high school` | GPA explainer | School report preview |
-| 2026-05-29 | Planned | Bay Area high schools with strong UC admissions outcomes | `bay area uc admission rates high school` | Regional data story | Search high school |
-| 2026-06-05 | Planned | Top UCLA feeder schools in California | `ucla feeder schools` | Feeder ranking | UCLA feeder page |
-| 2026-06-12 | Planned | Top UC Berkeley feeder schools in California | `uc berkeley feeder schools` | Feeder ranking | UC Berkeley feeder page |
-| 2026-06-19 | Planned | Why a high school's UC admit rate can change from year to year | `uc admission rate by high school changes` | Methodology explainer | Search high school |
+## Review and publishing queue
 
-## Weekly Output
+| Window | Work | Release condition |
+|---|---|---|
+| Week 1 | Rendering, navigation, sitemap and tracking | Resolve regressions; do not infer demand from tiny samples |
+| Weeks 2–4 | Improve one existing page with a relevant query opportunity; inspect article discovery | Query/page evidence and an accurate answer |
+| First complete 28 days | Evaluate the three-story cohort and acquisition versus depth | Select the next brief from results |
+| Months 2–3 | Up to two additional analyses per month, or meaningful existing-page updates | Distinct intent, qualifying data and authorized implementation |
+| Day 90 | Assess rolling-30-day traffic, revenue and RPM against the private runbook | Set next quarter from observed results |
 
-For each week, create or update:
-
-- One approved article brief.
-- One published article or one meaningful update to an existing page.
-- Internal links from `/insights` and one relevant product/page route.
-- A measurement note with 7-day and 28-day follow-up dates.
-
-## Measurement
-
-Track these after each article is published:
-
-- Search Console: impressions, clicks, CTR, average position, and query mix.
-- GA landing-page users for the article.
-- `article_cta_click` by `article_slug`, `target_type`, and `target_url`.
-- Downstream events: `comparison_intent`, `school_page_view`, `report_preview_open`, `report_cta_click`.
+Possible follow-ups are hypotheses: another campus pair, a regional trend with visible demand, or GPA context for a school/campus query. Reuse the calculation and review process; do not clone pages for every campus/county combination. Existing feeder pages and guides already serve several topics from the older plan.

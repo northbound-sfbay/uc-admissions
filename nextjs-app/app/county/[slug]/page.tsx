@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import RelatedDataStories from '@/components/RelatedDataStories'
 import { notFound } from 'next/navigation'
 import { countySchoolHref, getCountyData, getCountySlugs } from '@/lib/county'
 import { FEEDER_CAMPUSES } from '@/lib/feeder-options'
@@ -156,6 +157,7 @@ export default async function CountyPage({
           />
         </section>
 
+        <RelatedDataStories county={countyData.county} />
         <section className="charts-row" style={{ alignItems: 'start' }}>
           <div className="chart-panel" style={{ height: '760px' }}>
             <div className="panel-controls">
