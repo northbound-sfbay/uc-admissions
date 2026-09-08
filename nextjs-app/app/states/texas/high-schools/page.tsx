@@ -1,3 +1,4 @@
+import TexasDataUpdate from '@/components/TexasDataUpdate'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
@@ -95,6 +96,8 @@ export default function TexasHighSchoolIndexPage() {
               admission offers, or school-level acceptance rates.
             </p>
           </section>
+
+          <TexasDataUpdate />
 
           <section className="state-home-section">
             <div className="texas-directory-heading">

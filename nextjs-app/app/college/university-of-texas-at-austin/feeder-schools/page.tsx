@@ -1,3 +1,4 @@
+import TexasDataUpdate from '@/components/TexasDataUpdate'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getUtAustinFeederData, texasHighSchoolHref } from '@/lib/texas-outcomes'
@@ -145,6 +146,8 @@ export default function UtAustinFeederSchoolsPage() {
               figures, not applications, admission offers, or acceptance rates.
             </p>
           </section>
+
+          <TexasDataUpdate />
 
           <section className="state-home-section">
             <p className="state-home-kicker">Six-year trend</p>

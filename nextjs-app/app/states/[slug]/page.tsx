@@ -1,3 +1,4 @@
+import TexasDataUpdate from '@/components/TexasDataUpdate'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -183,6 +184,8 @@ export default async function StateOutcomePage({ params }: PageProps) {
           </div>
           <StateOutcomeExplorer stateSlug={profile.slug} stateName={profile.name} />
         </section>
+
+        <TexasDataUpdate />
 
         <section className="state-home-band">
           <div className="state-home-section">

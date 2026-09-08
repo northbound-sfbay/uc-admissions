@@ -40,9 +40,21 @@ function getSchoolEntries() {
 export default function sitemap(): MetadataRoute.Sitemap {
   const generatedAt = new Date()
   const texasData = getTexasOutcomeData()
-  const texasUpdatedAt = new Date(`${texasData.generatedAt}T00:00:00Z`)
+  const texasUpdatedAt = new Date('2026-09-07T00:00:00Z')
 
   const coreUrls: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/states/texas/college-acceptance-rates`,
+      lastModified: texasUpdatedAt,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/college/texas-am-university/feeder-schools`,
+      lastModified: texasUpdatedAt,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
     {
       url: BASE_URL,
       lastModified: generatedAt,

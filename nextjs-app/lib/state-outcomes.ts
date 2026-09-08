@@ -59,10 +59,10 @@ export const STATE_OUTCOME_PROFILES: StateOutcomeProfile[] = [
     description:
       'Use official Texas higher-ed data to understand where Texas high-school graduates enroll, with indexable school profiles, complete destination lists, UT Austin feeder trends, and first-year GPA bands.',
     canonical: `${BASE_URL}/states/texas`,
-    updatedLabel: 'Updated July 21, 2026',
+    updatedLabel: 'Reviewed September 7, 2026',
     sourceYearLabel: 'FY 2024 graduates entering higher education in Fall 2024',
     shortAnswer:
-      'Texas is the first non-California expansion because THECB publishes high-school-to-college destination files by campus, district, county, and destination institution. You can now browse one indexable page per Texas high school and compare reported UT Austin feeder enrollment without mislabeling those outcomes as acceptance rates.',
+      'Search 1,765 Texas high-school profiles for college enrollment destinations, six-year trends, and first-year GPA bands. Compare UT Austin and Texas A&M feeder enrollment, then use the separate Fall 2025 university admissions report to compare Texas-applicant acceptance rates.',
     sourceSummary:
       'The Texas Higher Education Coordinating Board publishes a long statewide summary from Fall 2000 through Fall 2024, annual campus destination files, and separate first-year GPA files. The site joins the 2019–2024 files on stable nine-digit campus codes and retains all published destination rows plus six-digit FICE codes. The files report enrollment outcomes, not admissions offers.',
     heroStats: [
@@ -166,6 +166,18 @@ export const STATE_OUTCOME_PROFILES: StateOutcomeProfile[] = [
     ],
     productModules: [
       {
+        title: 'Texas college acceptance rates',
+        description: 'Compare Texas-applicant admissions at 37 public universities across Fall 2017–2025. THECB released the latest workbook in July 2026.',
+        status: 'New data',
+        href: '/states/texas/college-acceptance-rates',
+      },
+      {
+        title: 'Texas A&M feeder schools',
+        description: 'Compare reported high-school enrollment at Texas A&M, shares of graduates, and trends from 2019–2024.',
+        status: 'Live',
+        href: '/college/texas-am-university/feeder-schools',
+      },
+      {
         title: 'Texas high-school destination pages',
         description:
           'Browse one page per Texas high school with complete destinations, college-going trends, UT Austin enrollment, sector mix, and GPA bands.',
@@ -183,7 +195,8 @@ export const STATE_OUTCOME_PROFILES: StateOutcomeProfile[] = [
         title: 'Texas automatic admission explainer',
         description:
           'Pair the destination data with Texas top-percent automatic-admission rules and explicit policy review dates.',
-        status: 'Planned',
+        status: 'Current policy context',
+        href: '/states/texas/college-acceptance-rates#data-years',
       },
     ],
     nextPages: [
@@ -214,9 +227,9 @@ export const STATE_OUTCOME_PROFILES: StateOutcomeProfile[] = [
           'The useful public Texas source is mainly college destination data: where graduates enrolled after high school. Acceptance-rate pages should use college-level IPEDS, Scorecard, and Common Data Set sources rather than treating destination records as admissions offers.',
       },
       {
-        question: 'What Texas content should be built first?',
+        question: 'What is the latest Texas university admissions data?',
         answer:
-          'The high-school destination pages and UT Austin feeder page are live. The next useful layer is policy-aware Texas college profiles using admissions sources that are distinct from the THECB enrollment outcomes.',
+          'THECB released Fall 2017–2025 university application, acceptance, and enrollment data on July 14, 2026. The site compares Texas-applicant acceptance rates at 37 public universities. High-school destination data remains a separate 2019–2024 series.',
       },
     ],
   },

@@ -1,3 +1,4 @@
+import TexasDataUpdate from '@/components/TexasDataUpdate'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound, permanentRedirect } from 'next/navigation'
@@ -183,6 +184,8 @@ export default async function TexasHighSchoolPage({ params }: PageProps) {
             </p>
           </section>
 
+          <TexasDataUpdate />
+
           <section className="state-home-section">
             <p className="state-home-kicker">College-going trend</p>
             <h2>Graduates found in Texas higher-education records</h2>
@@ -266,7 +269,9 @@ export default async function TexasHighSchoolPage({ params }: PageProps) {
                   {latest.destinations.map((destination, index) => (
                     <tr key={`${destination.ficeCode ?? destination.name}-${index}`}>
                       <td>
-                        {destination.name}
+                        {destination.ficeCode === '003632' ? <a href="/college/texas-am-university/feeder-schools">{destination.name}</a>
+                          : destination.ficeCode === '003658' ? <a href="/college/university-of-texas-at-austin/feeder-schools">{destination.name}</a>
+                            : destination.name}
                         {destination.institutionCount ? (
                           <small className="texas-table-sub">
                             {formatNumber(destination.institutionCount)} institutions combined

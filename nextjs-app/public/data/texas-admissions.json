@@ -1,0 +1,2911 @@
+{
+  "sourceTitle": "THECB Applicants, Acceptance, and Enrollment 2017\u20132025",
+  "sourceUrl": "https://reportcenter.highered.texas.gov/reports/data/applicants-acceptance-and-enrollment-2017-2025/",
+  "sourceIndexUrl": "https://reportcenter.highered.texas.gov/reports/data/",
+  "sourcePublishedAt": "2026-07-14",
+  "verifiedAt": "2026-09-07",
+  "sourceSha256": "5e1a0258c58eeea3e7d019fad32ab0324eff6470fffb6b7811ce6a8762752ad8",
+  "population": "First-time undergraduate Texas applicants, institution Total rows",
+  "years": [
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+  ],
+  "latestYear": "2025",
+  "institutions": [
+    {
+      "ficeCode": "003541",
+      "name": "Angelo State University",
+      "years": {
+        "2017": {
+          "texasApplicants": 3634,
+          "texasAccepted": 2625,
+          "texasEnrolled": 1239,
+          "allApplicants": 3734,
+          "sourceRow": 5,
+          "sourceName": "Angelo State University"
+        },
+        "2018": {
+          "texasApplicants": 3521,
+          "texasAccepted": 2523,
+          "texasEnrolled": 1192,
+          "allApplicants": 3639,
+          "sourceRow": 5,
+          "sourceName": "Angelo State University"
+        },
+        "2019": {
+          "texasApplicants": 3627,
+          "texasAccepted": 2739,
+          "texasEnrolled": 1284,
+          "allApplicants": 3711,
+          "sourceRow": 5,
+          "sourceName": "Angelo State University"
+        },
+        "2020": {
+          "texasApplicants": 3183,
+          "texasAccepted": 2445,
+          "texasEnrolled": 940,
+          "allApplicants": 3287,
+          "sourceRow": 5,
+          "sourceName": "Angelo State University"
+        },
+        "2021": {
+          "texasApplicants": 2613,
+          "texasAccepted": 1779,
+          "texasEnrolled": 839,
+          "allApplicants": 2711,
+          "sourceRow": 5,
+          "sourceName": "Angelo State University"
+        },
+        "2022": {
+          "texasApplicants": 4111,
+          "texasAccepted": 3235,
+          "texasEnrolled": 1170,
+          "allApplicants": 4233,
+          "sourceRow": 5,
+          "sourceName": "Angelo State University"
+        },
+        "2023": {
+          "texasApplicants": 4492,
+          "texasAccepted": 3541,
+          "texasEnrolled": 1356,
+          "allApplicants": 4584,
+          "sourceRow": 5,
+          "sourceName": "Angelo State University"
+        },
+        "2024": {
+          "texasApplicants": 5947,
+          "texasAccepted": 4908,
+          "texasEnrolled": 1305,
+          "allApplicants": 6196,
+          "sourceRow": 9,
+          "sourceName": "Angelo State University"
+        },
+        "2025": {
+          "texasApplicants": 6415,
+          "texasAccepted": 5101,
+          "texasEnrolled": 1163,
+          "allApplicants": 6645,
+          "sourceRow": 9,
+          "sourceName": "Angelo State University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003565",
+      "name": "East Texas A&M University",
+      "years": {
+        "2017": {
+          "texasApplicants": 4784,
+          "texasAccepted": 2404,
+          "texasEnrolled": 846,
+          "allApplicants": 4907,
+          "sourceRow": 14,
+          "sourceName": "Texas A&M University-Commerce"
+        },
+        "2018": {
+          "texasApplicants": 4600,
+          "texasAccepted": 2440,
+          "texasEnrolled": 902,
+          "allApplicants": 4737,
+          "sourceRow": 14,
+          "sourceName": "Texas A&M University-Commerce"
+        },
+        "2019": {
+          "texasApplicants": 4631,
+          "texasAccepted": 2582,
+          "texasEnrolled": 813,
+          "allApplicants": 4750,
+          "sourceRow": 14,
+          "sourceName": "Texas A&M University-Commerce"
+        },
+        "2020": {
+          "texasApplicants": 4657,
+          "texasAccepted": 2748,
+          "texasEnrolled": 675,
+          "allApplicants": 4834,
+          "sourceRow": 14,
+          "sourceName": "Texas A&M University-Commerce"
+        },
+        "2021": {
+          "texasApplicants": 4085,
+          "texasAccepted": 2892,
+          "texasEnrolled": 769,
+          "allApplicants": 4228,
+          "sourceRow": 14,
+          "sourceName": "Texas A&M University-Commerce"
+        },
+        "2022": {
+          "texasApplicants": 5339,
+          "texasAccepted": 4566,
+          "texasEnrolled": 832,
+          "allApplicants": 5776,
+          "sourceRow": 14,
+          "sourceName": "Texas A&M University-Commerce"
+        },
+        "2023": {
+          "texasApplicants": 7138,
+          "texasAccepted": 6604,
+          "texasEnrolled": 1179,
+          "allApplicants": 8146,
+          "sourceRow": 14,
+          "sourceName": "Texas A&M University-Commerce"
+        },
+        "2024": {
+          "texasApplicants": 9645,
+          "texasAccepted": 8719,
+          "texasEnrolled": 1264,
+          "allApplicants": 10817,
+          "sourceRow": 18,
+          "sourceName": "East Texas A&M University"
+        },
+        "2025": {
+          "texasApplicants": 11462,
+          "texasAccepted": 10518,
+          "texasEnrolled": 1118,
+          "allApplicants": 13436,
+          "sourceRow": 18,
+          "sourceName": "East Texas A&M University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003581",
+      "name": "Lamar University",
+      "years": {
+        "2017": {
+          "texasApplicants": 5440,
+          "texasAccepted": 4252,
+          "texasEnrolled": 1480,
+          "allApplicants": 5558,
+          "sourceRow": 23,
+          "sourceName": "Lamar University"
+        },
+        "2018": {
+          "texasApplicants": 5455,
+          "texasAccepted": 4574,
+          "texasEnrolled": 1472,
+          "allApplicants": 5602,
+          "sourceRow": 23,
+          "sourceName": "Lamar University"
+        },
+        "2019": {
+          "texasApplicants": 6196,
+          "texasAccepted": 5175,
+          "texasEnrolled": 1209,
+          "allApplicants": 6325,
+          "sourceRow": 23,
+          "sourceName": "Lamar University"
+        },
+        "2020": {
+          "texasApplicants": 7207,
+          "texasAccepted": 5956,
+          "texasEnrolled": 1418,
+          "allApplicants": 7368,
+          "sourceRow": 23,
+          "sourceName": "Lamar University"
+        },
+        "2021": {
+          "texasApplicants": 5887,
+          "texasAccepted": 5177,
+          "texasEnrolled": 1423,
+          "allApplicants": 6073,
+          "sourceRow": 23,
+          "sourceName": "Lamar University"
+        },
+        "2022": {
+          "texasApplicants": 6834,
+          "texasAccepted": 5778,
+          "texasEnrolled": 1477,
+          "allApplicants": 6990,
+          "sourceRow": 23,
+          "sourceName": "Lamar University"
+        },
+        "2023": {
+          "texasApplicants": 7054,
+          "texasAccepted": 6018,
+          "texasEnrolled": 1427,
+          "allApplicants": 7209,
+          "sourceRow": 23,
+          "sourceName": "Lamar University"
+        },
+        "2024": {
+          "texasApplicants": 8721,
+          "texasAccepted": 7534,
+          "texasEnrolled": 1626,
+          "allApplicants": 8904,
+          "sourceRow": 27,
+          "sourceName": "Lamar University"
+        },
+        "2025": {
+          "texasApplicants": 7850,
+          "texasAccepted": 6711,
+          "texasEnrolled": 1637,
+          "allApplicants": 8033,
+          "sourceRow": 27,
+          "sourceName": "Lamar University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003592",
+      "name": "Midwestern State University",
+      "years": {
+        "2017": {
+          "texasApplicants": 2862,
+          "texasAccepted": 2033,
+          "texasEnrolled": 771,
+          "allApplicants": 3023,
+          "sourceRow": 32,
+          "sourceName": "Midwestern State University"
+        },
+        "2018": {
+          "texasApplicants": 3124,
+          "texasAccepted": 2516,
+          "texasEnrolled": 830,
+          "allApplicants": 3305,
+          "sourceRow": 32,
+          "sourceName": "Midwestern State University"
+        },
+        "2019": {
+          "texasApplicants": 3655,
+          "texasAccepted": 2895,
+          "texasEnrolled": 816,
+          "allApplicants": 3823,
+          "sourceRow": 32,
+          "sourceName": "Midwestern State University"
+        },
+        "2020": {
+          "texasApplicants": 3812,
+          "texasAccepted": 2739,
+          "texasEnrolled": 746,
+          "allApplicants": 3972,
+          "sourceRow": 32,
+          "sourceName": "Midwestern State University"
+        },
+        "2021": {
+          "texasApplicants": 3725,
+          "texasAccepted": 3193,
+          "texasEnrolled": 693,
+          "allApplicants": 3897,
+          "sourceRow": 32,
+          "sourceName": "Midwestern State University"
+        },
+        "2022": {
+          "texasApplicants": 4991,
+          "texasAccepted": 4299,
+          "texasEnrolled": 729,
+          "allApplicants": 5285,
+          "sourceRow": 32,
+          "sourceName": "Midwestern State University"
+        },
+        "2023": {
+          "texasApplicants": 5320,
+          "texasAccepted": 4030,
+          "texasEnrolled": 740,
+          "allApplicants": 5790,
+          "sourceRow": 32,
+          "sourceName": "Midwestern State University"
+        },
+        "2024": {
+          "texasApplicants": 6976,
+          "texasAccepted": 6271,
+          "texasEnrolled": 852,
+          "allApplicants": 7819,
+          "sourceRow": 36,
+          "sourceName": "Midwestern State University"
+        },
+        "2025": {
+          "texasApplicants": 7069,
+          "texasAccepted": 6341,
+          "texasEnrolled": 5,
+          "allApplicants": 7815,
+          "sourceRow": 36,
+          "sourceName": "Midwestern State University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003630",
+      "name": "Prairie View A&M University",
+      "years": {
+        "2017": {
+          "texasApplicants": 5656,
+          "texasAccepted": 4418,
+          "texasEnrolled": 1880,
+          "allApplicants": 6399,
+          "sourceRow": 94,
+          "sourceName": "Prairie View A&M University"
+        },
+        "2018": {
+          "texasApplicants": 6735,
+          "texasAccepted": 5178,
+          "texasEnrolled": 1925,
+          "allApplicants": 7809,
+          "sourceRow": 95,
+          "sourceName": "Prairie View A&M University"
+        },
+        "2019": {
+          "texasApplicants": 5671,
+          "texasAccepted": 4649,
+          "texasEnrolled": 1491,
+          "allApplicants": 6846,
+          "sourceRow": 95,
+          "sourceName": "Prairie View A&M University"
+        },
+        "2020": {
+          "texasApplicants": 6888,
+          "texasAccepted": 5141,
+          "texasEnrolled": 1571,
+          "allApplicants": 8260,
+          "sourceRow": 95,
+          "sourceName": "Prairie View A&M University"
+        },
+        "2021": {
+          "texasApplicants": 5588,
+          "texasAccepted": 4189,
+          "texasEnrolled": 1473,
+          "allApplicants": 7113,
+          "sourceRow": 94,
+          "sourceName": "Prairie View A&M University"
+        },
+        "2022": {
+          "texasApplicants": 4813,
+          "texasAccepted": 3545,
+          "texasEnrolled": 1386,
+          "allApplicants": 5721,
+          "sourceRow": 95,
+          "sourceName": "Prairie View A&M University"
+        },
+        "2023": {
+          "texasApplicants": 7090,
+          "texasAccepted": 5270,
+          "texasEnrolled": 1715,
+          "allApplicants": 8751,
+          "sourceRow": 95,
+          "sourceName": "Prairie View A&M University"
+        },
+        "2024": {
+          "texasApplicants": 10894,
+          "texasAccepted": 8403,
+          "texasEnrolled": 1815,
+          "allApplicants": 12927,
+          "sourceRow": 99,
+          "sourceName": "Prairie View A&M University"
+        },
+        "2025": {
+          "texasApplicants": 9125,
+          "texasAccepted": 6868,
+          "texasEnrolled": 1822,
+          "allApplicants": 10792,
+          "sourceRow": 99,
+          "sourceName": "Prairie View A&M University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003606",
+      "name": "Sam Houston State University",
+      "years": {
+        "2017": {
+          "texasApplicants": 12108,
+          "texasAccepted": 9000,
+          "texasEnrolled": 2727,
+          "allApplicants": 12363,
+          "sourceRow": 58,
+          "sourceName": "Sam Houston State University"
+        },
+        "2018": {
+          "texasApplicants": 11597,
+          "texasAccepted": 9108,
+          "texasEnrolled": 2736,
+          "allApplicants": 11818,
+          "sourceRow": 59,
+          "sourceName": "Sam Houston State University"
+        },
+        "2019": {
+          "texasApplicants": 11310,
+          "texasAccepted": 9415,
+          "texasEnrolled": 2799,
+          "allApplicants": 11569,
+          "sourceRow": 59,
+          "sourceName": "Sam Houston State University"
+        },
+        "2020": {
+          "texasApplicants": 11807,
+          "texasAccepted": 10926,
+          "texasEnrolled": 2798,
+          "allApplicants": 12025,
+          "sourceRow": 59,
+          "sourceName": "Sam Houston State University"
+        },
+        "2021": {
+          "texasApplicants": 11249,
+          "texasAccepted": 10891,
+          "texasEnrolled": 2850,
+          "allApplicants": 11556,
+          "sourceRow": 59,
+          "sourceName": "Sam Houston State University"
+        },
+        "2022": {
+          "texasApplicants": 15951,
+          "texasAccepted": 13538,
+          "texasEnrolled": 3319,
+          "allApplicants": 16316,
+          "sourceRow": 59,
+          "sourceName": "Sam Houston State University"
+        },
+        "2023": {
+          "texasApplicants": 17304,
+          "texasAccepted": 14805,
+          "texasEnrolled": 3542,
+          "allApplicants": 17582,
+          "sourceRow": 59,
+          "sourceName": "Sam Houston State University"
+        },
+        "2024": {
+          "texasApplicants": 16945,
+          "texasAccepted": 15303,
+          "texasEnrolled": 3214,
+          "allApplicants": 17179,
+          "sourceRow": 63,
+          "sourceName": "Sam Houston State University"
+        },
+        "2025": {
+          "texasApplicants": 17683,
+          "texasAccepted": 16585,
+          "texasEnrolled": 3286,
+          "allApplicants": 18093,
+          "sourceRow": 63,
+          "sourceName": "Sam Houston State University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003624",
+      "name": "Stephen F. Austin State University",
+      "years": {
+        "2017": {
+          "texasApplicants": 9351,
+          "texasAccepted": 7344,
+          "texasEnrolled": 2299,
+          "allApplicants": 9491,
+          "sourceRow": 76,
+          "sourceName": "Stephen F. Austin State University"
+        },
+        "2018": {
+          "texasApplicants": 9158,
+          "texasAccepted": 7393,
+          "texasEnrolled": 2176,
+          "allApplicants": 9291,
+          "sourceRow": 77,
+          "sourceName": "Stephen F. Austin State University"
+        },
+        "2019": {
+          "texasApplicants": 9509,
+          "texasAccepted": 7675,
+          "texasEnrolled": 2020,
+          "allApplicants": 9631,
+          "sourceRow": 77,
+          "sourceName": "Stephen F. Austin State University"
+        },
+        "2020": {
+          "texasApplicants": 9178,
+          "texasAccepted": 7715,
+          "texasEnrolled": 1695,
+          "allApplicants": 9285,
+          "sourceRow": 77,
+          "sourceName": "Stephen F. Austin State University"
+        },
+        "2021": {
+          "texasApplicants": 8056,
+          "texasAccepted": 7422,
+          "texasEnrolled": 1654,
+          "allApplicants": 8200,
+          "sourceRow": 77,
+          "sourceName": "Stephen F. Austin State University"
+        },
+        "2022": {
+          "texasApplicants": 9808,
+          "texasAccepted": 8881,
+          "texasEnrolled": 1820,
+          "allApplicants": 9958,
+          "sourceRow": 77,
+          "sourceName": "Stephen F. Austin State University"
+        },
+        "2023": {
+          "texasApplicants": 11158,
+          "texasAccepted": 9892,
+          "texasEnrolled": 1805,
+          "allApplicants": 11383,
+          "sourceRow": 77,
+          "sourceName": "Stephen F. Austin State University"
+        },
+        "2024": {
+          "texasApplicants": 13382,
+          "texasAccepted": 12593,
+          "texasEnrolled": 1942,
+          "allApplicants": 13595,
+          "sourceRow": 81,
+          "sourceName": "Stephen F. Austin State University"
+        },
+        "2025": {
+          "texasApplicants": 16164,
+          "texasAccepted": 15845,
+          "texasEnrolled": 2476,
+          "allApplicants": 16384,
+          "sourceRow": 81,
+          "sourceName": "Stephen F. Austin State University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003625",
+      "name": "Sul Ross State University",
+      "years": {
+        "2017": {
+          "texasApplicants": 1393,
+          "texasAccepted": 872,
+          "texasEnrolled": 330,
+          "allApplicants": 1422,
+          "sourceRow": 85,
+          "sourceName": "Sul Ross State University"
+        },
+        "2018": {
+          "texasApplicants": 1364,
+          "texasAccepted": 858,
+          "texasEnrolled": 336,
+          "allApplicants": 1407,
+          "sourceRow": 86,
+          "sourceName": "Sul Ross State University"
+        },
+        "2019": {
+          "texasApplicants": 1067,
+          "texasAccepted": 864,
+          "texasEnrolled": 273,
+          "allApplicants": 1088,
+          "sourceRow": 86,
+          "sourceName": "Sul Ross State University"
+        },
+        "2020": {
+          "texasApplicants": 987,
+          "texasAccepted": 800,
+          "texasEnrolled": 202,
+          "allApplicants": 1009,
+          "sourceRow": 86,
+          "sourceName": "Sul Ross State University"
+        },
+        "2021": {
+          "texasApplicants": 531,
+          "texasAccepted": 448,
+          "texasEnrolled": 163,
+          "allApplicants": 549,
+          "sourceRow": 86,
+          "sourceName": "Sul Ross State University"
+        },
+        "2022": {
+          "texasApplicants": 696,
+          "texasAccepted": 677,
+          "texasEnrolled": 235,
+          "allApplicants": 717,
+          "sourceRow": 86,
+          "sourceName": "Sul Ross State University"
+        },
+        "2023": {
+          "texasApplicants": 1049,
+          "texasAccepted": 1003,
+          "texasEnrolled": 213,
+          "allApplicants": 1073,
+          "sourceRow": 86,
+          "sourceName": "Sul Ross State University"
+        },
+        "2024": {
+          "texasApplicants": 1127,
+          "texasAccepted": 1113,
+          "texasEnrolled": 198,
+          "allApplicants": 1156,
+          "sourceRow": 90,
+          "sourceName": "Sul Ross State University"
+        },
+        "2025": {
+          "texasApplicants": 1233,
+          "texasAccepted": 1218,
+          "texasEnrolled": 185,
+          "allApplicants": 1275,
+          "sourceRow": 90,
+          "sourceName": "Sul Ross State University"
+        }
+      }
+    },
+    {
+      "ficeCode": "000020",
+      "name": "Sul Ross State University Rio Grande College",
+      "years": {
+        "2024": {
+          "texasApplicants": null,
+          "texasAccepted": null,
+          "texasEnrolled": 0,
+          "allApplicants": null,
+          "sourceRow": 5,
+          "sourceName": "Sul Ross State University Rio Grande College"
+        },
+        "2025": {
+          "texasApplicants": 6,
+          "texasAccepted": 6,
+          "texasEnrolled": null,
+          "allApplicants": 6,
+          "sourceRow": 5,
+          "sourceName": "Sul Ross State University Rio Grande College"
+        }
+      }
+    },
+    {
+      "ficeCode": "003631",
+      "name": "Tarleton State University",
+      "years": {
+        "2017": {
+          "texasApplicants": 6929,
+          "texasAccepted": 5240,
+          "texasEnrolled": 1865,
+          "allApplicants": 7110,
+          "sourceRow": 103,
+          "sourceName": "Tarleton State University"
+        },
+        "2018": {
+          "texasApplicants": 7048,
+          "texasAccepted": 5594,
+          "texasEnrolled": 2120,
+          "allApplicants": 7220,
+          "sourceRow": 103,
+          "sourceName": "Tarleton State University"
+        },
+        "2019": {
+          "texasApplicants": 6918,
+          "texasAccepted": 5459,
+          "texasEnrolled": 2020,
+          "allApplicants": 7131,
+          "sourceRow": 103,
+          "sourceName": "Tarleton State University"
+        },
+        "2020": {
+          "texasApplicants": 7484,
+          "texasAccepted": 5665,
+          "texasEnrolled": 2203,
+          "allApplicants": 7714,
+          "sourceRow": 103,
+          "sourceName": "Tarleton State University"
+        },
+        "2021": {
+          "texasApplicants": 7671,
+          "texasAccepted": 5749,
+          "texasEnrolled": 2062,
+          "allApplicants": 7947,
+          "sourceRow": 103,
+          "sourceName": "Tarleton State University"
+        },
+        "2022": {
+          "texasApplicants": 8643,
+          "texasAccepted": 6614,
+          "texasEnrolled": 2353,
+          "allApplicants": 8964,
+          "sourceRow": 103,
+          "sourceName": "Tarleton State University"
+        },
+        "2023": {
+          "texasApplicants": 8507,
+          "texasAccepted": 7001,
+          "texasEnrolled": 2548,
+          "allApplicants": 8943,
+          "sourceRow": 103,
+          "sourceName": "Tarleton State University"
+        },
+        "2024": {
+          "texasApplicants": 13156,
+          "texasAccepted": 9679,
+          "texasEnrolled": 2882,
+          "allApplicants": 13702,
+          "sourceRow": 107,
+          "sourceName": "Tarleton State University"
+        },
+        "2025": {
+          "texasApplicants": 16838,
+          "texasAccepted": 11563,
+          "texasEnrolled": 2893,
+          "allApplicants": 17495,
+          "sourceRow": 107,
+          "sourceName": "Tarleton State University"
+        }
+      }
+    },
+    {
+      "ficeCode": "009651",
+      "name": "Texas A&M International University",
+      "years": {
+        "2017": {
+          "texasApplicants": 4678,
+          "texasAccepted": 3240,
+          "texasEnrolled": 1195,
+          "allApplicants": 4782,
+          "sourceRow": 201,
+          "sourceName": "Texas A&M International University"
+        },
+        "2018": {
+          "texasApplicants": 4299,
+          "texasAccepted": 3442,
+          "texasEnrolled": 1315,
+          "allApplicants": 4454,
+          "sourceRow": 201,
+          "sourceName": "Texas A&M International University"
+        },
+        "2019": {
+          "texasApplicants": 4818,
+          "texasAccepted": 3876,
+          "texasEnrolled": 1351,
+          "allApplicants": 4956,
+          "sourceRow": 200,
+          "sourceName": "Texas A&M International University"
+        },
+        "2020": {
+          "texasApplicants": 4990,
+          "texasAccepted": 3923,
+          "texasEnrolled": 1238,
+          "allApplicants": 5153,
+          "sourceRow": 200,
+          "sourceName": "Texas A&M International University"
+        },
+        "2021": {
+          "texasApplicants": 3502,
+          "texasAccepted": 2573,
+          "texasEnrolled": 1115,
+          "allApplicants": 3664,
+          "sourceRow": 201,
+          "sourceName": "Texas A&M International University"
+        },
+        "2022": {
+          "texasApplicants": 3988,
+          "texasAccepted": 3506,
+          "texasEnrolled": 1277,
+          "allApplicants": 4165,
+          "sourceRow": 201,
+          "sourceName": "Texas A&M International University"
+        },
+        "2023": {
+          "texasApplicants": 3999,
+          "texasAccepted": 3519,
+          "texasEnrolled": 1338,
+          "allApplicants": 4178,
+          "sourceRow": 202,
+          "sourceName": "Texas A&M International University"
+        },
+        "2024": {
+          "texasApplicants": 4169,
+          "texasAccepted": 3408,
+          "texasEnrolled": 1312,
+          "allApplicants": 4363,
+          "sourceRow": 204,
+          "sourceName": "Texas A&M International University"
+        },
+        "2025": {
+          "texasApplicants": 4285,
+          "texasAccepted": 3541,
+          "texasEnrolled": 1419,
+          "allApplicants": 4480,
+          "sourceRow": 205,
+          "sourceName": "Texas A&M International University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003632",
+      "name": "Texas A&M University",
+      "years": {
+        "2017": {
+          "texasApplicants": 31321,
+          "texasAccepted": 22026,
+          "texasEnrolled": 10628,
+          "allApplicants": 36140,
+          "sourceRow": 112,
+          "sourceName": "Texas A&M University"
+        },
+        "2018": {
+          "texasApplicants": 30712,
+          "texasAccepted": 20371,
+          "texasEnrolled": 10130,
+          "allApplicants": 35566,
+          "sourceRow": 112,
+          "sourceName": "Texas A&M University"
+        },
+        "2019": {
+          "texasApplicants": 36192,
+          "texasAccepted": 20842,
+          "texasEnrolled": 9709,
+          "allApplicants": 42014,
+          "sourceRow": 112,
+          "sourceName": "Texas A&M University"
+        },
+        "2020": {
+          "texasApplicants": 35871,
+          "texasAccepted": 22610,
+          "texasEnrolled": 10169,
+          "allApplicants": 42384,
+          "sourceRow": 112,
+          "sourceName": "Texas A&M University"
+        },
+        "2021": {
+          "texasApplicants": 35045,
+          "texasAccepted": 22302,
+          "texasEnrolled": 10854,
+          "allApplicants": 41507,
+          "sourceRow": 112,
+          "sourceName": "Texas A&M University"
+        },
+        "2022": {
+          "texasApplicants": 34939,
+          "texasAccepted": 21396,
+          "texasEnrolled": 10413,
+          "allApplicants": 41476,
+          "sourceRow": 112,
+          "sourceName": "Texas A&M University"
+        },
+        "2023": {
+          "texasApplicants": 39614,
+          "texasAccepted": 25127,
+          "texasEnrolled": 12059,
+          "allApplicants": 48516,
+          "sourceRow": 112,
+          "sourceName": "Texas A&M University"
+        },
+        "2024": {
+          "texasApplicants": 42519,
+          "texasAccepted": 24512,
+          "texasEnrolled": 11023,
+          "allApplicants": 52265,
+          "sourceRow": 116,
+          "sourceName": "Texas A&M University"
+        },
+        "2025": {
+          "texasApplicants": 47537,
+          "texasAccepted": 25052,
+          "texasEnrolled": 10984,
+          "allApplicants": 60315,
+          "sourceRow": 116,
+          "sourceName": "Texas A&M University"
+        }
+      }
+    },
+    {
+      "ficeCode": "010298",
+      "name": "Texas A&M University at Galveston",
+      "years": {
+        "2017": {
+          "texasApplicants": 876,
+          "texasAccepted": 798,
+          "texasEnrolled": 357,
+          "allApplicants": 1051,
+          "sourceRow": 237,
+          "sourceName": "Texas A&M University at Galveston"
+        },
+        "2018": {
+          "texasApplicants": 752,
+          "texasAccepted": 717,
+          "texasEnrolled": 337,
+          "allApplicants": 857,
+          "sourceRow": 237,
+          "sourceName": "Texas A&M University at Galveston"
+        },
+        "2019": {
+          "texasApplicants": 767,
+          "texasAccepted": 733,
+          "texasEnrolled": 324,
+          "allApplicants": 885,
+          "sourceRow": 236,
+          "sourceName": "Texas A&M University at Galveston"
+        },
+        "2020": {
+          "texasApplicants": 811,
+          "texasAccepted": 782,
+          "texasEnrolled": 348,
+          "allApplicants": 923,
+          "sourceRow": 236,
+          "sourceName": "Texas A&M University at Galveston"
+        },
+        "2021": {
+          "texasApplicants": 1950,
+          "texasAccepted": 1935,
+          "texasEnrolled": 293,
+          "allApplicants": 2603,
+          "sourceRow": 237,
+          "sourceName": "Texas A&M University at Galveston"
+        },
+        "2022": {
+          "texasApplicants": 1705,
+          "texasAccepted": 1699,
+          "texasEnrolled": 735,
+          "allApplicants": 2281,
+          "sourceRow": 236,
+          "sourceName": "Texas A&M University at Galveston"
+        },
+        "2023": {
+          "texasApplicants": 1899,
+          "texasAccepted": 1882,
+          "texasEnrolled": 770,
+          "allApplicants": 2592,
+          "sourceRow": 238,
+          "sourceName": "Texas A&M University at Galveston"
+        },
+        "2024": {
+          "texasApplicants": 1659,
+          "texasAccepted": 1557,
+          "texasEnrolled": 633,
+          "allApplicants": 2640,
+          "sourceRow": 239,
+          "sourceName": "Texas A&M University at Galveston"
+        },
+        "2025": {
+          "texasApplicants": 1618,
+          "texasAccepted": 1567,
+          "texasEnrolled": 693,
+          "allApplicants": 2652,
+          "sourceRow": 240,
+          "sourceName": "Texas A&M University at Galveston"
+        }
+      }
+    },
+    {
+      "ficeCode": "042295",
+      "name": "Texas A&M University-Central Texas",
+      "years": {
+        "2019": {
+          "texasApplicants": 39,
+          "texasAccepted": 34,
+          "texasEnrolled": 22,
+          "allApplicants": 39,
+          "sourceRow": 298,
+          "sourceName": "Texas A&M University-Central Texas"
+        },
+        "2020": {
+          "texasApplicants": 55,
+          "texasAccepted": 47,
+          "texasEnrolled": 36,
+          "allApplicants": null,
+          "sourceRow": 298,
+          "sourceName": "Texas A&M University-Central Texas"
+        },
+        "2021": {
+          "texasApplicants": 48,
+          "texasAccepted": 37,
+          "texasEnrolled": 32,
+          "allApplicants": null,
+          "sourceRow": 299,
+          "sourceName": "Texas A&M University-Central Texas"
+        },
+        "2022": {
+          "texasApplicants": 74,
+          "texasAccepted": 52,
+          "texasEnrolled": 33,
+          "allApplicants": 74,
+          "sourceRow": 298,
+          "sourceName": "Texas A&M University-Central Texas"
+        },
+        "2023": {
+          "texasApplicants": 34,
+          "texasAccepted": 31,
+          "texasEnrolled": 23,
+          "allApplicants": 35,
+          "sourceRow": 300,
+          "sourceName": "Texas A&M University-Central Texas"
+        },
+        "2024": {
+          "texasApplicants": 61,
+          "texasAccepted": 58,
+          "texasEnrolled": 40,
+          "allApplicants": null,
+          "sourceRow": 301,
+          "sourceName": "Texas A&M University-Central Texas"
+        },
+        "2025": {
+          "texasApplicants": 64,
+          "texasAccepted": 61,
+          "texasEnrolled": 43,
+          "allApplicants": null,
+          "sourceRow": 301,
+          "sourceName": "Texas A&M University-Central Texas"
+        }
+      }
+    },
+    {
+      "ficeCode": "011161",
+      "name": "Texas A&M University-Corpus Christi",
+      "years": {
+        "2017": {
+          "texasApplicants": 8652,
+          "texasAccepted": 7757,
+          "texasEnrolled": 2190,
+          "allApplicants": 8831,
+          "sourceRow": 246,
+          "sourceName": "Texas A&M University-Corpus Christi"
+        },
+        "2018": {
+          "texasApplicants": 8746,
+          "texasAccepted": 7594,
+          "texasEnrolled": 1980,
+          "allApplicants": 9133,
+          "sourceRow": 246,
+          "sourceName": "Texas A&M University-Corpus Christi"
+        },
+        "2019": {
+          "texasApplicants": 9547,
+          "texasAccepted": 7604,
+          "texasEnrolled": 1837,
+          "allApplicants": 9940,
+          "sourceRow": 245,
+          "sourceName": "Texas A&M University-Corpus Christi"
+        },
+        "2020": {
+          "texasApplicants": 8257,
+          "texasAccepted": 7435,
+          "texasEnrolled": 1497,
+          "allApplicants": 8605,
+          "sourceRow": 245,
+          "sourceName": "Texas A&M University-Corpus Christi"
+        },
+        "2021": {
+          "texasApplicants": 6911,
+          "texasAccepted": 6312,
+          "texasEnrolled": 1715,
+          "allApplicants": 7337,
+          "sourceRow": 246,
+          "sourceName": "Texas A&M University-Corpus Christi"
+        },
+        "2022": {
+          "texasApplicants": 7996,
+          "texasAccepted": 7003,
+          "texasEnrolled": 1841,
+          "allApplicants": 8608,
+          "sourceRow": 245,
+          "sourceName": "Texas A&M University-Corpus Christi"
+        },
+        "2023": {
+          "texasApplicants": 10162,
+          "texasAccepted": 9071,
+          "texasEnrolled": 1902,
+          "allApplicants": 10868,
+          "sourceRow": 247,
+          "sourceName": "Texas A&M University-Corpus Christi"
+        },
+        "2024": {
+          "texasApplicants": 11551,
+          "texasAccepted": 10191,
+          "texasEnrolled": 2156,
+          "allApplicants": 12219,
+          "sourceRow": 248,
+          "sourceName": "Texas A&M University-Corpus Christi"
+        },
+        "2025": {
+          "texasApplicants": 10818,
+          "texasAccepted": 9841,
+          "texasEnrolled": 2230,
+          "allApplicants": 11707,
+          "sourceRow": 249,
+          "sourceName": "Texas A&M University-Corpus Christi"
+        }
+      }
+    },
+    {
+      "ficeCode": "003639",
+      "name": "Texas A&M University-Kingsville",
+      "years": {
+        "2017": {
+          "texasApplicants": 6623,
+          "texasAccepted": 4953,
+          "texasEnrolled": 1098,
+          "allApplicants": 6787,
+          "sourceRow": 121,
+          "sourceName": "Texas A&M University-Kingsville"
+        },
+        "2018": {
+          "texasApplicants": 7145,
+          "texasAccepted": 5487,
+          "texasEnrolled": 1223,
+          "allApplicants": 7316,
+          "sourceRow": 121,
+          "sourceName": "Texas A&M University-Kingsville"
+        },
+        "2019": {
+          "texasApplicants": 6209,
+          "texasAccepted": 4784,
+          "texasEnrolled": 973,
+          "allApplicants": 6370,
+          "sourceRow": 121,
+          "sourceName": "Texas A&M University-Kingsville"
+        },
+        "2020": {
+          "texasApplicants": 6189,
+          "texasAccepted": 5106,
+          "texasEnrolled": 1038,
+          "allApplicants": 6310,
+          "sourceRow": 121,
+          "sourceName": "Texas A&M University-Kingsville"
+        },
+        "2021": {
+          "texasApplicants": 4743,
+          "texasAccepted": 4312,
+          "texasEnrolled": 917,
+          "allApplicants": 4878,
+          "sourceRow": 121,
+          "sourceName": "Texas A&M University-Kingsville"
+        },
+        "2022": {
+          "texasApplicants": 5515,
+          "texasAccepted": 5380,
+          "texasEnrolled": 1085,
+          "allApplicants": 5642,
+          "sourceRow": 121,
+          "sourceName": "Texas A&M University-Kingsville"
+        },
+        "2023": {
+          "texasApplicants": 7769,
+          "texasAccepted": 7022,
+          "texasEnrolled": 1187,
+          "allApplicants": 7896,
+          "sourceRow": 121,
+          "sourceName": "Texas A&M University-Kingsville"
+        },
+        "2024": {
+          "texasApplicants": 8662,
+          "texasAccepted": 7768,
+          "texasEnrolled": 1278,
+          "allApplicants": 8807,
+          "sourceRow": 125,
+          "sourceName": "Texas A&M University-Kingsville"
+        },
+        "2025": {
+          "texasApplicants": 7279,
+          "texasAccepted": 7151,
+          "texasEnrolled": 1159,
+          "allApplicants": 7509,
+          "sourceRow": 125,
+          "sourceName": "Texas A&M University-Kingsville"
+        }
+      }
+    },
+    {
+      "ficeCode": "042485",
+      "name": "Texas A&M University-San Antonio",
+      "years": {
+        "2017": {
+          "texasApplicants": 6301,
+          "texasAccepted": 2242,
+          "texasEnrolled": 549,
+          "allApplicants": 6542,
+          "sourceRow": 307,
+          "sourceName": "Texas A&M University-San Antonio"
+        },
+        "2018": {
+          "texasApplicants": 3360,
+          "texasAccepted": 2184,
+          "texasEnrolled": 551,
+          "allApplicants": 3450,
+          "sourceRow": 307,
+          "sourceName": "Texas A&M University-San Antonio"
+        },
+        "2019": {
+          "texasApplicants": 4642,
+          "texasAccepted": 3659,
+          "texasEnrolled": 693,
+          "allApplicants": 4741,
+          "sourceRow": 315,
+          "sourceName": "Texas A&M University-San Antonio"
+        },
+        "2020": {
+          "texasApplicants": 5906,
+          "texasAccepted": 4707,
+          "texasEnrolled": 607,
+          "allApplicants": 5986,
+          "sourceRow": 315,
+          "sourceName": "Texas A&M University-San Antonio"
+        },
+        "2021": {
+          "texasApplicants": 6643,
+          "texasAccepted": 6112,
+          "texasEnrolled": 922,
+          "allApplicants": 6800,
+          "sourceRow": 316,
+          "sourceName": "Texas A&M University-San Antonio"
+        },
+        "2022": {
+          "texasApplicants": 6641,
+          "texasAccepted": 6113,
+          "texasEnrolled": null,
+          "allApplicants": 6798,
+          "sourceRow": 315,
+          "sourceName": "Texas A&M University-San Antonio"
+        },
+        "2023": {
+          "texasApplicants": 6950,
+          "texasAccepted": 6265,
+          "texasEnrolled": 894,
+          "allApplicants": 7092,
+          "sourceRow": 317,
+          "sourceName": "Texas A&M University-San Antonio"
+        },
+        "2024": {
+          "texasApplicants": 8810,
+          "texasAccepted": 8200,
+          "texasEnrolled": 876,
+          "allApplicants": 9024,
+          "sourceRow": 318,
+          "sourceName": "Texas A&M University-San Antonio"
+        },
+        "2025": {
+          "texasApplicants": 8265,
+          "texasAccepted": 7800,
+          "texasEnrolled": 1203,
+          "allApplicants": 8558,
+          "sourceRow": 318,
+          "sourceName": "Texas A&M University-San Antonio"
+        }
+      }
+    },
+    {
+      "ficeCode": "029269",
+      "name": "Texas A&M University-Texarkana",
+      "years": {
+        "2017": {
+          "texasApplicants": 3114,
+          "texasAccepted": 2032,
+          "texasEnrolled": 192,
+          "allApplicants": 3768,
+          "sourceRow": 289,
+          "sourceName": "Texas A&M University-Texarkana"
+        },
+        "2018": {
+          "texasApplicants": 2868,
+          "texasAccepted": 1811,
+          "texasEnrolled": 202,
+          "allApplicants": 3662,
+          "sourceRow": 289,
+          "sourceName": "Texas A&M University-Texarkana"
+        },
+        "2019": {
+          "texasApplicants": 1971,
+          "texasAccepted": 1381,
+          "texasEnrolled": 168,
+          "allApplicants": 2386,
+          "sourceRow": 289,
+          "sourceName": "Texas A&M University-Texarkana"
+        },
+        "2020": {
+          "texasApplicants": 2091,
+          "texasAccepted": 1653,
+          "texasEnrolled": 244,
+          "allApplicants": 2444,
+          "sourceRow": 289,
+          "sourceName": "Texas A&M University-Texarkana"
+        },
+        "2021": {
+          "texasApplicants": 1401,
+          "texasAccepted": 899,
+          "texasEnrolled": 185,
+          "allApplicants": 1651,
+          "sourceRow": 290,
+          "sourceName": "Texas A&M University-Texarkana"
+        },
+        "2022": {
+          "texasApplicants": 1557,
+          "texasAccepted": 956,
+          "texasEnrolled": 228,
+          "allApplicants": 1986,
+          "sourceRow": 289,
+          "sourceName": "Texas A&M University-Texarkana"
+        },
+        "2023": {
+          "texasApplicants": 1404,
+          "texasAccepted": 1146,
+          "texasEnrolled": 212,
+          "allApplicants": 1789,
+          "sourceRow": 291,
+          "sourceName": "Texas A&M University-Texarkana"
+        },
+        "2024": {
+          "texasApplicants": 2091,
+          "texasAccepted": 1894,
+          "texasEnrolled": 278,
+          "allApplicants": 2571,
+          "sourceRow": 292,
+          "sourceName": "Texas A&M University-Texarkana"
+        },
+        "2025": {
+          "texasApplicants": 2616,
+          "texasAccepted": 2332,
+          "texasEnrolled": 382,
+          "allApplicants": 3430,
+          "sourceRow": 292,
+          "sourceName": "Texas A&M University-Texarkana"
+        }
+      }
+    },
+    {
+      "ficeCode": "013231",
+      "name": "Texas A&M University-Victoria",
+      "years": {
+        "2017": {
+          "texasApplicants": 3396,
+          "texasAccepted": 2950,
+          "texasEnrolled": 278,
+          "allApplicants": 3602,
+          "sourceRow": 280,
+          "sourceName": "University of Houston-Victoria"
+        },
+        "2018": {
+          "texasApplicants": 3495,
+          "texasAccepted": 2865,
+          "texasEnrolled": 297,
+          "allApplicants": 3735,
+          "sourceRow": 280,
+          "sourceName": "University of Houston-Victoria"
+        },
+        "2019": {
+          "texasApplicants": 3473,
+          "texasAccepted": 2945,
+          "texasEnrolled": 292,
+          "allApplicants": 3628,
+          "sourceRow": 280,
+          "sourceName": "University of Houston-Victoria"
+        },
+        "2020": {
+          "texasApplicants": 2553,
+          "texasAccepted": 2269,
+          "texasEnrolled": 261,
+          "allApplicants": 2721,
+          "sourceRow": 280,
+          "sourceName": "University of Houston-Victoria"
+        },
+        "2021": {
+          "texasApplicants": 1275,
+          "texasAccepted": 1076,
+          "texasEnrolled": 141,
+          "allApplicants": 1415,
+          "sourceRow": 281,
+          "sourceName": "University of Houston-Victoria"
+        },
+        "2022": {
+          "texasApplicants": 1913,
+          "texasAccepted": 1573,
+          "texasEnrolled": 186,
+          "allApplicants": 2111,
+          "sourceRow": 280,
+          "sourceName": "University of Houston-Victoria"
+        },
+        "2023": {
+          "texasApplicants": 1706,
+          "texasAccepted": 1427,
+          "texasEnrolled": 180,
+          "allApplicants": 1863,
+          "sourceRow": 282,
+          "sourceName": "University of Houston-Victoria"
+        },
+        "2024": {
+          "texasApplicants": 1986,
+          "texasAccepted": 1894,
+          "texasEnrolled": 218,
+          "allApplicants": 2120,
+          "sourceRow": 283,
+          "sourceName": "University of Houston-Victoria"
+        },
+        "2025": {
+          "texasApplicants": 2121,
+          "texasAccepted": 2062,
+          "texasEnrolled": 218,
+          "allApplicants": 2239,
+          "sourceRow": 283,
+          "sourceName": "Texas A&M University-Victoria"
+        }
+      }
+    },
+    {
+      "ficeCode": "003642",
+      "name": "Texas Southern University",
+      "years": {
+        "2017": {
+          "texasApplicants": 10030,
+          "texasAccepted": 6712,
+          "texasEnrolled": 1648,
+          "allApplicants": 13376,
+          "sourceRow": 130,
+          "sourceName": "Texas Southern University"
+        },
+        "2018": {
+          "texasApplicants": 10505,
+          "texasAccepted": 6183,
+          "texasEnrolled": 1363,
+          "allApplicants": 14115,
+          "sourceRow": 130,
+          "sourceName": "Texas Southern University"
+        },
+        "2019": {
+          "texasApplicants": 6745,
+          "texasAccepted": 6306,
+          "texasEnrolled": 1290,
+          "allApplicants": 8775,
+          "sourceRow": 130,
+          "sourceName": "Texas Southern University"
+        },
+        "2020": {
+          "texasApplicants": 5336,
+          "texasAccepted": 3551,
+          "texasEnrolled": 628,
+          "allApplicants": 6867,
+          "sourceRow": 130,
+          "sourceName": "Texas Southern University"
+        },
+        "2021": {
+          "texasApplicants": 8633,
+          "texasAccepted": 5949,
+          "texasEnrolled": 1061,
+          "allApplicants": 11290,
+          "sourceRow": 130,
+          "sourceName": "Texas Southern University"
+        },
+        "2022": {
+          "texasApplicants": 6984,
+          "texasAccepted": 6765,
+          "texasEnrolled": 1820,
+          "allApplicants": 8697,
+          "sourceRow": 130,
+          "sourceName": "Texas Southern University"
+        },
+        "2023": {
+          "texasApplicants": 6462,
+          "texasAccepted": 6033,
+          "texasEnrolled": 1293,
+          "allApplicants": 7986,
+          "sourceRow": 130,
+          "sourceName": "Texas Southern University"
+        },
+        "2024": {
+          "texasApplicants": 7612,
+          "texasAccepted": 7399,
+          "texasEnrolled": 1311,
+          "allApplicants": 9570,
+          "sourceRow": 134,
+          "sourceName": "Texas Southern University"
+        },
+        "2025": {
+          "texasApplicants": 11942,
+          "texasAccepted": 7039,
+          "texasEnrolled": 1299,
+          "allApplicants": 15028,
+          "sourceRow": 134,
+          "sourceName": "Texas Southern University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003615",
+      "name": "Texas State University",
+      "years": {
+        "2017": {
+          "texasApplicants": 23787,
+          "texasAccepted": 17385,
+          "texasEnrolled": 5821,
+          "allApplicants": 24643,
+          "sourceRow": 67,
+          "sourceName": "Texas State University"
+        },
+        "2018": {
+          "texasApplicants": 23963,
+          "texasAccepted": 18959,
+          "texasEnrolled": 6030,
+          "allApplicants": 24923,
+          "sourceRow": 68,
+          "sourceName": "Texas State University"
+        },
+        "2019": {
+          "texasApplicants": 24567,
+          "texasAccepted": 20348,
+          "texasEnrolled": 6199,
+          "allApplicants": 25654,
+          "sourceRow": 68,
+          "sourceName": "Texas State University"
+        },
+        "2020": {
+          "texasApplicants": 26408,
+          "texasAccepted": 22666,
+          "texasEnrolled": 5710,
+          "allApplicants": 27726,
+          "sourceRow": 68,
+          "sourceName": "Texas State University"
+        },
+        "2021": {
+          "texasApplicants": 24583,
+          "texasAccepted": 22165,
+          "texasEnrolled": 6471,
+          "allApplicants": 25927,
+          "sourceRow": 68,
+          "sourceName": "Texas State University"
+        },
+        "2022": {
+          "texasApplicants": 27412,
+          "texasAccepted": 24633,
+          "texasEnrolled": 7346,
+          "allApplicants": 28761,
+          "sourceRow": 68,
+          "sourceName": "Texas State University"
+        },
+        "2023": {
+          "texasApplicants": 30172,
+          "texasAccepted": 27112,
+          "texasEnrolled": 7649,
+          "allApplicants": 32884,
+          "sourceRow": 68,
+          "sourceName": "Texas State University"
+        },
+        "2024": {
+          "texasApplicants": 31098,
+          "texasAccepted": 27978,
+          "texasEnrolled": 7657,
+          "allApplicants": 34103,
+          "sourceRow": 72,
+          "sourceName": "Texas State University"
+        },
+        "2025": {
+          "texasApplicants": 38896,
+          "texasAccepted": 35502,
+          "texasEnrolled": 8578,
+          "allApplicants": 45121,
+          "sourceRow": 72,
+          "sourceName": "Texas State University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003644",
+      "name": "Texas Tech University",
+      "years": {
+        "2017": {
+          "texasApplicants": 17943,
+          "texasAccepted": 14389,
+          "texasEnrolled": 5040,
+          "allApplicants": 18666,
+          "sourceRow": 139,
+          "sourceName": "Texas Tech University"
+        },
+        "2018": {
+          "texasApplicants": 23324,
+          "texasAccepted": 14823,
+          "texasEnrolled": 5638,
+          "allApplicants": 24227,
+          "sourceRow": 139,
+          "sourceName": "Texas Tech University"
+        },
+        "2019": {
+          "texasApplicants": 24341,
+          "texasAccepted": 13705,
+          "texasEnrolled": 5686,
+          "allApplicants": 25172,
+          "sourceRow": 138,
+          "sourceName": "Texas Tech University"
+        },
+        "2020": {
+          "texasApplicants": 27877,
+          "texasAccepted": 17140,
+          "texasEnrolled": 5990,
+          "allApplicants": 29106,
+          "sourceRow": 138,
+          "sourceName": "Texas Tech University"
+        },
+        "2021": {
+          "texasApplicants": 29534,
+          "texasAccepted": 17122,
+          "texasEnrolled": 5959,
+          "allApplicants": 33969,
+          "sourceRow": 138,
+          "sourceName": "Texas Tech University"
+        },
+        "2022": {
+          "texasApplicants": 30101,
+          "texasAccepted": 17273,
+          "texasEnrolled": 6098,
+          "allApplicants": 35366,
+          "sourceRow": 138,
+          "sourceName": "Texas Tech University"
+        },
+        "2023": {
+          "texasApplicants": 29345,
+          "texasAccepted": 18579,
+          "texasEnrolled": 6573,
+          "allApplicants": 34008,
+          "sourceRow": 139,
+          "sourceName": "Texas Tech University"
+        },
+        "2024": {
+          "texasApplicants": 29644,
+          "texasAccepted": 19952,
+          "texasEnrolled": 6074,
+          "allApplicants": 34334,
+          "sourceRow": 142,
+          "sourceName": "Texas Tech University"
+        },
+        "2025": {
+          "texasApplicants": 25474,
+          "texasAccepted": 22074,
+          "texasEnrolled": 6797,
+          "allApplicants": 28672,
+          "sourceRow": 143,
+          "sourceName": "Texas Tech University"
+        }
+      }
+    },
+    {
+      "ficeCode": "003646",
+      "name": "Texas Woman's University",
+      "years": {
+        "2017": {
+          "texasApplicants": 5627,
+          "texasAccepted": 4717,
+          "texasEnrolled": 1270,
+          "allApplicants": 5734,
+          "sourceRow": 148,
+          "sourceName": "Texas Woman's University"
+        },
+        "2018": {
+          "texasApplicants": 5776,
+          "texasAccepted": 4898,
+          "texasEnrolled": 1220,
+          "allApplicants": 5899,
+          "sourceRow": 148,
+          "sourceName": "Texas Woman's University"
+        },
+        "2019": {
+          "texasApplicants": 5736,
+          "texasAccepted": 5246,
+          "texasEnrolled": 1274,
+          "allApplicants": 5916,
+          "sourceRow": 147,
+          "sourceName": "Texas Woman's University"
+        },
+        "2020": {
+          "texasApplicants": 5886,
+          "texasAccepted": 5418,
+          "texasEnrolled": 1101,
+          "allApplicants": 6059,
+          "sourceRow": 147,
+          "sourceName": "Texas Woman's University"
+        },
+        "2021": {
+          "texasApplicants": 5443,
+          "texasAccepted": 5029,
+          "texasEnrolled": 1211,
+          "allApplicants": 5607,
+          "sourceRow": 147,
+          "sourceName": "Texas Woman's University"
+        },
+        "2022": {
+          "texasApplicants": 7393,
+          "texasAccepted": 6822,
+          "texasEnrolled": 1280,
+          "allApplicants": 7562,
+          "sourceRow": 147,
+          "sourceName": "Texas Woman's University"
+        },
+        "2023": {
+          "texasApplicants": 7713,
+          "texasAccepted": 7228,
+          "texasEnrolled": 1403,
+          "allApplicants": 7881,
+          "sourceRow": 148,
+          "sourceName": "Texas Woman's University"
+        },
+        "2024": {
+          "texasApplicants": 8494,
+          "texasAccepted": 8042,
+          "texasEnrolled": 1548,
+          "allApplicants": 8702,
+          "sourceRow": 151,
+          "sourceName": "Texas Woman's University"
+        },
+        "2025": {
+          "texasApplicants": 8122,
+          "texasAccepted": 7711,
+          "texasEnrolled": 1448,
+          "allApplicants": 8324,
+          "sourceRow": 152,
+          "sourceName": "Texas Woman's University"
+        }
+      }
+    },
+    {
+      "ficeCode": "009930",
+      "name": "The University of Texas Permian Basin",
+      "years": {
+        "2017": {
+          "texasApplicants": 878,
+          "texasAccepted": 715,
+          "texasEnrolled": 410,
+          "allApplicants": 957,
+          "sourceRow": 219,
+          "sourceName": "The University of Texas Permian Basin"
+        },
+        "2018": {
+          "texasApplicants": 783,
+          "texasAccepted": 647,
+          "texasEnrolled": 348,
+          "allApplicants": 846,
+          "sourceRow": 219,
+          "sourceName": "The University of Texas Permian Basin"
+        },
+        "2019": {
+          "texasApplicants": 1110,
+          "texasAccepted": 868,
+          "texasEnrolled": 373,
+          "allApplicants": 1192,
+          "sourceRow": 218,
+          "sourceName": "The University of Texas Permian Basin"
+        },
+        "2020": {
+          "texasApplicants": 1318,
+          "texasAccepted": 1166,
+          "texasEnrolled": 520,
+          "allApplicants": 1429,
+          "sourceRow": 218,
+          "sourceName": "The University of Texas Permian Basin"
+        },
+        "2021": {
+          "texasApplicants": 1050,
+          "texasAccepted": 941,
+          "texasEnrolled": 393,
+          "allApplicants": 1136,
+          "sourceRow": 219,
+          "sourceName": "The University of Texas Permian Basin"
+        },
+        "2022": {
+          "texasApplicants": 1428,
+          "texasAccepted": 1298,
+          "texasEnrolled": 600,
+          "allApplicants": 1532,
+          "sourceRow": 219,
+          "sourceName": "The University of Texas Permian Basin"
+        },
+        "2023": {
+          "texasApplicants": 1486,
+          "texasAccepted": 1270,
+          "texasEnrolled": 537,
+          "allApplicants": 1568,
+          "sourceRow": 220,
+          "sourceName": "The University of Texas Permian Basin"
+        },
+        "2024": {
+          "texasApplicants": 1408,
+          "texasAccepted": 1321,
+          "texasEnrolled": 571,
+          "allApplicants": 1481,
+          "sourceRow": 222,
+          "sourceName": "The University of Texas Permian Basin"
+        },
+        "2025": {
+          "texasApplicants": 1459,
+          "texasAccepted": 1203,
+          "texasEnrolled": 536,
+          "allApplicants": 1557,
+          "sourceRow": 223,
+          "sourceName": "The University of Texas Permian Basin"
+        }
+      }
+    },
+    {
+      "ficeCode": "003599",
+      "name": "The University of Texas Rio Grande Valley",
+      "years": {
+        "2017": {
+          "texasApplicants": 10308,
+          "texasAccepted": 8311,
+          "texasEnrolled": 4442,
+          "allApplicants": 10537,
+          "sourceRow": 49,
+          "sourceName": "The University of Texas Rio Grande Valley"
+        },
+        "2018": {
+          "texasApplicants": 11044,
+          "texasAccepted": 8945,
+          "texasEnrolled": 4503,
+          "allApplicants": 11191,
+          "sourceRow": 50,
+          "sourceName": "The University of Texas Rio Grande Valley"
+        },
+        "2019": {
+          "texasApplicants": 10988,
+          "texasAccepted": 8810,
+          "texasEnrolled": 4733,
+          "allApplicants": 11117,
+          "sourceRow": 50,
+          "sourceName": "The University of Texas Rio Grande Valley"
+        },
+        "2020": {
+          "texasApplicants": 12699,
+          "texasAccepted": 10306,
+          "texasEnrolled": 5284,
+          "allApplicants": 12809,
+          "sourceRow": 50,
+          "sourceName": "The University of Texas Rio Grande Valley"
+        },
+        "2021": {
+          "texasApplicants": 11630,
+          "texasAccepted": 10788,
+          "texasEnrolled": 5346,
+          "allApplicants": 11811,
+          "sourceRow": 50,
+          "sourceName": "The University of Texas Rio Grande Valley"
+        },
+        "2022": {
+          "texasApplicants": 13585,
+          "texasAccepted": 11901,
+          "texasEnrolled": 5694,
+          "allApplicants": 13744,
+          "sourceRow": 50,
+          "sourceName": "The University of Texas Rio Grande Valley"
+        },
+        "2023": {
+          "texasApplicants": 13371,
+          "texasAccepted": 11322,
+          "texasEnrolled": 5557,
+          "allApplicants": 13542,
+          "sourceRow": 50,
+          "sourceName": "The University of Texas Rio Grande Valley"
+        },
+        "2024": {
+          "texasApplicants": 18133,
+          "texasAccepted": 17072,
+          "texasEnrolled": 6909,
+          "allApplicants": 18377,
+          "sourceRow": 54,
+          "sourceName": "The University of Texas Rio Grande Valley"
+        },
+        "2025": {
+          "texasApplicants": 19071,
+          "texasAccepted": 17653,
+          "texasEnrolled": 7056,
+          "allApplicants": 19245,
+          "sourceRow": 54,
+          "sourceName": "The University of Texas Rio Grande Valley"
+        }
+      }
+    },
+    {
+      "ficeCode": "003656",
+      "name": "The University of Texas at Arlington",
+      "years": {
+        "2017": {
+          "texasApplicants": 10275,
+          "texasAccepted": 7931,
+          "texasEnrolled": 3116,
+          "allApplicants": 11246,
+          "sourceRow": 166,
+          "sourceName": "The University of Texas at Arlington"
+        },
+        "2018": {
+          "texasApplicants": 11463,
+          "texasAccepted": 9051,
+          "texasEnrolled": 3183,
+          "allApplicants": 12335,
+          "sourceRow": 166,
+          "sourceName": "The University of Texas at Arlington"
+        },
+        "2019": {
+          "texasApplicants": 11696,
+          "texasAccepted": 9637,
+          "texasEnrolled": 3504,
+          "allApplicants": 12646,
+          "sourceRow": 165,
+          "sourceName": "The University of Texas at Arlington"
+        },
+        "2020": {
+          "texasApplicants": 12995,
+          "texasAccepted": 11373,
+          "texasEnrolled": 3702,
+          "allApplicants": 14614,
+          "sourceRow": 165,
+          "sourceName": "The University of Texas at Arlington"
+        },
+        "2021": {
+          "texasApplicants": 13720,
+          "texasAccepted": 12808,
+          "texasEnrolled": 4367,
+          "allApplicants": 15491,
+          "sourceRow": 165,
+          "sourceName": "The University of Texas at Arlington"
+        },
+        "2022": {
+          "texasApplicants": 19087,
+          "texasAccepted": 15456,
+          "texasEnrolled": 4596,
+          "allApplicants": 21961,
+          "sourceRow": 165,
+          "sourceName": "The University of Texas at Arlington"
+        },
+        "2023": {
+          "texasApplicants": 20725,
+          "texasAccepted": 16842,
+          "texasEnrolled": 4876,
+          "allApplicants": 23126,
+          "sourceRow": 166,
+          "sourceName": "The University of Texas at Arlington"
+        },
+        "2024": {
+          "texasApplicants": 21769,
+          "texasAccepted": 17379,
+          "texasEnrolled": 4743,
+          "allApplicants": 24623,
+          "sourceRow": 169,
+          "sourceName": "The University of Texas at Arlington"
+        },
+        "2025": {
+          "texasApplicants": 28426,
+          "texasAccepted": 22627,
+          "texasEnrolled": 5196,
+          "allApplicants": 33362,
+          "sourceRow": 170,
+          "sourceName": "The University of Texas at Arlington"
+        }
+      }
+    },
+    {
+      "ficeCode": "003658",
+      "name": "The University of Texas at Austin",
+      "years": {
+        "2017": {
+          "texasApplicants": 29698,
+          "texasAccepted": 14419,
+          "texasEnrolled": 7209,
+          "allApplicants": 43082,
+          "sourceRow": 175,
+          "sourceName": "The University of Texas at Austin"
+        },
+        "2018": {
+          "texasApplicants": 31009,
+          "texasAccepted": 15258,
+          "texasEnrolled": 7673,
+          "allApplicants": 45241,
+          "sourceRow": 175,
+          "sourceName": "The University of Texas at Austin"
+        },
+        "2019": {
+          "texasApplicants": 31710,
+          "texasAccepted": 13938,
+          "texasEnrolled": 7285,
+          "allApplicants": 50213,
+          "sourceRow": 174,
+          "sourceName": "The University of Texas at Austin"
+        },
+        "2020": {
+          "texasApplicants": 33487,
+          "texasAccepted": 14838,
+          "texasEnrolled": 7603,
+          "allApplicants": 53215,
+          "sourceRow": 174,
+          "sourceName": "The University of Texas at Austin"
+        },
+        "2021": {
+          "texasApplicants": 38049,
+          "texasAccepted": 15265,
+          "texasEnrolled": 7865,
+          "allApplicants": 62137,
+          "sourceRow": 174,
+          "sourceName": "The University of Texas at Austin"
+        },
+        "2022": {
+          "texasApplicants": 35879,
+          "texasAccepted": 15505,
+          "texasEnrolled": 7942,
+          "allApplicants": 56947,
+          "sourceRow": 174,
+          "sourceName": "The University of Texas at Austin"
+        },
+        "2023": {
+          "texasApplicants": 37351,
+          "texasAccepted": 15907,
+          "texasEnrolled": 8147,
+          "allApplicants": 63437,
+          "sourceRow": 175,
+          "sourceName": "The University of Texas at Austin"
+        },
+        "2024": {
+          "texasApplicants": 40633,
+          "texasAccepted": 16106,
+          "texasEnrolled": 7897,
+          "allApplicants": 68931,
+          "sourceRow": 178,
+          "sourceName": "The University of Texas at Austin"
+        },
+        "2025": {
+          "texasApplicants": 37691,
+          "texasAccepted": 15931,
+          "texasEnrolled": 8561,
+          "allApplicants": 77639,
+          "sourceRow": 179,
+          "sourceName": "The University of Texas at Austin"
+        }
+      }
+    },
+    {
+      "ficeCode": "009741",
+      "name": "The University of Texas at Dallas",
+      "years": {
+        "2017": {
+          "texasApplicants": 10417,
+          "texasAccepted": 8270,
+          "texasEnrolled": 2891,
+          "allApplicants": 11769,
+          "sourceRow": 210,
+          "sourceName": "The University of Texas at Dallas"
+        },
+        "2018": {
+          "texasApplicants": 11641,
+          "texasAccepted": 9347,
+          "texasEnrolled": 3539,
+          "allApplicants": 13116,
+          "sourceRow": 210,
+          "sourceName": "The University of Texas at Dallas"
+        },
+        "2019": {
+          "texasApplicants": 12666,
+          "texasAccepted": 9871,
+          "texasEnrolled": 3700,
+          "allApplicants": 14312,
+          "sourceRow": 209,
+          "sourceName": "The University of Texas at Dallas"
+        },
+        "2020": {
+          "texasApplicants": 13553,
+          "texasAccepted": 10691,
+          "texasEnrolled": 3239,
+          "allApplicants": 15391,
+          "sourceRow": 209,
+          "sourceName": "The University of Texas at Dallas"
+        },
+        "2021": {
+          "texasApplicants": 14722,
+          "texasAccepted": 12997,
+          "texasEnrolled": 3736,
+          "allApplicants": 18834,
+          "sourceRow": 210,
+          "sourceName": "The University of Texas at Dallas"
+        },
+        "2022": {
+          "texasApplicants": 16554,
+          "texasAccepted": 14098,
+          "texasEnrolled": 3851,
+          "allApplicants": 21489,
+          "sourceRow": 210,
+          "sourceName": "The University of Texas at Dallas"
+        },
+        "2023": {
+          "texasApplicants": 21988,
+          "texasAccepted": 15409,
+          "texasEnrolled": 3810,
+          "allApplicants": 29363,
+          "sourceRow": 211,
+          "sourceName": "The University of Texas at Dallas"
+        },
+        "2024": {
+          "texasApplicants": 24439,
+          "texasAccepted": 16907,
+          "texasEnrolled": 3792,
+          "allApplicants": 31765,
+          "sourceRow": 213,
+          "sourceName": "The University of Texas at Dallas"
+        },
+        "2025": {
+          "texasApplicants": 28762,
+          "texasAccepted": 20491,
+          "texasEnrolled": 4416,
+          "allApplicants": 36360,
+          "sourceRow": 214,
+          "sourceName": "The University of Texas at Dallas"
+        }
+      }
+    },
+    {
+      "ficeCode": "003661",
+      "name": "The University of Texas at El Paso",
+      "years": {
+        "2017": {
+          "texasApplicants": 8965,
+          "texasAccepted": 8965,
+          "texasEnrolled": 3342,
+          "allApplicants": 9382,
+          "sourceRow": 183,
+          "sourceName": "The University of Texas at El Paso"
+        },
+        "2018": {
+          "texasApplicants": 9933,
+          "texasAccepted": 9932,
+          "texasEnrolled": 3137,
+          "allApplicants": 10456,
+          "sourceRow": 184,
+          "sourceName": "The University of Texas at El Paso"
+        },
+        "2019": {
+          "texasApplicants": 10498,
+          "texasAccepted": 10497,
+          "texasEnrolled": 3310,
+          "allApplicants": 10972,
+          "sourceRow": 182,
+          "sourceName": "The University of Texas at El Paso"
+        },
+        "2020": {
+          "texasApplicants": 12622,
+          "texasAccepted": 12621,
+          "texasEnrolled": 3104,
+          "allApplicants": 13121,
+          "sourceRow": 182,
+          "sourceName": "The University of Texas at El Paso"
+        },
+        "2021": {
+          "texasApplicants": 9724,
+          "texasAccepted": 9723,
+          "texasEnrolled": 2829,
+          "allApplicants": 10153,
+          "sourceRow": 183,
+          "sourceName": "The University of Texas at El Paso"
+        },
+        "2022": {
+          "texasApplicants": 9986,
+          "texasAccepted": 9985,
+          "texasEnrolled": 3456,
+          "allApplicants": 10493,
+          "sourceRow": 183,
+          "sourceName": "The University of Texas at El Paso"
+        },
+        "2023": {
+          "texasApplicants": 10585,
+          "texasAccepted": 10582,
+          "texasEnrolled": 3617,
+          "allApplicants": 11171,
+          "sourceRow": 184,
+          "sourceName": "The University of Texas at El Paso"
+        },
+        "2024": {
+          "texasApplicants": 11450,
+          "texasAccepted": 11447,
+          "texasEnrolled": 3721,
+          "allApplicants": 11996,
+          "sourceRow": 186,
+          "sourceName": "The University of Texas at El Paso"
+        },
+        "2025": {
+          "texasApplicants": 11929,
+          "texasAccepted": 11929,
+          "texasEnrolled": 4313,
+          "allApplicants": 12357,
+          "sourceRow": 187,
+          "sourceName": "The University of Texas at El Paso"
+        }
+      }
+    },
+    {
+      "ficeCode": "010115",
+      "name": "The University of Texas at San Antonio",
+      "years": {
+        "2017": {
+          "texasApplicants": 15428,
+          "texasAccepted": 12232,
+          "texasEnrolled": 4872,
+          "allApplicants": 15987,
+          "sourceRow": 228,
+          "sourceName": "The University of Texas at San Antonio"
+        },
+        "2018": {
+          "texasApplicants": 16351,
+          "texasAccepted": 12889,
+          "texasEnrolled": 4805,
+          "allApplicants": 16943,
+          "sourceRow": 228,
+          "sourceName": "The University of Texas at San Antonio"
+        },
+        "2019": {
+          "texasApplicants": 16631,
+          "texasAccepted": 12707,
+          "texasEnrolled": 4447,
+          "allApplicants": 17143,
+          "sourceRow": 227,
+          "sourceName": "The University of Texas at San Antonio"
+        },
+        "2020": {
+          "texasApplicants": 20994,
+          "texasAccepted": 17526,
+          "texasEnrolled": 5197,
+          "allApplicants": 21618,
+          "sourceRow": 227,
+          "sourceName": "The University of Texas at San Antonio"
+        },
+        "2021": {
+          "texasApplicants": 20531,
+          "texasAccepted": 18625,
+          "texasEnrolled": 5366,
+          "allApplicants": 21777,
+          "sourceRow": 228,
+          "sourceName": "The University of Texas at San Antonio"
+        },
+        "2022": {
+          "texasApplicants": 22067,
+          "texasAccepted": 19228,
+          "texasEnrolled": 5502,
+          "allApplicants": 23295,
+          "sourceRow": 227,
+          "sourceName": "The University of Texas at San Antonio"
+        },
+        "2023": {
+          "texasApplicants": 21512,
+          "texasAccepted": 19074,
+          "texasEnrolled": 5707,
+          "allApplicants": 22497,
+          "sourceRow": 229,
+          "sourceName": "The University of Texas at San Antonio"
+        },
+        "2024": {
+          "texasApplicants": 24056,
+          "texasAccepted": 21009,
+          "texasEnrolled": 5814,
+          "allApplicants": 25422,
+          "sourceRow": 230,
+          "sourceName": "The University of Texas at San Antonio"
+        },
+        "2025": {
+          "texasApplicants": 28513,
+          "texasAccepted": 26265,
+          "texasEnrolled": 7247,
+          "allApplicants": 30911,
+          "sourceRow": 231,
+          "sourceName": "The University of Texas at San Antonio"
+        }
+      }
+    },
+    {
+      "ficeCode": "011163",
+      "name": "The University of Texas at Tyler",
+      "years": {
+        "2017": {
+          "texasApplicants": 2359,
+          "texasAccepted": 1520,
+          "texasEnrolled": 681,
+          "allApplicants": 2508,
+          "sourceRow": 255,
+          "sourceName": "The University of Texas at Tyler"
+        },
+        "2018": {
+          "texasApplicants": 2790,
+          "texasAccepted": 2060,
+          "texasEnrolled": 843,
+          "allApplicants": 3086,
+          "sourceRow": 255,
+          "sourceName": "The University of Texas at Tyler"
+        },
+        "2019": {
+          "texasApplicants": 2588,
+          "texasAccepted": 2142,
+          "texasEnrolled": 793,
+          "allApplicants": 2735,
+          "sourceRow": 254,
+          "sourceName": "The University of Texas at Tyler"
+        },
+        "2020": {
+          "texasApplicants": 3213,
+          "texasAccepted": 2939,
+          "texasEnrolled": 1031,
+          "allApplicants": 3341,
+          "sourceRow": 254,
+          "sourceName": "The University of Texas at Tyler"
+        },
+        "2021": {
+          "texasApplicants": 3418,
+          "texasAccepted": 3211,
+          "texasEnrolled": 1118,
+          "allApplicants": 3569,
+          "sourceRow": 255,
+          "sourceName": "The University of Texas at Tyler"
+        },
+        "2022": {
+          "texasApplicants": 3357,
+          "texasAccepted": 3155,
+          "texasEnrolled": 1083,
+          "allApplicants": 3489,
+          "sourceRow": 254,
+          "sourceName": "The University of Texas at Tyler"
+        },
+        "2023": {
+          "texasApplicants": 5396,
+          "texasAccepted": 4934,
+          "texasEnrolled": 1281,
+          "allApplicants": 5518,
+          "sourceRow": 256,
+          "sourceName": "The University of Texas at Tyler"
+        },
+        "2024": {
+          "texasApplicants": 5482,
+          "texasAccepted": 5152,
+          "texasEnrolled": 1381,
+          "allApplicants": 5594,
+          "sourceRow": 257,
+          "sourceName": "The University of Texas at Tyler"
+        },
+        "2025": {
+          "texasApplicants": 5367,
+          "texasAccepted": 5096,
+          "texasEnrolled": 1502,
+          "allApplicants": 5465,
+          "sourceRow": 258,
+          "sourceName": "The University of Texas at Tyler"
+        }
+      }
+    },
+    {
+      "ficeCode": "003652",
+      "name": "University of Houston",
+      "years": {
+        "2017": {
+          "texasApplicants": 19773,
+          "texasAccepted": 12391,
+          "texasEnrolled": 4697,
+          "allApplicants": 21823,
+          "sourceRow": 157,
+          "sourceName": "University of Houston"
+        },
+        "2018": {
+          "texasApplicants": 20336,
+          "texasAccepted": 12882,
+          "texasEnrolled": 4922,
+          "allApplicants": 22958,
+          "sourceRow": 157,
+          "sourceName": "University of Houston"
+        },
+        "2019": {
+          "texasApplicants": 22610,
+          "texasAccepted": 14773,
+          "texasEnrolled": 5408,
+          "allApplicants": 25331,
+          "sourceRow": 156,
+          "sourceName": "University of Houston"
+        },
+        "2020": {
+          "texasApplicants": 25329,
+          "texasAccepted": 16040,
+          "texasEnrolled": 5022,
+          "allApplicants": 28579,
+          "sourceRow": 156,
+          "sourceName": "University of Houston"
+        },
+        "2021": {
+          "texasApplicants": 23120,
+          "texasAccepted": 17229,
+          "texasEnrolled": 5207,
+          "allApplicants": 26409,
+          "sourceRow": 156,
+          "sourceName": "University of Houston"
+        },
+        "2022": {
+          "texasApplicants": 24230,
+          "texasAccepted": 16628,
+          "texasEnrolled": 5189,
+          "allApplicants": 29438,
+          "sourceRow": 156,
+          "sourceName": "University of Houston"
+        },
+        "2023": {
+          "texasApplicants": 25885,
+          "texasAccepted": 18346,
+          "texasEnrolled": 5281,
+          "allApplicants": 30269,
+          "sourceRow": 157,
+          "sourceName": "University of Houston"
+        },
+        "2024": {
+          "texasApplicants": 26228,
+          "texasAccepted": 19855,
+          "texasEnrolled": 5794,
+          "allApplicants": 31544,
+          "sourceRow": 160,
+          "sourceName": "University of Houston"
+        },
+        "2025": {
+          "texasApplicants": 29329,
+          "texasAccepted": 22739,
+          "texasEnrolled": 6216,
+          "allApplicants": 34511,
+          "sourceRow": 161,
+          "sourceName": "University of Houston"
+        }
+      }
+    },
+    {
+      "ficeCode": "011711",
+      "name": "University of Houston-Clear Lake",
+      "years": {
+        "2017": {
+          "texasApplicants": 1009,
+          "texasAccepted": 729,
+          "texasEnrolled": 277,
+          "allApplicants": 1049,
+          "sourceRow": 263,
+          "sourceName": "University of Houston-Clear Lake"
+        },
+        "2018": {
+          "texasApplicants": 1148,
+          "texasAccepted": 799,
+          "texasEnrolled": 302,
+          "allApplicants": 1197,
+          "sourceRow": 264,
+          "sourceName": "University of Houston-Clear Lake"
+        },
+        "2019": {
+          "texasApplicants": 1363,
+          "texasAccepted": 1004,
+          "texasEnrolled": 336,
+          "allApplicants": 1402,
+          "sourceRow": 263,
+          "sourceName": "University of Houston-Clear Lake"
+        },
+        "2020": {
+          "texasApplicants": 1622,
+          "texasAccepted": 1308,
+          "texasEnrolled": 361,
+          "allApplicants": 1666,
+          "sourceRow": 263,
+          "sourceName": "University of Houston-Clear Lake"
+        },
+        "2021": {
+          "texasApplicants": 1741,
+          "texasAccepted": 1591,
+          "texasEnrolled": 331,
+          "allApplicants": 1793,
+          "sourceRow": 264,
+          "sourceName": "University of Houston-Clear Lake"
+        },
+        "2022": {
+          "texasApplicants": 1928,
+          "texasAccepted": 1349,
+          "texasEnrolled": 352,
+          "allApplicants": 1985,
+          "sourceRow": 263,
+          "sourceName": "University of Houston-Clear Lake"
+        },
+        "2023": {
+          "texasApplicants": 2108,
+          "texasAccepted": 1585,
+          "texasEnrolled": 423,
+          "allApplicants": 2347,
+          "sourceRow": 265,
+          "sourceName": "University of Houston-Clear Lake"
+        },
+        "2024": {
+          "texasApplicants": 2232,
+          "texasAccepted": 2025,
+          "texasEnrolled": 469,
+          "allApplicants": 2352,
+          "sourceRow": 266,
+          "sourceName": "University of Houston-Clear Lake"
+        },
+        "2025": {
+          "texasApplicants": 1996,
+          "texasAccepted": 1834,
+          "texasEnrolled": 409,
+          "allApplicants": 2066,
+          "sourceRow": 266,
+          "sourceName": "University of Houston-Clear Lake"
+        }
+      }
+    },
+    {
+      "ficeCode": "012826",
+      "name": "University of Houston-Downtown",
+      "years": {
+        "2017": {
+          "texasApplicants": 3761,
+          "texasAccepted": 3168,
+          "texasEnrolled": 952,
+          "allApplicants": 3931,
+          "sourceRow": 272,
+          "sourceName": "University of Houston-Downtown"
+        },
+        "2018": {
+          "texasApplicants": 4275,
+          "texasAccepted": 3568,
+          "texasEnrolled": 1056,
+          "allApplicants": 4416,
+          "sourceRow": 272,
+          "sourceName": "University of Houston-Downtown"
+        },
+        "2019": {
+          "texasApplicants": 5398,
+          "texasAccepted": 4786,
+          "texasEnrolled": 1446,
+          "allApplicants": 5601,
+          "sourceRow": 271,
+          "sourceName": "University of Houston-Downtown"
+        },
+        "2020": {
+          "texasApplicants": 5810,
+          "texasAccepted": 5384,
+          "texasEnrolled": 1463,
+          "allApplicants": 6037,
+          "sourceRow": 271,
+          "sourceName": "University of Houston-Downtown"
+        },
+        "2021": {
+          "texasApplicants": 5927,
+          "texasAccepted": 5627,
+          "texasEnrolled": 1332,
+          "allApplicants": 6148,
+          "sourceRow": 272,
+          "sourceName": "University of Houston-Downtown"
+        },
+        "2022": {
+          "texasApplicants": 5839,
+          "texasAccepted": 5164,
+          "texasEnrolled": 1341,
+          "allApplicants": 6131,
+          "sourceRow": 271,
+          "sourceName": "University of Houston-Downtown"
+        },
+        "2023": {
+          "texasApplicants": 6668,
+          "texasAccepted": 6035,
+          "texasEnrolled": 1468,
+          "allApplicants": 6953,
+          "sourceRow": 273,
+          "sourceName": "University of Houston-Downtown"
+        },
+        "2024": {
+          "texasApplicants": 6326,
+          "texasAccepted": 5683,
+          "texasEnrolled": 1168,
+          "allApplicants": 6551,
+          "sourceRow": 274,
+          "sourceName": "University of Houston-Downtown"
+        },
+        "2025": {
+          "texasApplicants": 7215,
+          "texasAccepted": 6347,
+          "texasEnrolled": 1161,
+          "allApplicants": 7355,
+          "sourceRow": 274,
+          "sourceName": "University of Houston-Downtown"
+        }
+      }
+    },
+    {
+      "ficeCode": "003594",
+      "name": "University of North Texas",
+      "years": {
+        "2017": {
+          "texasApplicants": 15287,
+          "texasAccepted": 12043,
+          "texasEnrolled": 4523,
+          "allApplicants": 16512,
+          "sourceRow": 40,
+          "sourceName": "University of North Texas"
+        },
+        "2018": {
+          "texasApplicants": 16091,
+          "texasAccepted": 12637,
+          "texasEnrolled": 4365,
+          "allApplicants": 17612,
+          "sourceRow": 41,
+          "sourceName": "University of North Texas"
+        },
+        "2019": {
+          "texasApplicants": 17770,
+          "texasAccepted": 13729,
+          "texasEnrolled": 5086,
+          "allApplicants": 19634,
+          "sourceRow": 41,
+          "sourceName": "University of North Texas"
+        },
+        "2020": {
+          "texasApplicants": 17649,
+          "texasAccepted": 16087,
+          "texasEnrolled": 4793,
+          "allApplicants": 19688,
+          "sourceRow": 41,
+          "sourceName": "University of North Texas"
+        },
+        "2021": {
+          "texasApplicants": 21963,
+          "texasAccepted": 17927,
+          "texasEnrolled": 5022,
+          "allApplicants": 24926,
+          "sourceRow": 41,
+          "sourceName": "University of North Texas"
+        },
+        "2022": {
+          "texasApplicants": 28004,
+          "texasAccepted": 22411,
+          "texasEnrolled": 5976,
+          "allApplicants": 32522,
+          "sourceRow": 41,
+          "sourceName": "University of North Texas"
+        },
+        "2023": {
+          "texasApplicants": 33170,
+          "texasAccepted": 26998,
+          "texasEnrolled": 6336,
+          "allApplicants": 37479,
+          "sourceRow": 41,
+          "sourceName": "University of North Texas"
+        },
+        "2024": {
+          "texasApplicants": 34530,
+          "texasAccepted": 24975,
+          "texasEnrolled": 6046,
+          "allApplicants": 39063,
+          "sourceRow": 45,
+          "sourceName": "University of North Texas"
+        },
+        "2025": {
+          "texasApplicants": 36189,
+          "texasAccepted": 25906,
+          "texasEnrolled": 5758,
+          "allApplicants": 41542,
+          "sourceRow": 45,
+          "sourceName": "University of North Texas"
+        }
+      }
+    },
+    {
+      "ficeCode": "042421",
+      "name": "University of North Texas at Dallas",
+      "years": {
+        "2017": {
+          "texasApplicants": 1448,
+          "texasAccepted": 1081,
+          "texasEnrolled": 308,
+          "allApplicants": 1476,
+          "sourceRow": 298,
+          "sourceName": "University of North Texas at Dallas"
+        },
+        "2018": {
+          "texasApplicants": 1636,
+          "texasAccepted": 1372,
+          "texasEnrolled": 357,
+          "allApplicants": 1659,
+          "sourceRow": 298,
+          "sourceName": "University of North Texas at Dallas"
+        },
+        "2019": {
+          "texasApplicants": 2548,
+          "texasAccepted": 2211,
+          "texasEnrolled": 422,
+          "allApplicants": 2582,
+          "sourceRow": 306,
+          "sourceName": "University of North Texas at Dallas"
+        },
+        "2020": {
+          "texasApplicants": 2261,
+          "texasAccepted": 2134,
+          "texasEnrolled": 324,
+          "allApplicants": 2296,
+          "sourceRow": 306,
+          "sourceName": "University of North Texas at Dallas"
+        },
+        "2021": {
+          "texasApplicants": 2535,
+          "texasAccepted": 2298,
+          "texasEnrolled": 358,
+          "allApplicants": 2618,
+          "sourceRow": 307,
+          "sourceName": "University of North Texas at Dallas"
+        },
+        "2022": {
+          "texasApplicants": 2526,
+          "texasAccepted": 2286,
+          "texasEnrolled": 340,
+          "allApplicants": 2639,
+          "sourceRow": 306,
+          "sourceName": "University of North Texas at Dallas"
+        },
+        "2023": {
+          "texasApplicants": 4000,
+          "texasAccepted": 3641,
+          "texasEnrolled": 466,
+          "allApplicants": 4132,
+          "sourceRow": 308,
+          "sourceName": "University of North Texas at Dallas"
+        },
+        "2024": {
+          "texasApplicants": 5011,
+          "texasAccepted": 3983,
+          "texasEnrolled": 462,
+          "allApplicants": 5187,
+          "sourceRow": 309,
+          "sourceName": "University of North Texas at Dallas"
+        },
+        "2025": {
+          "texasApplicants": 5971,
+          "texasAccepted": 4817,
+          "texasEnrolled": 413,
+          "allApplicants": 6239,
+          "sourceRow": 309,
+          "sourceName": "University of North Texas at Dallas"
+        }
+      }
+    },
+    {
+      "ficeCode": "003665",
+      "name": "West Texas A&M University",
+      "years": {
+        "2017": {
+          "texasApplicants": 4056,
+          "texasAccepted": 3486,
+          "texasEnrolled": 1041,
+          "allApplicants": 4763,
+          "sourceRow": 192,
+          "sourceName": "West Texas A&M University"
+        },
+        "2018": {
+          "texasApplicants": 3841,
+          "texasAccepted": 3275,
+          "texasEnrolled": 1001,
+          "allApplicants": 4524,
+          "sourceRow": 193,
+          "sourceName": "West Texas A&M University"
+        },
+        "2019": {
+          "texasApplicants": 3899,
+          "texasAccepted": 3596,
+          "texasEnrolled": 1153,
+          "allApplicants": 4590,
+          "sourceRow": 191,
+          "sourceName": "West Texas A&M University"
+        },
+        "2020": {
+          "texasApplicants": 4008,
+          "texasAccepted": 3389,
+          "texasEnrolled": 1113,
+          "allApplicants": 4642,
+          "sourceRow": 191,
+          "sourceName": "West Texas A&M University"
+        },
+        "2021": {
+          "texasApplicants": 4181,
+          "texasAccepted": 3758,
+          "texasEnrolled": 1137,
+          "allApplicants": 4921,
+          "sourceRow": 192,
+          "sourceName": "West Texas A&M University"
+        },
+        "2022": {
+          "texasApplicants": 4399,
+          "texasAccepted": 4033,
+          "texasEnrolled": 1060,
+          "allApplicants": 5284,
+          "sourceRow": 192,
+          "sourceName": "West Texas A&M University"
+        },
+        "2023": {
+          "texasApplicants": 4486,
+          "texasAccepted": 4228,
+          "texasEnrolled": 1032,
+          "allApplicants": 5368,
+          "sourceRow": 193,
+          "sourceName": "West Texas A&M University"
+        },
+        "2024": {
+          "texasApplicants": 4916,
+          "texasAccepted": 4589,
+          "texasEnrolled": 1012,
+          "allApplicants": 5720,
+          "sourceRow": 195,
+          "sourceName": "West Texas A&M University"
+        },
+        "2025": {
+          "texasApplicants": 4685,
+          "texasAccepted": 4294,
+          "texasEnrolled": 1027,
+          "allApplicants": 5405,
+          "sourceRow": 196,
+          "sourceName": "West Texas A&M University"
+        }
+      }
+    }
+  ],
+  "statewide": {
+    "2017": {
+      "texasApplicants": 164334,
+      "texasAccepted": 137151,
+      "texasEnrolled": 82750,
+      "allApplicants": 195264,
+      "sourceRow": 316,
+      "sourceName": "Statewide"
+    },
+    "2018": {
+      "texasApplicants": 169378,
+      "texasAccepted": 142227,
+      "texasEnrolled": 84230,
+      "allApplicants": 202963,
+      "sourceRow": 316,
+      "sourceName": "Statewide"
+    },
+    "2019": {
+      "texasApplicants": 172185,
+      "texasAccepted": 145327,
+      "texasEnrolled": 84727,
+      "allApplicants": 209148,
+      "sourceRow": 324,
+      "sourceName": "Statewide"
+    },
+    "2020": {
+      "texasApplicants": 179944,
+      "texasAccepted": 155096,
+      "texasEnrolled": 84015,
+      "allApplicants": 219939,
+      "sourceRow": 324,
+      "sourceName": "Statewide"
+    },
+    "2021": {
+      "texasApplicants": 180712,
+      "texasAccepted": 157785,
+      "texasEnrolled": 87711,
+      "allApplicants": 232589,
+      "sourceRow": 325,
+      "sourceName": "Statewide"
+    },
+    "2022": {
+      "texasApplicants": 201615,
+      "texasAccepted": 174579,
+      "texasEnrolled": 93358,
+      "allApplicants": 255792,
+      "sourceRow": 324,
+      "sourceName": "Statewide"
+    },
+    "2023": {
+      "texasApplicants": 219013,
+      "texasAccepted": 188475,
+      "texasEnrolled": 98788,
+      "allApplicants": 283371,
+      "sourceRow": 326,
+      "sourceName": "Statewide"
+    },
+    "2024": {
+      "texasApplicants": 256465,
+      "texasAccepted": 208732,
+      "texasEnrolled": 99524,
+      "allApplicants": 330208,
+      "sourceRow": 327,
+      "sourceName": "Statewide"
+    },
+    "2025": {
+      "texasApplicants": 276963,
+      "texasAccepted": 233618,
+      "texasEnrolled": 105396,
+      "allApplicants": 366684,
+      "sourceRow": 327,
+      "sourceName": "Statewide"
+    }
+  }
+}

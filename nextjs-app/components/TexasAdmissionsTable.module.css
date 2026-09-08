@@ -1,0 +1,8 @@
+.controls { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.25rem 0; }
+.controls label { display: flex; flex: 1 1 180px; flex-direction: column; gap: .4rem; font-weight: 600; }
+.controls input, .controls select { min-height: 44px; width: 100%; padding: .7rem; border: 1px solid #b4b9c4; border-radius: 6px; background: white; color: #182334; font: inherit; }
+.controls input:focus-visible, .controls select:focus-visible, .table:focus-visible { outline: 3px solid #176588; outline-offset: 3px; }
+.table { max-height: none; overflow-x: auto; }
+.table table { min-width: 820px; }
+.table caption { padding: .75rem 0; text-align: left; font-weight: 600; }
+.table tbody th { font-weight: 500; text-align: left; white-space: normal; min-width: 230px; }

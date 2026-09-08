@@ -17,6 +17,18 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    title: 'Texas college acceptance rates: Fall 2025 results, released in 2026',
+    href: '/states/texas/college-acceptance-rates',
+    description: 'Compare Texas applicants, acceptances, and enrollment at 37 public universities across nine entering classes, with clear reporting-year and residency definitions.',
+    eyebrow: 'New Texas admissions data',
+  },
+  {
+    title: 'Texas A&M feeder schools by high-school enrollment',
+    href: '/college/texas-am-university/feeder-schools',
+    description: 'Explore the leading Texas high schools by reported Texas A&M enrollment, shares of graduates, and trends from Fall 2019–2024.',
+    eyebrow: 'Texas school destinations',
+  },
+  {
     title: 'UC acceptance rates 2026: official results for every campus',
     href: '/insights/uc-acceptance-rates-2026',
     description:
@@ -31,10 +43,10 @@ const ARTICLES = [
     eyebrow: 'Source data guide',
   },
   {
-    title: 'Texas and Virginia college outcome data: first state expansion hubs',
+    title: 'Texas high-school college outcome data',
     href: '/states',
     description:
-      'Browse official state sources for Texas and Virginia high-school college destinations, postsecondary enrollment, locality admissions, and future college-profile pages.',
+      'Browse official Texas high-school college destinations, enrollment trends, university admissions, and first-year GPA data.',
     eyebrow: 'State expansion',
   },
   {
@@ -83,7 +95,7 @@ export default function InsightsPage() {
               View UC rankings
             </Link>
             <Link href="/states" className="report-entry-link">
-              Browse TX and VA
+              Browse Texas data
             </Link>
             <Link href="/uc-admission-rates" className="report-entry-link">
               View UC admission rates
