@@ -1678,6 +1678,11 @@ footer a:hover { text-decoration: underline; }
 /* School discovery and comparison flow */
 .lookup-main { gap: 12px; }
 .lookup-intro { color: var(--text-muted); font-size: .95rem; }
+.data-freshness-note { padding: 10px 14px; border: 1px solid #d5e2ef; border-radius: var(--radius); background: #f7fafc; color: #4b5e70; font-size: .8rem; line-height: 1.6; }
+.data-freshness-note strong { color: var(--uc-blue); font-weight: 650; }
+.data-freshness-note a { color: var(--uc-blue); text-decoration: underline; text-underline-offset: 2px; }
+.data-freshness-note a:hover { text-decoration-thickness: 2px; }
+.data-freshness-note a:focus-visible { outline: 2px solid var(--uc-blue); outline-offset: 3px; border-radius: 2px; }
 .school-tool { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 16px; }
 .tool-status { color: var(--text-muted); padding: 4px 0; font-size: .85rem; }
 .tool-status button, .quick-school-finder button { text-decoration: underline; cursor: pointer; color: var(--uc-blue); }

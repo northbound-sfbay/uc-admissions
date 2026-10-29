@@ -28,6 +28,12 @@ export default function Home() {
       <header><div className="header-inner"><h1>UC admissions by high school</h1><p className="subtitle">Official source-school outcomes · Fall 1994–2025</p></div></header>
       <main className="lookup-main">
         <p className="lookup-intro">Find your school, explore UC campus results, and compare admissions trends.</p>
+        <p className="data-freshness-note">
+          <strong>Latest school-level data: Fall 2025.</strong>{' '}
+          Next UC update expected February 2027, based on UC’s{' '}
+          <a href="https://www.universityofcalifornia.edu/about-uc/information-center/dashboard-update-schedule" target="_blank" rel="noopener noreferrer">published update schedule</a>.
+          {' '}Timing may change.
+        </p>
         <InteractiveToolLoader />
         <section className="compact-update" data-navigation-source="home_update">
           <h2>Looking for Fall 2026 campus results?</h2>
