@@ -303,7 +303,8 @@ export default async function FeederPage({
 
         <FeederAnswerBlock feederData={feederData} />
         <section className="next-steps" data-navigation-source="feeder_search">
-          <h2>Find your school’s campus results</h2>
+          <h2>How does your school compare at {feederData.campusLabel}?</h2>
+          <p>Find your high school’s applicants, admits and enrollment, then compare its campus results with nearby schools. A feeder ranking describes past outcomes, not your individual admission chances.</p>
           <SchoolFinder source={`feeder_${slug}`} />
           <nav className="discovery-links" aria-label="Explore another campus">
             <a href="#full-rankings">Browse all {feederData.rankedSchools.length.toLocaleString()} schools</a>

@@ -1,6 +1,6 @@
 # Weekly search and ad-revenue review
 
-Updated September 8, 2026. Useful reading and ad revenue are the business objectives. This workflow supersedes the earlier weekly-article quota and paid-report conversion plan. Keep private account metrics in the locally excluded `docs/growth-reviews/` directory, never in this public repository.
+Updated November 2, 2026. Useful reading and ad revenue are the business objectives. This workflow supersedes the earlier weekly-article quota and paid-report conversion plan. Keep private account metrics in the locally excluded `docs/growth-reviews/` directory, never in this public repository.
 
 ## Repeatable growth pattern
 
@@ -19,7 +19,7 @@ After the initial three-story release, cap new analyses at two per month during 
 ## Inputs and definitions
 
 - Journey: revenue, page views, sessions, impressions, page RPM and session RPM. State exact dates and traffic definition.
-- GA: use the single reporting property in the private runbook. Inspect organic and AI landing sessions, engagement, device mix, return visits and actual onward page loads. `article_cta_click`, `school_search_complete`, `internal_navigation` and `comparison_intent` measure intent; a click is not a completed second page.
+- GA: use the single reporting property in the private runbook. Inspect organic and AI landing sessions, engagement, device mix, return visits and actual onward page loads. `article_cta_click`, `school_search_select`, `internal_navigation` and `comparison_intent` measure intent; a click is not a completed second page. Since the November release, `school_search_complete` requires loaded tool data or a confirmed profile arrival; compare pre-release and post-release counts cautiously.
 - Search Console: queries and destinations, clicks, impressions, CTR, position, country and device. Distinguish adjacent-topic hypotheses from proven exact-query demand.
 - Site: publication date, cohort URLs, changed links, canonical/sitemap, data releases, rendering/ad regressions and concurrent deployments.
 
@@ -49,3 +49,14 @@ Weekly: seven fully reported days versus the preceding seven, plus a separate ro
 ## Weekly output
 
 Save a private note with exact windows, actuals versus target, acquisition/depth/yield diagnosis, cohort results, limitations and three next actions. Each action needs a specific page, evidence, proposed change and review date. Give mature experiments a keep/revise/stop decision. Maintain the public calendar using publication facts only.
+
+## November navigation measurement
+
+- `school_profile_open`: a real school profile mounted after a matching same-tab link/search, within five minutes, with a matching internal referrer. Direct arrivals, reloads, new tabs, blocked storage/referrers, and mismatched destinations do not qualify. This conservative event can undercount; it does not replace `page_view` or `school_page_view`.
+- `school_search_complete`: selected data loaded in the tool (`destination=interactive_tool`) or quick search reached its profile (`destination=school_profile`). Quick-finder clicks separately emit `school_search_select`.
+- `comparison_loaded`: two or more selected histories loaded, excluding the untouched example. Shared explicit comparisons qualify. Repeated filter changes do not produce another completion; a changed school set does. This measures loaded data, not chart paint or time spent reading.
+- Use `interaction_source` for UI placement; the reserved acquisition-like `source` parameter is no longer sent by search. Keep both established analytics destinations until there is a separate retention decision.
+
+For an article-to-school rate, restrict to sessions landing on the selected `/insights/` cohort, require the initial article `page_view` before `school_profile_open`, match its `origin_page` to that landing article, and use the same GA session identifier. Count each qualifying session once. Numerator and denominator must share dates, device/source filters, consent availability and reporting property. A user-scoped funnel spanning multiple sessions is not this rate. If the reporting interface cannot enforce the session boundary or expose the required parameter, report the rate as unavailable and list event counts separately. Do not infer the rate from a ratio of event totals or fabricate a historical baseline for new events.
+
+Check the main sitemap and focused `/insights-sitemap.xml` processing independently. Submission acceptance is not crawl or indexing success. The focused sitemap preserves the existing main URL inventory and makes article discovery easier to diagnose.

@@ -11,6 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/report/'],
       },
     ],
-    sitemap: `${BASE_URL}/sitemap.xml`,
+    sitemap: [`${BASE_URL}/sitemap.xml`, `${BASE_URL}/insights-sitemap.xml`],
   }
 }

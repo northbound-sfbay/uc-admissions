@@ -1793,3 +1793,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .enrollment-bar-row { grid-template-columns: 76px minmax(0, 1fr) 72px; gap: 8px; font-size: .76rem; }
   .enrollment-scale { margin-left: 84px; margin-right: 80px; }
 }
+
+/* Growth navigation: visible choices and comfortable mobile controls. */
+.lookup-paths { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; margin: 0 0 18px; }
+.lookup-paths a { color: var(--uc-blue); font-size: .9rem; text-decoration: underline; text-underline-offset: 3px; }
+.lookup-paths .school-profile-action { margin: 0; text-decoration: none; }
+.tool-example { color: #46576d; font-size: .85rem; margin: 0 0 10px; }
+.chart-loading { color: var(--text-muted); padding: 18px; font-size: .85rem; }
+@media (max-width: 600px) {
+  .school-input, .filter-group select { min-height: 44px; font-size: 16px; }
+  .lookup-paths { align-items: stretch; flex-direction: column; gap: 12px; }
+  .lookup-paths a { padding: 5px 0; }
+  .lookup-paths .school-profile-action { padding: 10px 14px; align-self: flex-start; }
+  .chip-remove { min-width: 32px; min-height: 32px; justify-content: center; }
+}

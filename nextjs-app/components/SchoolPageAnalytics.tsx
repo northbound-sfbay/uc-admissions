@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { completeSchoolNavigation } from '@/lib/school-journey'
 import { trackEvent } from '@/lib/analytics'
 
 interface Props {
@@ -21,6 +22,7 @@ export default function SchoolPageAnalytics({ schoolSlug, schoolName, county }: 
       }
     }
 
+    completeSchoolNavigation(schoolSlug)
     trackEvent('school_page_view', {
       school_slug: schoolSlug,
       school_name: schoolName,

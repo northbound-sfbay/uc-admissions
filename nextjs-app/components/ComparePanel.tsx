@@ -1,13 +1,13 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { Chart, registerables } from 'chart.js'
+import type { Chart as ChartType } from 'chart.js'
+import { useChartLibrary } from '@/lib/use-chart-library'
 import SchoolAutocomplete from './SchoolAutocomplete'
 import { ALL_YEARS, CAMPUSES, ETHNICITIES, CMP_COLORS } from '@/lib/constants'
 import { getYearData, schoolKey } from '@/lib/utils'
 import type { School } from '@/lib/types'
 
-Chart.register(...registerables)
 
 export interface CmpEntry { school: School; colorIdx: number }
 
@@ -26,11 +26,12 @@ export default function ComparePanel({
   allSchools, selected, campus, ethnicity,
   onAdd, onRemove, onCampusChange, onEthnicityChange,
 }: Props) {
+  const { Chart, failed } = useChartLibrary()
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const chartRef  = useRef<Chart | null>(null)
+  const chartRef  = useRef<ChartType | null>(null)
 
   useEffect(() => {
-    if (!canvasRef.current) return
+    if (!canvasRef.current || !Chart) return
     if (chartRef.current) { chartRef.current.destroy(); chartRef.current = null }
     if (!selected.length) return
 
@@ -77,7 +78,7 @@ export default function ComparePanel({
     })
 
     return () => { chartRef.current?.destroy(); chartRef.current = null }
-  }, [selected, campus, ethnicity])
+  }, [Chart, selected, campus, ethnicity])
 
   const subParts = []
   if (campus !== 'universitywide') subParts.push(campus)
@@ -122,7 +123,7 @@ export default function ComparePanel({
                     <span className="chip-dot" style={{ background: color }}></span>
                     <span className="chip-name" title={school.school_name}>{school.school_name}</span>
                     <span className="chip-city">{school.city}{typeLabel}</span>
-                    <button className="chip-remove" aria-label="Remove" onClick={() => onRemove(key)}>×</button>
+                    <button className="chip-remove" aria-label={`Remove ${school.school_name} from comparison`} onClick={() => onRemove(key)}>×</button>
                   </div>
                 )
               })
@@ -138,7 +139,8 @@ export default function ComparePanel({
           </div>
         </div>
         <div className="chart-canvas-wrap">
-          <canvas ref={canvasRef} style={{ display: selected.length ? undefined : 'none' }} />
+          {!Chart && <p className="chart-loading" role="status">{failed ? 'The chart could not load. School search and profile links are still available.' : 'Loading chart…'}</p>}
+          <canvas role="img" aria-label={`Admit rates over time for ${selected.map(entry => entry.school.school_name).join(", ")}`} ref={canvasRef} style={{ display: selected.length ? undefined : 'none' }} />
           {!selected.length && (
             <div className="no-data-msg">Add schools above to compare admit rate trends.</div>
           )}

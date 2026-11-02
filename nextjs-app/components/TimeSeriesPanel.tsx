@@ -1,14 +1,14 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { Chart, registerables } from 'chart.js'
+import type { Chart as ChartType } from 'chart.js'
+import { useChartLibrary } from '@/lib/use-chart-library'
 import SchoolAutocomplete from './SchoolAutocomplete'
 import { trackEvent } from '@/lib/analytics'
 import { ALL_YEARS, CAMPUSES, ETHNICITIES } from '@/lib/constants'
 import { getYearData, yieldRate, makeSlug } from '@/lib/utils'
 import type { School } from '@/lib/types'
 
-Chart.register(...registerables)
 
 interface Props {
   allSchools: School[]
@@ -27,11 +27,12 @@ export default function TimeSeriesPanel({
   onSelectSchool, onCampusChange, onEthnicityChange,
   tsInput, onTsInputChange,
 }: Props) {
+  const { Chart, failed } = useChartLibrary()
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const chartRef  = useRef<Chart | null>(null)
+  const chartRef  = useRef<ChartType | null>(null)
 
   useEffect(() => {
-    if (!canvasRef.current) return
+    if (!canvasRef.current || !Chart) return
     const school = selectedSchool
     if (chartRef.current) { chartRef.current.destroy(); chartRef.current = null }
 
@@ -101,7 +102,7 @@ export default function TimeSeriesPanel({
     })
 
     return () => { chartRef.current?.destroy(); chartRef.current = null }
-  }, [selectedSchool, campus, ethnicity])
+  }, [Chart, selectedSchool, campus, ethnicity])
 
   const school = selectedSchool
   const hasData = school && ALL_YEARS.some(yr => (getYearData(school.years?.[yr], campus, ethnicity)?.app ?? null) != null)
@@ -157,7 +158,7 @@ export default function TimeSeriesPanel({
                   }}
                   className="school-profile-action"
                 >
-                  Explore full school profile →
+                  See this school’s results across all 9 UCs →
                 </a>
               )}
             </p>
@@ -169,7 +170,8 @@ export default function TimeSeriesPanel({
           </div>
         </div>
         <div className="chart-canvas-wrap">
-          <canvas ref={canvasRef} style={{ display: hasData ? undefined : 'none' }} />
+          {!Chart && <p className="chart-loading" role="status">{failed ? 'The chart could not load. School search and profile links are still available.' : 'Loading chart…'}</p>}
+          <canvas role="img" aria-label={`${school?.school_name ?? "School"}: applicants, admit rate and enrollment yield over time`} ref={canvasRef} style={{ display: hasData ? undefined : 'none' }} />
           {!hasData && school && (
             <div className="no-data-msg">No data for this selection.</div>
           )}

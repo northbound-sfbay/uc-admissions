@@ -22,6 +22,9 @@ export default function InteractiveTool() {
   const [tsCampus, setTsCampus] = useState('universitywide')
   const [tsEthnicity, setTsEthnicity] = useState('all')
   const [tsInput, setTsInput] = useState('')
+  const [isExample, setIsExample] = useState(false)
+  const comparisonCustomized = useRef(false)
+  const lastCompletedComparison = useRef('')
   const [cmpSelected, setCmpSelected] = useState<CmpEntry[]>([])
   const [cmpCampus, setCmpCampus] = useState('universitywide')
   const [cmpEthnicity, setCmpEthnicity] = useState('all')
@@ -53,12 +56,15 @@ export default function InteractiveTool() {
       setCmpCampus(state.compareCampus)
       setCmpEthnicity(state.compareEthnicity)
       const selected = index.find(s => s.school_id === (state.school || '52350')) ?? index[0]
-      const ids = state.hasCompare ? state.compare : [selected.school_id, '52970']
+      const example = !state.school && !state.hasCompare
+      comparisonCustomized.current = state.hasCompare
+      const ids = state.hasCompare ? state.compare : example ? [selected.school_id, '52970'] : [selected.school_id]
       const comparisonSchools = ids.map(id => index.find(s => s.school_id === id)).filter((s): s is School => Boolean(s))
       const [school, comparison] = await Promise.all([loadSchool(selected), Promise.all(comparisonSchools.map(loadSchool))])
       if (cancelled) return
       setTsSelectedSchool(school)
-      setTsInput(school.school_name)
+      setTsInput(example ? '' : school.school_name)
+      setIsExample(example)
       setCmpSelected(comparison.map((item, i) => ({ school: item, colorIdx: i })))
       if (state.school && !index.some(item => item.school_id === state.school)) setError('That school link was not found. Search for a school below.')
       setLoading(false)
@@ -69,6 +75,17 @@ export default function InteractiveTool() {
     return () => { cancelled = true }
   }, [retry])
 
+  useEffect(() => {
+    if (loading || isExample || cmpSelected.length < 2) {
+      lastCompletedComparison.current = ''
+      return
+    }
+    const signature = cmpSelected.map(entry => schoolKey(entry.school)).sort().join(',')
+    if (signature === lastCompletedComparison.current) return
+    lastCompletedComparison.current = signature
+    trackEvent('comparison_loaded', { school_count: cmpSelected.length, interaction_source: 'comparison_tool' })
+  }, [cmpSelected, isExample, loading])
+
   async function selectSchool(summary: School, source = 'school_search') {
     const request = ++selectionRequest.current
     setTsInput(summary.school_name)
@@ -77,7 +94,9 @@ export default function InteractiveTool() {
       const school = await loadSchool(summary)
       if (request !== selectionRequest.current) return
       setTsSelectedSchool(school)
-      trackEvent('school_search_complete', { source, school_slug: makeSlug(school.school_id, school.school_name) })
+      setIsExample(false)
+      if (!comparisonCustomized.current) setCmpSelected([{ school, colorIdx: 0 }])
+      trackEvent('school_search_complete', { interaction_source: source, school_slug: makeSlug(school.school_id, school.school_name), destination: 'interactive_tool' })
       trackEvent('comparison_intent', { interaction_type: 'select_school', school_slug: makeSlug(school.school_id, school.school_name) })
     } catch { if (request === selectionRequest.current) setError('This school could not load. Select it again to retry.') }
   }
@@ -86,10 +105,12 @@ export default function InteractiveTool() {
     const key = schoolKey(summary)
     if (cmpSelected.some(entry => schoolKey(entry.school) === key) || pendingComparisons.current.has(key)) return
     if (cmpSelected.length + pendingComparisons.current.size >= MAX_CMP) { setError(`You can compare up to ${MAX_CMP} schools. Remove one to add another.`); return }
+    comparisonCustomized.current = true
     pendingComparisons.current.add(key)
     setError('')
     try {
       const school = await loadSchool(summary)
+      setIsExample(false)
       setCmpSelected(previous => previous.some(entry => schoolKey(entry.school) === key) || previous.length >= MAX_CMP
         ? previous : [...previous, { school, colorIdx: previous.length }])
       trackEvent('comparison_intent', { interaction_type: 'add_compare_school', school_slug: makeSlug(school.school_id, school.school_name) })
@@ -162,12 +183,13 @@ export default function InteractiveTool() {
     <section id="school-tool" className="school-tool" aria-label="Search and compare high schools">
       {loading && <p className="tool-status" role="status">Loading school search and selected histories…</p>}
       {error && <p className="tool-status" role="alert">{error} <button type="button" onClick={() => setRetry(value => value + 1)}>Reload school search</button></p>}
+      {isExample && <p className="tool-example">Example: Palo Alto and Lowell. Search below to explore your own school.</p>}
       <div className="charts-row tool-charts" inert={loading} aria-busy={loading}>
         <TimeSeriesPanel allSchools={allSchools} selectedSchool={tsSelectedSchool} campus={tsCampus} ethnicity={tsEthnicity}
           onSelectSchool={school => { void selectSchool(school) }} onCampusChange={value => changeFilter('timeseries_campus_change', value, setTsCampus)}
           onEthnicityChange={value => changeFilter('timeseries_ethnicity_change', value, setTsEthnicity)} tsInput={tsInput} onTsInputChange={setTsInput} />
         <ComparePanel allSchools={allSchools} selected={cmpSelected} campus={cmpCampus} ethnicity={cmpEthnicity}
-          onAdd={school => { void addComparison(school) }} onRemove={key => setCmpSelected(previous => previous.filter(entry => schoolKey(entry.school) !== key).map((entry, i) => ({ ...entry, colorIdx: i })))}
+          onAdd={school => { void addComparison(school) }} onRemove={key => { comparisonCustomized.current = true; setIsExample(false); setCmpSelected(previous => previous.filter(entry => schoolKey(entry.school) !== key).map((entry, i) => ({ ...entry, colorIdx: i }))) }}
           onCampusChange={value => changeFilter('compare_campus_change', value, setCmpCampus)} onEthnicityChange={value => changeFilter('compare_ethnicity_change', value, setCmpEthnicity)} />
       </div>
       <div className="comparison-actions" data-tool-controls>

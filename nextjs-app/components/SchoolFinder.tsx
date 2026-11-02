@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import SchoolAutocomplete from './SchoolAutocomplete'
 import { loadSchoolIndex } from '@/lib/school-client'
 import { makeSlug } from '@/lib/utils'
+import { rememberSchoolNavigation } from '@/lib/school-journey'
 import { trackEvent } from '@/lib/analytics'
 import type { School } from '@/lib/types'
 
@@ -20,7 +21,8 @@ export default function SchoolFinder({ source = 'school_header' }: { source?: st
       <label className="ctrl-label">Find a California high school</label>
       <SchoolAutocomplete placeholder="Search school name or city…" allSchools={schools} onSelect={school => {
         const href = `/school/${makeSlug(school.school_id, school.school_name)}`
-        trackEvent('school_search_complete', { source, school_slug: makeSlug(school.school_id, school.school_name), target_url: href })
+        rememberSchoolNavigation(href, source, true)
+        trackEvent('school_search_select', { interaction_source: source, school_slug: makeSlug(school.school_id, school.school_name), target_url: href })
         window.location.assign(href)
       }} />
       {error && <p role="status">Search could not load. <button type="button" onClick={load}>Try again</button></p>}

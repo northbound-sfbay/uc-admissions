@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import type { MetadataRoute } from 'next'
-import { DATA_STORIES, STORY_DATE, storyHref } from '@/lib/data-stories'
+import { INSIGHT_PAGES } from '@/lib/insight-pages'
 import { getCountySlugs } from '@/lib/county'
 import { getFeederSlugs } from '@/lib/feeder'
 import { getStateOutcomeSlugs } from '@/lib/state-outcomes'
@@ -58,7 +58,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: BASE_URL,
-      lastModified: generatedAt,
+      lastModified: new Date('2026-11-02T00:00:00Z'),
       changeFrequency: 'weekly',
       priority: 1,
     },
@@ -73,12 +73,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: generatedAt,
       changeFrequency: 'weekly',
       priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/insights`,
-      lastModified: generatedAt,
-      changeFrequency: 'weekly',
-      priority: 0.75,
     },
     {
       url: `${BASE_URL}/states`,
@@ -97,30 +91,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: texasUpdatedAt,
       changeFrequency: 'monthly',
       priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/insights/uc-admission-rates-by-high-school`,
-      lastModified: generatedAt,
-      changeFrequency: 'monthly',
-      priority: 0.85,
-    },
-    {
-      url: `${BASE_URL}/insights/uc-acceptance-rates-2026`,
-      lastModified: new Date('2026-08-26T00:00:00Z'),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/insights/uc-admissions-by-source-school`,
-      lastModified: generatedAt,
-      changeFrequency: 'monthly',
-      priority: 0.85,
-    },
-    {
-      url: `${BASE_URL}/insights/uc-gpa-by-high-school`,
-      lastModified: generatedAt,
-      changeFrequency: 'monthly',
-      priority: 0.85,
     },
     {
       url: `${BASE_URL}/about`,
@@ -151,7 +121,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const feederUrls: MetadataRoute.Sitemap = getFeederSlugs().map(slug => ({
     url: `${BASE_URL}/feeder-schools/${slug}`,
-    lastModified: generatedAt,
+    lastModified: new Date('2026-11-02T00:00:00Z'),
     changeFrequency: 'monthly',
     priority: 0.85,
   }))
@@ -178,7 +148,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...coreUrls,
-    ...DATA_STORIES.map(story => ({ url: `${BASE_URL}${storyHref(story)}`, lastModified: new Date(STORY_DATE), changeFrequency: 'monthly' as const, priority: 0.8 })),
+    ...INSIGHT_PAGES.map(page => ({ url: `${BASE_URL}${page.path}`, lastModified: new Date(page.updated), changeFrequency: 'monthly' as const, priority: 0.8 })),
     ...countyUrls,
     ...feederUrls,
     ...stateUrls,

@@ -5,11 +5,11 @@ import RelatedDataStories from '@/components/RelatedDataStories'
 
 export const metadata: Metadata = {
   title: 'UC Acceptance Rates by High School | UC Admissions Data',
-  description: 'Search UC acceptance rates and admissions trends by high school, with admit rates, applicants, admits, and enrollment data from Fall 1994 through Fall 2025.',
+  description: 'Find UC acceptance rates by high school using Fall 2025 results. Compare school outcomes and view preliminary Fall 2026 UC campus acceptance rates.',
   alternates: { canonical: 'https://collegeacceptance.info' },
   openGraph: {
     title: 'UC Acceptance Rates by High School | UC Admissions Data',
-    description: 'Search UC acceptance rates and admissions trends by high school, with admit rates, applicants, admits, and enrollment data from Fall 1994 through Fall 2025.',
+    description: 'Find UC acceptance rates by high school using Fall 2025 results. Compare school outcomes and view preliminary Fall 2026 UC campus acceptance rates.',
     url: 'https://collegeacceptance.info',
     type: 'website',
     images: [{ url: 'https://collegeacceptance.info/og-image.png' }],
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'UC Acceptance Rates by High School | UC Admissions Data',
-    description: 'Search UC acceptance rates and admissions trends by high school, with admit rates, applicants, admits, and enrollment data from Fall 1994 through Fall 2025.',
+    description: 'Find UC acceptance rates by high school using Fall 2025 results. Compare school outcomes and view preliminary Fall 2026 UC campus acceptance rates.',
     images: ['https://collegeacceptance.info/og-image.png'],
   },
 }
@@ -27,20 +27,19 @@ export default function Home() {
     <>
       <header><div className="header-inner"><h1>UC admissions by high school</h1><p className="subtitle">Official source-school outcomes · Fall 1994–2025</p></div></header>
       <main className="lookup-main">
-        <p className="lookup-intro">Find your school, explore UC campus results, and compare admissions trends.</p>
+        <p className="lookup-intro">Search your high school’s UC applicants, admits and enrollment, then compare campus results.</p>
         <p className="data-freshness-note">
           <strong>Latest school-level data: Fall 2025.</strong>{' '}
           Next UC update expected February 2027, based on UC’s{' '}
           <a href="https://www.universityofcalifornia.edu/about-uc/information-center/dashboard-update-schedule" target="_blank" rel="noopener noreferrer">published update schedule</a>.
           {' '}Timing may change.
         </p>
+        <nav className="lookup-paths" aria-label="Choose your admissions data" data-navigation-source="home_data_paths">
+          <a href="#school-tool" className="school-profile-action">Find your high school ↓</a>
+          <a href="/insights/uc-acceptance-rates-2026">See preliminary 2026 UC campus acceptance rates →</a>
+          <a href="/insights/uc-admission-rates-by-high-school#data-year">Why school results use Fall 2025</a>
+        </nav>
         <InteractiveToolLoader />
-        <section className="compact-update" data-navigation-source="home_update">
-          <h2>Looking for Fall 2026 campus results?</h2>
-          <p>The new preliminary campus totals are available. School-specific outcomes above remain finalized through Fall 2025.</p>
-          <a href="/insights/uc-acceptance-rates-2026">See 2026 acceptance rates for every UC campus →</a>
-          <p><a href="/insights/uc-admission-rates-by-high-school#data-year">Why school-level results still use Fall 2025</a></p>
-        </section>
         <RelatedDataStories all />
         <section className="seo-intro">
           <h2>Understand your school’s UC outcomes</h2>

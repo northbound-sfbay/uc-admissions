@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import SchoolFinder from '@/components/SchoolFinder'
+import RelatedDataStories from '@/components/RelatedDataStories'
 import ArticleCtaLink from '@/components/ArticleCtaLink'
 
 const CANONICAL = 'https://collegeacceptance.info/insights/uc-admission-rates-by-high-school'
@@ -108,7 +110,7 @@ function JsonLd() {
     headline: TITLE,
     description: DESCRIPTION,
     datePublished: '2026-05-01',
-    dateModified: '2026-09-08',
+    dateModified: '2026-11-02',
     author: {
       '@type': 'Organization',
       name: 'collegeacceptance.info',
@@ -186,7 +188,7 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
           <a href="/insights" className="text-sm text-blue-200 hover:text-white">
             UC Admissions Insights
           </a>
-          <h1>UC admission rates by high school can be useful - if you know what you are looking at</h1>
+          <h1>UC admission rates by high school: find and compare your school</h1>
           <p className="subtitle">
             A data guide to applicants, admits, enrollment, GPA and campus mix in the latest UC source-school tables.
           </p>
@@ -196,7 +198,7 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
       <main className="article-shell">
         <article className="article-card">
           <div className="article-kicker">Data analysis</div>
-          <p className="article-byline">By collegeacceptance.info · Updated September 8, 2026</p>
+          <p className="article-byline">By collegeacceptance.info · Updated November 2, 2026</p>
 
           <p className="article-deck">
             Families often search for a single UC acceptance rate for a high school. The data is
@@ -210,15 +212,6 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
             <p>The school-level records on this site are finalized through <strong>Fall 2025</strong>. The separate <a href="/insights/uc-acceptance-rates-2026">preliminary Fall 2026 campus results</a> cover each campus as a whole. They do not provide a school’s 2026 admit rate. Choose a school in the <a href="/">lookup tool</a> to see the latest available school-level year.</p>
           </section>
 
-          <section className="article-stat-grid" aria-label="Fall 2025 UC source-school snapshot">
-            {STAT_CARDS.map(card => (
-              <div className="article-stat-card" key={card.label}>
-                <strong>{card.value}</strong>
-                <span>{card.label}</span>
-              </div>
-            ))}
-          </section>
-
           <section className="answer-block" aria-label="Short answer">
             <h2>Short answer</h2>
             <p>
@@ -227,6 +220,25 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
               read as a historical record for a group of applicants, not as an individual student&apos;s
               odds of admission.
             </p>
+          </section>
+
+          <section className="next-steps" data-navigation-source="high_school_guide_search">
+            <h2>Find your school’s UC results</h2>
+            <p>Choose a California high school to see applicants, admits and enrollment by campus, then compare it with nearby schools.</p>
+            <SchoolFinder source="high_school_guide" />
+            <nav className="discovery-links" aria-label="Explore school outcomes">
+              <a href="/feeder-schools/ucla">Explore UCLA feeder schools</a>
+              <a href="/feeder-schools/uc-berkeley">Explore UC Berkeley feeder schools</a>
+            </nav>
+          </section>
+
+          <section className="article-stat-grid" aria-label="Fall 2025 UC source-school snapshot">
+            {STAT_CARDS.map(card => (
+              <div className="article-stat-card" key={card.label}>
+                <strong>{card.value}</strong>
+                <span>{card.label}</span>
+              </div>
+            ))}
           </section>
 
           <section>
@@ -481,6 +493,7 @@ export default function UcAdmissionRatesByHighSchoolArticle() {
               </a>
             </p>
           </section>
+          <RelatedDataStories all />
         </article>
       </main>
 
